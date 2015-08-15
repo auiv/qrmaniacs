@@ -85,7 +85,6 @@ myApp.controller("ItemsController",['$scope','$http','$modal','$cookies','$cooki
         $scope.selected=null;
         $scope.update();
         }
-
     reset = function() {
     $scope.answers=[null,null,null,null];
     $scope.question=null;

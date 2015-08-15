@@ -27,6 +27,7 @@
                                                 <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"> 
                                                 <button  class="delete btn btn-danger btn-lg" ng-click="deleteArgomento(argomento.index)">X</button>
                                                 <button   class="seleziona btn btn-primary btn-lg" ng-click="selectArgomento($index)">Seleziona</button>
+                                                <a href="api/QR/{{argomento.index}}">QR</a>
                                                         
                                                 <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data,argomento.index)" e-rows="2" e-cols="20">
                                                                         {{ argomento.text || 'Argomento..' }}</a>

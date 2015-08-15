@@ -8,6 +8,9 @@ import Network
 import Data.Time.LocalTime
 import Protocol
 import DB0
+import System.Process
+import qualified Data.ByteString.UTF8 as BS
+import qualified Data.ByteString as BSF
 import Text.Read 
 import Network.HTTP.Server
 import Network.HTTP.Server.Logger
@@ -15,7 +18,6 @@ import Network.URL as URL
 import Network.URI (URI (..), URIAuth (..))
 import Text.JSON
 import Text.JSON.String(runGetJSON)
-import Codec.Binary.UTF8.String
 import Control.Exception(try,SomeException)
 import System.FilePath
 import Data.List
@@ -25,22 +27,22 @@ import Control.Concurrent
 
 import System.Environment
 import JSON
-jsError x = makeObj [("error",JSString $ toJSString x)]
-jsDBError x  = makeObj [("dberror",JSString $ toJSString $ show x)]
+jsError x = makeObj [("error",showJSON $ show x)]
+jsDBError x  = makeObj [("dberror",showJSON $ show x)]
 jsCompund x y = makeObj [("result",showJSON x)]
 
 sendResponse
-  :: JSON a => WGet -> Maybe (Get a) -> IO (Response String)
+  :: JSON a => WGet -> Maybe (Get a) -> IO (Response BS.ByteString)
 sendResponse g v = case v of 
         Nothing -> return $ sendJSON BadRequest $ jsError "Not parsed"
         Just v -> do
                 let (WGet g') = g
                 (x,w) <- runWriterT $ g' v
                 case x of 
-                        Left x -> return $ sendJSON BadRequest $ jsDBError $ x
-                        Right x -> return $ sendJSON OK $ jsCompund x w
+                        Left x -> return $ sendJSON BadRequest $  jsDBError $ x
+                        Right x -> return $ sendJSON OK $  jsCompund x w
 sendResponseP p v = case v of 
-        Nothing -> return $ sendJSON BadRequest $ jsError "Not parsed"
+        Nothing -> return $ sendJSON BadRequest $ jsError $ "Not parsed"
         Just v -> do
                 (x,w) <- runWriterT $ p v
                 forM_ w $ \y ->
@@ -51,8 +53,8 @@ sendResponseP p v = case v of
                 case x of 
                         Left x -> return $ sendJSON BadRequest $ jsDBError $ x
                         Right () -> return $ sendJSON OK $ jsCompund JSNull w
-redirectHome :: String -> Response String
-redirectHome r = insertHeader HdrLocation r $ (respond SeeOther :: Response String)
+redirectHome :: String -> Response BS.ByteString
+redirectHome r = insertHeader HdrLocation r $ (respond SeeOther :: Response BS.ByteString)
 
 main :: IO ()
 main = do
@@ -63,7 +65,8 @@ main = do
             responseP = sendResponseP  p
             findUserName x = fmap tail . lookup "userName" . map (break (=='=')) $ splitOn ";" x 
         putStrLn "running"
-        let responser url request = do
+        let     
+                responser url request = do
                           let   URI a (Just (URIAuth _ b _)) _ _ _  = rqURI request
                                 href = reloc
                                 user = findHeader HdrCookie request >>= findUserName
@@ -87,7 +90,7 @@ main = do
                                                         return $ ChangeRispostaValue u i' v'
                                         _ -> return $ sendJSON BadRequest $ JSNull
                             POST -> do 
-                                let msg = decodeString (rqBody request)
+                                let msg = BS.toString $ rqBody request
                                 case splitOn "/" $ url_path url of
                                         ["AddArgomento"] -> onuser user $ \u -> responseP $ do
                                                         return $ AddArgomento u msg
@@ -114,28 +117,40 @@ main = do
 
                                         ["Domande",i] -> sendResponse g $ do
                                                         return $ Domande i 
+                                        ["QR",h] -> do
+                                                let url = reloc ++ "/api/QR/" ++ h
+                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                callCommand c
+                                                qr <- BSF.readFile "qr.tmp"
+                                                return $ sendPng qr
                                         _ -> return $ sendJSON BadRequest $ JSNull
         --when t $ void $ responseP $ Just $ Boot mailbooter reloc 
-        serverWith defaultConfig { srvLog = quietLogger, srvPort = 8889 }
+        forkIO$ serverWith defaultConfig { srvLog = quietLogger, srvPort = 8889 }
                 $ \_ url request -> do
                         resp <- responser url request
                         putStrLn "||||"
                         print resp
                         return resp      
+        serverWith defaultConfig { srvLog = quietLogger, srvPort = 8890 }
+                $ \_ url request -> do
+                        resp <- responser url request
+                        putStrLn "||||"
+                        print resp
+                        return resp      
+sendPng :: BS.ByteString -> Response BS.ByteString
+sendPng s = insertHeader HdrContentLength (show  756)
+                $ insertHeader HdrContentEncoding "image/png"
+                $ (respond OK :: Response BS.ByteString) { rspBody = s }
 
 
-sendText       :: StatusCode -> String -> Response String
-sendText s v    = insertHeader HdrContentLength (show (length txt))
+sendText s v    = insertHeader HdrContentLength (show $ length v)
                 $ insertHeader HdrContentEncoding "UTF-8"
                 $ insertHeader HdrContentEncoding "text/plain"
-                $ (respond s :: Response String) { rspBody = txt }
-  where txt       = encodeString v
+                $ (respond s :: Response BS.ByteString) { rspBody = BS.fromString v }
 
-sendJSON       :: StatusCode -> JSValue -> Response String
 sendJSON s v    = insertHeader HdrContentType "application/json"  
                 $ sendText s (showJSValue v "")
 
-sendHTML       :: StatusCode -> String -> Response String
 sendHTML s v    = insertHeader HdrContentType "text/html"
                 $ sendText s v
 
