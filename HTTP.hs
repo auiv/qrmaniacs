@@ -51,6 +51,8 @@ sendResponseP p v = case v of
                 case x of 
                         Left x -> return $ sendJSON BadRequest $ jsDBError $ x
                         Right () -> return $ sendJSON OK $ jsCompund JSNull w
+redirectHome :: String -> Response String
+redirectHome r = insertHeader HdrLocation r $ (respond SeeOther :: Response String)
 
 main :: IO ()
 main = do
@@ -108,8 +110,7 @@ main = do
                                 case splitOn "/" $ url_path url of
                                         ["Argomenti"] -> onuser user $ \u ->fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) . sendResponse g $ do
                                                         return $ Argomenti u 
-                                        ["Login",u] -> fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) . sendResponse g $ do
-                                                        return $ Argomenti u 
+                                        ["Login",u] -> return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) $ redirectHome   reloc                                                   
 
                                         ["Domande",i] -> sendResponse g $ do
                                                         return $ Domande i 
