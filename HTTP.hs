@@ -106,9 +106,9 @@ main = do
                                         _ -> return $ sendJSON BadRequest $ JSNull
                             GET -> do 
                                 case splitOn "/" $ url_path url of
-                                        ["Argomenti"] -> onuser user $ \u ->fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";")) . sendResponse g $ do
+                                        ["Argomenti"] -> onuser user $ \u ->fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) . sendResponse g $ do
                                                         return $ Argomenti u 
-                                        ["Login",u] -> fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";")) . sendResponse g $ do
+                                        ["Login",u] -> fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) . sendResponse g $ do
                                                         return $ Argomenti u 
 
                                         ["Domande",i] -> sendResponse g $ do
