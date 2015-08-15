@@ -108,7 +108,7 @@ main = do
                                 case splitOn "/" $ url_path url of
                                         ["Argomenti"] -> onuser user $ \u ->fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";")) . sendResponse g $ do
                                                         return $ Argomenti u 
-                                        ["Argomenti",u] -> fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";")) . sendResponse g $ do
+                                        ["Login",u] -> fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";")) . sendResponse g $ do
                                                         return $ Argomenti u 
 
                                         ["Domande",i] -> sendResponse g $ do
