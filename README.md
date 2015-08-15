@@ -1,0 +1,2 @@
+# qrmaniacs
+diminished virtual reality
