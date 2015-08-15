@@ -18,12 +18,14 @@ myApp.controller('Input', function ($scope, $modalInstance) {
         });
 
 
-
-myApp.controller("ItemsController",['$scope','$http','$modal','$cookies','$cookieStore','$timeout','$log',function ($scope,$http,$modal,$cookies,$cookieStore,$timeout,$log) {
+myApp.controller("ItemsController",['$scope','$http','$modal','$cookies','$cookieStore','$timeout','$log','$location',function ($scope,$http,$modal,$cookies,$cookieStore,$timeout,$log,$location) {
     $scope.items = [];
     $scope.selected=null;
     $scope.argomenti = [];
     $scope.valori=['Giusta','Sbagliata','Accettabile'];
+    $scope.$on('$locationChangeSuccess', function () {
+        if($location.path() == "") $scope.selected=null;
+    });
     $scope.update = function () {
                 $http.get("api/Argomenti").success(function(xs){
                         $scope.argomenti=xs.result;
@@ -33,6 +35,11 @@ myApp.controller("ItemsController",['$scope','$http','$modal','$cookies','$cooki
                         });
     $scope.input={};
         }
+        
+   $scope.qr=function(h){
+         window.location.href = "api/QR/"+h;
+        }
+
    $scope.update();
       $scope.addArgomento = function () {
                 var modalInstance = $modal.open({
@@ -77,8 +84,9 @@ myApp.controller("ItemsController",['$scope','$http','$modal','$cookies','$cooki
                         );
                 };
 
-    $scope.selectArgomento = function (index){
+    $scope.selectArgomento = function (index,h){
         $scope.selected=index;
+        $location.url("api/Risorsa/"+h);
         $scope.update();
         }
     $scope.leaveArgomento = function (index){
