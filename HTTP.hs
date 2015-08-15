@@ -123,15 +123,18 @@ main = do
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
+       --                                 ["Risorsa",h] -> return ()
+                                                -- controllo utente
+                                                -- utente editore:
+                                                        -- redirect to editor drugged h
+                                                -- utente nuovo:
+                                                        -- new cookie
+                                                        -- redirect to play drugged h
+                                                -- utente vecchio:
+                                                        -- redirect to play drugged h
                                         _ -> return $ sendJSON BadRequest $ JSNull
         --when t $ void $ responseP $ Just $ Boot mailbooter reloc 
-        forkIO$ serverWith defaultConfig { srvLog = quietLogger, srvPort = 8889 }
-                $ \_ url request -> do
-                        resp <- responser url request
-                        putStrLn "||||"
-                        print resp
-                        return resp      
-        serverWith defaultConfig { srvLog = quietLogger, srvPort = 8890 }
+        serverWith defaultConfig { srvLog = quietLogger, srvPort = 8889 }
                 $ \_ url request -> do
                         resp <- responser url request
                         putStrLn "||||"
