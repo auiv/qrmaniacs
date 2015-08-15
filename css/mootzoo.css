@@ -1,0 +1,136 @@
+.containerb {padding-top:70px;}
+.dropdown-menu {
+	min-width:100px;
+	opacity:0.9;
+	}
+.dropdown-menu>li:hover{
+	background-color:#bbb;
+	}
+.dropdown-toggle:hover{
+	text-decoration:none;
+	background-color:#ddd;
+	cursor:pointer;
+}
+.mex {
+  font-size:80%; 
+  color:#999; 
+  display:inline;
+  padding-left:5px
+  }
+.mexr  {
+  font-size:60%; 
+  color:#888; 
+  padding-right:15px;
+	float:right;
+	}
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 5px 5px;
+}
+/* Margini e padding inferiore */
+.list-group {
+  padding-left: 0;
+  margin-bottom: 1px;
+}
+ 
+ 
+/* Formattazione dell'item di lista */
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 0px 0px;
+  margin-bottom:0px;
+  padding-left:1px;
+  background-color: #eee;
+  border:0;
+  border-bottom: 1px dashed #dddddd;
+}
+ 
+
+
+.posr {
+        float:right;
+        }
+.message{
+        cursor:pointer;
+}
+.message:hover{
+        cursor:pointer;
+	background-color:#ccc;
+}
+.vote{
+    vertical-align: bottom;
+    width:30px;
+    position:absolute;
+    top:0;
+    left:0;
+}
+.op{
+    vertical-align: bottom;
+    width:150px;
+    position:absolute;
+    right:0;
+    bottom:0;
+}
+.odd{
+        background-color:#777777;
+        }
+.even {
+        background-color:#666666;
+        margin-left:10px;
+        }
+.btn-warning {
+        background-color:#aa0;
+        }
+.ciao{
+        background-color:black;
+        color:white;
+        }
+.btn {padding:12px;}
+.btn {
+    color:white;
+    white-space: normal;
+}
+.label {
+    white-space: normal;
+}
+.ciao:focus{
+        background-color:black;
+        color:white;
+        }
+.ciao:hover{
+        background-color:black;
+        color:white;
+        }
+.btn-default{
+        background-color:#aaa;
+        color:white;
+	padding:5px;
+        }
+.btn-grey > .btn-default {
+        background-color:#fff;     
+        }
+textarea {
+  margin:0px 0px;
+  padding:5px ;
+  height:16px;
+  line-height:16px;
+  width:96%;
+  display:block;
+  margin:0px auto;    
+}
+
+.label-default {
+  margin:3px;
+  background-color:#aaa;
+}
+.btn-off:hover {
+  background-color:#aaa;
+  color:white;
+}
+.panel-body {padding:3px;}
+.modal-body {padding:3px;}
+.login {margin-left:20px};
+
+
