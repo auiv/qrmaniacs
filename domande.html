@@ -1,0 +1,39 @@
+
+<a class=relink href="#/">Altri riferimenti</a>
+
+<ul class="op list-group"> 
+        <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
+                <button class="delete btn btn-danger btn-xs" ng-click="checkDelete(deleteDomanda,item.index)">X</button>
+                <div class=well>
+                <a  href="#" editable-textarea="item.text" onbeforesave="changeDomanda($data,item.index)" e-rows="3" e-cols="25">
+                                {{ item.text || 'Domanda..' }}
+                                        </a>
+                </div>
+                <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
+
+                        <div class="row">
+                                <div class="col-sm-7 well">
+                        <a  href="#" editable-textarea="item.answers[$index].text" onbeforesave="changeRisposta($data,item.answers[$index].index)" e-rows="2" e-cols="20">
+                                {{ item.answers[$index].text || 'Risposta ' + $index + '..' }}
+                                        </a>
+                                </div>
+                                <div class="col-sm-5 well">
+                                <a class=valore href="#" editable-radiolist="item.answers[$index].value"  onbeforesave="changeRispostaValue($data,item.answers[$index].index)"  e-ng-options="s for s  in valori">
+                                        {{item.answers[$index].value}}</p>
+                                <a/>
+                                </div>
+                        </div>
+                        <button  class="delete btn btn-danger btn-xs" ng-click="checkDelete(deleteRisposta,item.answers[$index].index)">X</button>
+                         
+
+                        </li>
+                        <li class="list-group-item">
+                                <button class="btn btn-success btn-xs" ng-click="addRisposta(item.index)">Nuova Risposta</button>
+                        </li>
+                </ul>
+        </li>
+        <li class="list-group-item">
+                <button class="btn btn-success btn-xs" ng-click="addDomanda(argomenti[selected].index)">Nuova Domanda</button>
+        </li>
+</ul>
