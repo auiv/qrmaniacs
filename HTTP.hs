@@ -139,6 +139,7 @@ main = do
                         resp <- responser url request
                         putStrLn "||||"
                         print resp
+                        print $ rspBody resp
                         return resp      
 sendPng :: BS.ByteString -> Response BS.ByteString
 sendPng s = insertHeader HdrContentLength (show  756)
