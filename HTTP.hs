@@ -147,7 +147,7 @@ sendPng s = insertHeader HdrContentLength (show  756)
                 $ (respond OK :: Response BS.ByteString) { rspBody = s }
 
 
-sendText s v    = insertHeader HdrContentLength (show $ BS.length v' * 2)
+sendText s v    = insertHeader HdrContentLength (show $ BS.length v' * 10)
                 $ insertHeader HdrContentEncoding "UTF-8"
                 $ insertHeader HdrContentEncoding "text/plain"
                 $ (respond s :: Response BS.ByteString) { rspBody = v'}
