@@ -18,11 +18,11 @@ controllers.controller("ArgomentiController",['$scope','$http','$modal','$timeou
     $scope.update = function () {
                 $http.get("api/Argomenti").success(function(xs){
                         $scope.argomenti=xs.result;
+                        alert(1);     
                         });
         }
    $scope.update();
    $scope.input={};
-   alert(1);     
    $scope.qr=function(h){
          window.location.href = "api/QR/"+h;
         }
