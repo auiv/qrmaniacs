@@ -142,8 +142,8 @@ main = do
                         print $ rspBody resp
                         return resp      
 sendPng :: BS.ByteString -> Response BS.ByteString
-sendPng s = insertHeader HdrContentLength (show  756)
-                $ insertHeader HdrContentEncoding "image/png"
+sendPng s = 
+                 insertHeader HdrContentEncoding "image/png"
                 $ (respond OK :: Response BS.ByteString) { rspBody = s }
 
 
