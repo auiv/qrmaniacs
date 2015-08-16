@@ -41,7 +41,7 @@
                         <div ng-show="selected != null">
                                 <ul class="list-group"> 
                                         <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
-                                                <button class="delete btn btn-danger btn-xs" ng-click="deleteDomanda(item.index)">X</button>
+                                                <button class="delete btn btn-danger btn-xs" ng-click="checkDelete(deleteDomanda,item.index)">X</button>
                                                 <div class=well>
                                                 <a  href="#" editable-textarea="item.text" onbeforesave="changeDomanda($data,item.index)" e-rows="3" e-cols="25">
                                                                 {{ item.text || 'Domanda..' }}
@@ -62,7 +62,7 @@
                                                                 <a/>
                                                                 </div>
                                                         </div>
-                                                        <button  class="delete btn btn-danger btn-xs" ng-click="deleteRisposta(item.answers[$index].index)">X</button>
+                                                        <button  class="delete btn btn-danger btn-xs" ng-click="checkDelete(deleteRisposta,item.answers[$index].index)">X</button>
                                                          
 
                                                         </li>
