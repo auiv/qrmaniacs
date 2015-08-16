@@ -91,5 +91,5 @@ body{font-size:xx-large ;}
 .link:hover{color:white;background-color:green;text-decoration:none;}
 .link  {margin-left:15px;background-color: lightgreen;padding:13px;border-radius:5px;font-weight:normal;color:white;}
 .op{}
-.argomento{margin-left:500px;font-size:40px;background-color: lightgrey;padding:7px;width:-moz-fit-content;border-radius:27px;}
-.domanda{margin-left:10px;font-size:40px;background-color: #eee;padding:7px;width:-moz-fit-content;border-radius:8px;color:black;}
+.argomento{margin-left:500px;font-size:40px;background-color: lightgrey;padding:7px;width:700px;border-radius:8px;}
+.domanda{margin-left:23px;font-size:40px;background-color: #eee;padding:7px;border-radius:8px;color:black;}
