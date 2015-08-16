@@ -19,7 +19,7 @@ controllers.controller("ArgomentiController",['$scope','$http','$modal','$timeou
                 $http.get("api/Argomenti").then(function(xs){
                         alert(1);     
                         $scope.argomenti=xs.result;
-                        },function(x) {alert(x.statusText)});
+                        },function(x) {alert(x.status)});
         }
    $scope.update();
    $scope.input={};
