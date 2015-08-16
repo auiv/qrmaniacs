@@ -17,8 +17,8 @@ controllers.controller("ArgomentiController",['$scope','$http','$modal','$timeou
     $scope.argomenti = [];
     $scope.update = function () {
                 $http.get("api/Argomenti").success(function(xs){
-                        $scope.argomenti=xs.result;
                         alert(1);     
+                        $scope.argomenti=xs.result;
                         });
         }
    $scope.update();
