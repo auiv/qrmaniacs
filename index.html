@@ -26,7 +26,7 @@
                                         <ul class="list-group"> 
                                                 <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"> 
                                                 <button  class="delete btn btn-danger btn-lg" ng-click="checkDelete(deleteArgomento,argomento.index)">X</button>
-                                                <button   class="seleziona btn btn-primary btn-lg" ng-click="selectArgomento($index,argomento.index)">Seleziona</button>
+                                                <button   class="seleziona btn btn-primary btn-lg" ng-click="selectArgomento($index,argomento.index)">Domande</button>
                                                 <button   class="seleziona btn btn-primary btn-lg" ng-click="qr(argomento.index)">QR</button>
                                                         
                                                 <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data,argomento.index)" e-rows="2" e-cols="20">

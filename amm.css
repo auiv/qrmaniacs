@@ -65,12 +65,13 @@ a.editable-click:hover {
 
 .modal-dialog {
     width: 480px;
-    margin: 30px auto;
+    margin: 30px;
+    margin-top:50px;
 }
 .modal-footer{
        position: absolute;
-       top:5px;
-       right:-10px;
+       top:0px;
+       right:-300px;
        background-color: yellow;
        padding:30px;
        border-radius: 5px
