@@ -22,7 +22,7 @@ controllers.controller("ArgomentiController",['$scope','$http','$modal','$timeou
         }
    $scope.update();
    $scope.input={};
-        
+   alert(1);     
    $scope.qr=function(h){
          window.location.href = "api/QR/"+h;
         }
