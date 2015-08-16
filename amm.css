@@ -86,3 +86,8 @@ body{font-size:xx-large ;}
     margin-bottom: 0px;
     margin-left: 35px;
 }
+.btn {margin-bottom:5px;}
+.relink  {background-color: green;padding:13px;border-radius:5px;font-weight:normal;color:white;position:fixed;margin-top:-70px;z-index: 100;}
+.link:hover{color:white;background-color:green;text-decoration:none;}
+.link  {margin-left:15px;background-color: lightgreen;padding:13px;border-radius:5px;font-weight:normal;color:white;}
+.op{margin-top:70px;}
