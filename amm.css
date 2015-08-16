@@ -64,17 +64,15 @@ a.editable-click:hover {
 .delete{position:absolute;right:0px;top:0px;}
 
 .modal-dialog {
-    width: 480px;
+    width: 500px;
     margin: 30px;
-    margin-top:50px;
+    margin-top:5px;
 }
 .modal-footer{
        position: absolute;
-       top:0px;
+       top:-30px;
        right:-300px;
-       background-color: yellow;
        padding:30px;
-       border-radius: 5px
        
 }
 body{font-size:xx-large ;}
@@ -83,3 +81,8 @@ body{font-size:xx-large ;}
 .form-control{font-size:34px;}
 .btn{font-size:xx-large}
 .modal-footer{margin-bottom:15px}
+
+.modal-footer .btn + .btn {
+    margin-bottom: 0px;
+    margin-left: 35px;
+}
