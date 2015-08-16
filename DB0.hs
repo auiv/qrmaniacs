@@ -198,9 +198,9 @@ instance FromRow Risposta where
 data Domanda = Domanda Integer String [Risposta] deriving Show
 
 checkRisorsa e i f = do 
-        r <- equery e "select id from argomenti where risorsa = ?" (Only i)
-        case (r :: [Only Integer]) of
-                [Only i] -> f i
+        r <- equery e "select id,argomento from argomenti where risorsa = ?" (Only i)
+        case (r :: [(Integer,String)]) of
+                [(i,x)] -> f i x
                 _ -> throwError $ DatabaseError "Unknown User"
 checkDomanda e u i f = do
         r <- equery e "select argomenti.id from argomenti join domande join utenti on domande.argomento = argomenti.id and  utenti.id = argomenti.autore where hash =? and domande.id = ?" (u,i)
@@ -213,13 +213,14 @@ checkRisposta e u i f = do
         case (r :: [Only Integer]) of
                 [Only i] -> f 
                 _ -> throwError $ DatabaseError "Unknown User"
-
-listDomande :: Env -> String -> ConnectionMonad [Domanda]
-listDomande e i = etransaction e $ checkRisorsa e i $ \i -> do 
+data Questionario = Questionario String [Domanda]
+listDomande :: Env -> String -> ConnectionMonad Questionario
+listDomande e i = etransaction e $ checkRisorsa e i $ \i n -> do 
                 ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
-                forM ds $ \(i,d) -> do
+                fs <- forM ds $ \(i,d) -> do
                         rs <- equery e "select id,risposta,valore from risposte where domanda = ?" $ Only i
                         return $ Domanda i d rs
+                return $ Questionario n fs
 
 addDomanda :: Env -> User -> String -> String -> ConnectionMonad ()
 addDomanda e u i s = checkAuthorOf e u i $ \i -> eexecute e "insert into domande (domanda,argomento) values (?,?)" (s,i)

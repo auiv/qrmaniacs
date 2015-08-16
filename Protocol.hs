@@ -54,7 +54,7 @@ put e l = runErrorT (put' e l)
    
 data Get a where
         Argomenti :: User -> Get [Argomento]
-        Domande :: String -> Get [Domanda]
+        Domande :: String -> Get Questionario
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (Argomenti u) = listArgomenti e u 

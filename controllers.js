@@ -75,7 +75,8 @@ controllers.controller("DomandeController",['$scope','$http','$modal','$timeout'
     $scope.hash = $routeParams.hash;
     $scope.update = function () {
                 $http.get("api/Domande/"+$scope.hash).success(function(xs){
-                        $scope.items=xs.result;
+                        $scope.items=xs.result.domande;
+                        $scope.argomento=xs.result.text;
                         });
                 }
    $scope.update();
