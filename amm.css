@@ -69,11 +69,16 @@ a.editable-click:hover {
 }
 .modal-footer{
        position: absolute;
-       top:0px;
-       right:0px;
+       top:5px;
+       right:-10px;
+       background-color: yellow;
+       padding:30px;
+       border-radius: 5px
+       
 }
 body{font-size:xx-large ;}
 .list-group-item{margin:25px}
 
 .form-control{font-size:34px;}
 .btn{font-size:xx-large}
+.modal-footer{margin-bottom:15px}

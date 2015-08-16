@@ -41,6 +41,20 @@ myApp.controller("ItemsController",['$scope','$http','$modal','$cookies','$cooki
         }
 
    $scope.update();
+     $scope.checkDelete = function (f,i) {
+                var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'deleting.html',
+                        controller: 'Input',
+                        size: 'lg',
+                        scope:$scope
+                        });
+                modalInstance.result.then(
+                        function () {f(i);},
+                        function () {}
+                        );
+                };
+
       $scope.addArgomento = function () {
                 var modalInstance = $modal.open({
                         animation: true,
