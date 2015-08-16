@@ -16,10 +16,10 @@ controllers.controller("ArgomentiController",['$scope','$http','$modal','$timeou
     $scope.selected=null;
     $scope.argomenti = [];
     $scope.update = function () {
-                $http.get("api/Argomenti").success(function(xs){
+                $http.get("api/Argomenti").then(function(xs){
                         alert(1);     
                         $scope.argomenti=xs.result;
-                        });
+                        },function() {alert(2)});
         }
    $scope.update();
    $scope.input={};
