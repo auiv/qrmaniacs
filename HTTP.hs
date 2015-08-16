@@ -147,10 +147,11 @@ sendPng s = insertHeader HdrContentLength (show  756)
                 $ (respond OK :: Response BS.ByteString) { rspBody = s }
 
 
-sendText s v    = insertHeader HdrContentLength (show $ length v)
+sendText s v    = insertHeader HdrContentLength (show $ BS.length v')
                 $ insertHeader HdrContentEncoding "UTF-8"
                 $ insertHeader HdrContentEncoding "text/plain"
-                $ (respond s :: Response BS.ByteString) { rspBody = BS.fromString v }
+                $ (respond s :: Response BS.ByteString) { rspBody = v'}
+ where v'= BS.fromString v;
 
 sendJSON s v    = insertHeader HdrContentType "application/json"  
                 $ sendText s (showJSValue v "")
