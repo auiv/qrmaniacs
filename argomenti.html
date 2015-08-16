@@ -6,6 +6,7 @@
                 <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data,argomento.index)" e-rows="2" e-cols="20">
                                         {{ argomento.text || 'Argomento..' }}</a>
                 <a class=link href="#/Resource/{{argomento.index}}">Domande</a>
+                <a class=link href="api/Resource/{{argomento.index}}">Questionario</a>
                 </li>
                 <li class="list-group-item">
         <button class="btn btn-success btn-lg" ng-click="addArgomento($index)">Nuovo Argomento</button>

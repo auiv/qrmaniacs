@@ -195,13 +195,17 @@ data Risposta = Risposta Integer String Value deriving Show
 instance FromRow Risposta where
    fromRow = Risposta <$> field <*> field <*> field 
 
-data Domanda = Domanda Integer String [Risposta] deriving Show
+data Domanda = Domanda 
+        Integer  --index
+        String   --text
+        [Risposta] deriving Show
 
+checkRisorsa :: Env -> String -> (Integer -> String -> ConnectionMonad a) -> ConnectionMonad a
 checkRisorsa e i f = do 
         r <- equery e "select id,argomento from argomenti where risorsa = ?" (Only i)
         case (r :: [(Integer,String)]) of
                 [(i,x)] -> f i x
-                _ -> throwError $ DatabaseError "Unknown User"
+                _ -> throwError $ DatabaseError $ "Unknown Resource:" ++ i
 checkDomanda e u i f = do
         r <- equery e "select argomenti.id from argomenti join domande join utenti on domande.argomento = argomenti.id and  utenti.id = argomenti.autore where hash =? and domande.id = ?" (u,i)
         case (r :: [Only Integer]) of
@@ -213,9 +217,15 @@ checkRisposta e u i f = do
         case (r :: [Only Integer]) of
                 [Only i] -> f 
                 _ -> throwError $ DatabaseError "Unknown User"
-data Questionario = Questionario String [Domanda]
+
+data Questionario = Questionario 
+        String --testo titolo
+        [Domanda]
+
 listDomande :: Env -> String -> ConnectionMonad Questionario
-listDomande e i = etransaction e $ checkRisorsa e i $ \i n -> do 
+listDomande e i = etransaction e $ listDomande' e i 
+
+listDomande' e i =  checkRisorsa e i $ \i n -> do 
                 ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
                 fs <- forM ds $ \(i,d) -> do
                         rs <- equery e "select id,risposta,valore from risposte where domanda = ?" $ Only i
@@ -243,3 +253,39 @@ changeRispostaValue e u i v = checkRisposta e u i $ eexecute e "update risposte 
 
 deleteRisposta :: Env -> User -> Integer -> ConnectionMonad ()
 deleteRisposta e u i = checkRisposta e u i $ eexecute e "delete from risposte where id= ?" $ Only i
+
+feedbackArgomenti e u = checkUtente e u $ \u -> equery e "select argomenti.risorsa,argomenti.txt from argomenti join domande join feedback on feedback.domanda = domande.id and domande.argomento = argomenti.id where feedback.utente = ?" (Only u)
+
+feedbackUtente :: Env -> String -> ConnectionMonad [Integer]
+feedbackUtente e u =  map fromOnly `fmap` equery e "select risposta from feedback where utente = ?" (Only u)
+
+addFeedback e u d r = checkAssoc e u d $ \u -> eexecute e "insert or replace into feedback values (?,?,?)" (u,d,r)
+
+changeAssoc :: Env -> String -> String -> ConnectionMonad Questionario
+changeAssoc e u h = checkUtente e u $ \u -> checkRisorsa e h $ \i _ -> etransaction e $ do 
+        eexecute e "replace into assoc values (?,?)" (u,i)
+        listDomande' e h
+
+data UserAndArgomento = UserAndArgomento User Questionario
+
+newUser e h = do
+        new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
+        q <- etransaction e $ do
+                eexecute e "insert into utenti (hash) values (?)" (Only new)
+                u <- lastRow e 
+                checkRisorsa e h $ \i _ -> eexecute e "insert into assoc values (?,?)" (u,i)
+                listDomande' e h
+        return $ UserAndArgomento new q
+
+        
+checkUtente e u f = do
+        r <- equery e "select id from utenti where hash=?" (Only u)
+        case (r :: [Only Integer]) of
+                [Only i] -> f i
+                _ -> throwError $ DatabaseError "Unknown Hash"
+
+checkAssoc e u d f = do
+        r <- equery e "select utenti.id from assoc  join domande join utenti on assoc.utente = utenti.id and assoc.argomento = domande.argomento where utenti.hash = ? and domande.id = ?" (u,d)
+        case (r :: [Only Integer]) of
+                [Only i] -> f i
+                _ -> throwError $ DatabaseError "Unknown user argument association"

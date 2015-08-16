@@ -1,4 +1,5 @@
 {-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad
 import Control.Monad.Writer
@@ -22,7 +23,7 @@ import Control.Exception(try,SomeException)
 import System.FilePath
 import Data.List
 import Data.List.Split
-import Data.String.Utils (replace)
+import Data.List.Utils
 import Control.Concurrent
 
 import System.Environment
@@ -33,14 +34,20 @@ jsCompund x y = makeObj [("result",showJSON x)]
 
 sendResponse
   :: JSON a => WGet -> Maybe (Get a) -> IO (Response BS.ByteString)
-sendResponse g v = case v of 
+sendResponse g v = sendResponse' g v (\k -> (id,k))
+
+sendResponse'
+  :: JSON b => WGet -> Maybe (Get a) -> (a -> (Response BS.ByteString -> Response BS.ByteString,b)) -> IO (Response BS.ByteString)
+sendResponse' g v f = case v of 
         Nothing -> return $ sendJSON BadRequest $ jsError "Not parsed"
         Just v -> do
                 let (WGet g') = g
                 (x,w) <- runWriterT $ g' v
                 case x of 
                         Left x -> return $ sendJSON BadRequest $  jsDBError $ x
-                        Right x -> return $ sendJSON OK $  jsCompund x w
+                        Right x -> do 
+                                        let (t,y) = f x 
+                                        return $ t $ sendJSON OK $  jsCompund y w
 sendResponseP p v = case v of 
         Nothing -> return $ sendJSON BadRequest $ jsError $ "Not parsed"
         Just v -> do
@@ -88,6 +95,11 @@ main = do
                                                         i' <- readMaybe i
                                                         v' <- readMaybe v
                                                         return $ ChangeRispostaValue u i' v'
+
+                                        ["AddFeedback",i,v] -> onuser user $ \u -> responseP $ do
+                                                        i' <- readMaybe i
+                                                        v' <- readMaybe v
+                                                        return $ AddFeedback u i' v'
                                         _ -> return $ sendJSON BadRequest $ JSNull
                             POST -> do 
                                 let msg = BS.toString $ rqBody request
@@ -111,18 +123,42 @@ main = do
                                         _ -> return $ sendJSON BadRequest $ JSNull
                             GET -> do 
                                 case splitOn "/" $ url_path url of
-                                        ["Argomenti"] -> onuser user $ \u ->fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) . sendResponse g $ do
+                                        ["Argomenti"] -> onuser user $ \u ->
+                                                        fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                                . sendResponse g $ do
                                                         return $ Argomenti u 
-                                        ["Login",u] -> return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) $ redirectHome   reloc                                                   
+                                        ["Login",u] -> return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                        $ redirectHome   reloc                                                   
 
                                         ["Domande",i] -> sendResponse g $ do
                                                         return $ Domande i 
                                         ["QR",h] -> do
-                                                let url = reloc ++ "/api/QR/" ++ h
+                                                let url = reloc ++ "/api/Resource/" ++ h
                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
+                                        {-
+                                        ["ArgomentiFeedback"] -> onuser user $ \u ->
+                                                fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                        . sendResponse g $ do
+                                                        return $ ArgomentiFeedback u 
+                                        ["Feedback",u,d] -> onuser user $ \u ->
+                                                fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                        . sendResponse g $ do
+                                                        return $ Feedback u d
+                                        -}
+                                        ["Resource",h] -> do
+                                                v <- readFile "questionario.html"
+                                                let v' = replace "acca"  h v
+                                                return $ sendHTML OK $  v'
+                                        ["ResourceJ",h] -> do
+                                                print "ahi"
+                                                case user of
+                                                        Nothing -> sendResponse' g (Just $ AddAssoc h) (\(UserAndArgomento u q) ->
+                                                                (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
+                                                        Just u -> sendResponse g $ Just (ChangeAssoc u h)
+                                        
        --                                 ["Risorsa",h] -> return ()
                                                 -- controllo utente
                                                 -- utente editore:
