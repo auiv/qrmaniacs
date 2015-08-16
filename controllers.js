@@ -1,7 +1,7 @@
 
-var controllers = angular.module("controllers", ["xeditable",'ui.bootstrap']);
+var cs = angular.module("cs", ["xeditable",'ui.bootstrap']);
 
-controllers.controller('Input', function ($scope, $modalInstance) {
+cs.controller('Input', function ($scope, $modalInstance) {
 
           $scope.gotMessage = function () {
             $modalInstance.close();
@@ -12,14 +12,14 @@ controllers.controller('Input', function ($scope, $modalInstance) {
           };
         });
 
-controllers.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log','$location',function ($scope,$http,$modal,$timeout,$log,$location) {
+cs.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log','$location',function ($scope,$http,$modal,$timeout,$log,$location) {
     $scope.selected=null;
     $scope.argomenti = [];
     $scope.update = function () {
                 $http.get("api/Argomenti").then(function(xs){
-                        alert(1);     
-                        $scope.argomenti=xs.result;
-                        },function(x) {alert(x.data)});
+                        $scope.argomenti=xs.data.result;
+                        $log.log(xs.data);
+                        });
         }
    $scope.update();
    $scope.input={};
@@ -69,7 +69,7 @@ controllers.controller("ArgomentiController",['$scope','$http','$modal','$timeou
 }]);
 
 
-controllers.controller("DomandeController",['$scope','$http','$modal','$timeout','$log','$routeParams',function ($scope,$http,$modal,$timeout,$log,$routeParams) {
+cs.controller("DomandeController",['$scope','$http','$modal','$timeout','$log','$routeParams',function ($scope,$http,$modal,$timeout,$log,$routeParams) {
     $scope.items = [];
     $scope.valori=['Giusta','Sbagliata','Accettabile'];
     $scope.hash = $routeParams.hash;

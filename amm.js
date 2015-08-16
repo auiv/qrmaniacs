@@ -1,6 +1,6 @@
 
 
-var myApp = angular.module("myApp", ["xeditable",'ngRoute','controllers']);
+var myApp = angular.module("myApp", ["xeditable",'ngRoute','cs']);
 
 myApp.config(['$routeProvider',
   function($routeProvider) {
