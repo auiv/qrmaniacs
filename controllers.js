@@ -76,7 +76,7 @@ cs.controller("DomandeController",['$scope','$http','$modal','$timeout','$log','
     $scope.update = function () {
                 $http.get("api/Domande/"+$scope.hash).success(function(xs){
                         $scope.items=xs.result.domande;
-                        $scope.argomento=xs.result.text;
+                        $scope.argomento={'text':xs.result.text};
                         });
                 }
    $scope.update();
@@ -107,7 +107,7 @@ cs.controller("DomandeController",['$scope','$http','$modal','$timeout','$log','
                         });
                 modalInstance.result.then(
                         function () {
-                                $http.post("api/AddDomanda/"+ i,$scope.input.domanda).success($scope.update);}, 
+                                $http.post("api/AddDomanda/"+ $scope.hash,$scope.input.domanda).success($scope.update);}, 
                         function () {}
                         );
                 };    
