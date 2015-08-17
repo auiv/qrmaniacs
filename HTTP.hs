@@ -63,11 +63,12 @@ sendResponseP p v = case v of
 redirectHome :: String -> Response BS.ByteString
 redirectHome r = insertHeader HdrLocation r $ (respond SeeOther :: Response BS.ByteString)
 
+logoutAsError = insertHeader HdrSetCookie ""  
 main :: IO ()
 main = do
         [reloc] <- getArgs
         (t,p,g) <- prepare
-        let onuser Nothing f = return $ sendJSON BadRequest $ jsDBError $ DatabaseError "Unknown user"
+        let onuser Nothing f = return $ logoutAsError $ sendJSON BadRequest $ jsDBError $ DatabaseError "Unknown user"
             onuser (Just u) f = f u
             responseP = sendResponseP  p
             findUserName x = fmap tail . lookup "userName" . map (break (=='=')) $ splitOn ";" x 
@@ -101,6 +102,7 @@ main = do
                                                         v' <- readMaybe v
                                                         return $ AddFeedback u i' v'
                                         _ -> return $ sendJSON BadRequest $ JSNull
+
                             POST -> do 
                                 let msg = BS.toString $ rqBody request
                                 case splitOn "/" $ url_path url of
