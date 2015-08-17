@@ -150,6 +150,10 @@ main = do
                                                         . sendResponse g $ do
                                                         return $ Feedback u d
                                         -}
+                                        ["Resource","Logout"] -> onuser user $ \u -> do
+                                                v <- readFile "logout.html"
+                                                let v' = replace "utente"  u v
+                                                return $ sendHTML OK $  v'
                                         ["Resource",h] -> do
                                                 v <- readFile "questionario.html"
                                                 let v' = replace "acca"  h v

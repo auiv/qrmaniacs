@@ -27,6 +27,9 @@ cs.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log'
          window.location.href = "api/QR/"+h;
         }
 
+   $scope.qrlogout=function(){
+         window.location.href = "api/QR/Logout";
+        }
      $scope.checkDelete = function (f,i) {
                 var modalInstance = $modal.open({
                         animation: true,
