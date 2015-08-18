@@ -148,7 +148,7 @@ checkAuthor e u f = do
         r <- equery e "select autori.id from autori join utenti on autori.id = utenti.id where hash=?" (Only u)
         case (r :: [Only Integer]) of
                 [Only i] -> f i
-                _ -> throwError $ DatabaseError "Unknown Hash"
+                _ -> throwError $ DatabaseError "Unknown Author"
 checkAuthorOf e u i f = checkAuthor e u $ \u -> do
         r <- equery e "select id from argomenti where autore =? and risorsa = ?" (u,i)
         case (r :: [Only Integer]) of
@@ -267,11 +267,12 @@ addFeedback e u r = checkUtente e u $ \u -> etransaction e $ do
                         _ -> throwError $ DatabaseError $ "User not associated with the QR of this answer"
                         
 
-changeAssoc :: Env -> String -> String -> ConnectionMonad Questionario
-changeAssoc e u h = checkUtente e u $ \u -> checkRisorsa e h $ \i _ -> etransaction e $ do 
+changeAssoc :: Env -> String -> String -> ConnectionMonad UserAndArgomento
+changeAssoc e u' h = checkUtente' e u' (\u -> checkRisorsa e h $ \i _ -> etransaction e $ do 
         eexecute e "delete from assoc where utente = ? " (Only u)
         eexecute e "insert into assoc values (?,?)" (u,i)
-        listDomande' e h
+        l <- listDomande' e h
+        return $ UserAndArgomento u' l) $ addAssoc e h
 
 data UserAndArgomento = UserAndArgomento User Questionario
 
@@ -285,11 +286,12 @@ addAssoc e h = do
         return $ UserAndArgomento new q
 
         
-checkUtente e u f = do
+checkUtente' e u f g = do
         r <- equery e "select id from utenti where hash=?" (Only u)
         case (r :: [Only Integer]) of
                 [Only i] -> f i
-                _ -> throwError $ DatabaseError "Unknown Hash for User"
+                _ -> g 
+checkUtente e u f = checkUtente' e u f $ throwError $ DatabaseError "Unknown Hash for User"
 
 checkAssoc e u d f = do
         r <- equery e "select utenti.id from assoc  join domande join utenti on assoc.utente = utenti.id and assoc.argomento = domande.argomento where utenti.hash = ? and domande.id = ?" (u,d)

@@ -139,7 +139,8 @@ main = do
                                         ["Domande",i] -> sendResponse g $ do
                                                         return $ Domande i 
                                         ["ChangeAssoc",i] -> case user of
-                                                                 Just u -> sendResponse g $ return $ ChangeAssoc u i 
+                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndArgomento u q) ->
+                                                                          (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                                                  Nothing -> sendResponse' g (Just $ AddAssoc i) (\(UserAndArgomento u q) ->
                                                                           (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                         ["QR","Identify"] -> onuser user $ \u -> do
@@ -175,12 +176,6 @@ main = do
                                                 v <- readFile "static/questionario.html"
                                                 let v' = replace "acca"  h v
                                                 return $ sendHTML OK $  v'
-                                        ["ResourceJ",h] -> do
-                                                print "ahi"
-                                                case user of
-                                                        Nothing -> sendResponse' g (Just $ AddAssoc h) (\(UserAndArgomento u q) ->
-                                                                (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
-                                                        Just u -> sendResponse g $ Just (ChangeAssoc u h)
                                         ["Logout"] -> fmap (insertHeader HdrSetCookie ("userName=;Path=/;Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
                                                         $ return $ sendText OK "Bye!"
 
