@@ -68,7 +68,7 @@ get' e (Argomenti u) = listArgomenti e u
 get' e (Domande i) = listDomande e i
 get' e (Visitati u) = feedbackArgomenti e u
 get' e (Feedback u) = feedbackUtente e u
-get' e (AddAssoc i) = newUser e i
+get' e (AddAssoc i) = addAssoc e i
 get' e (ChangeAssoc u i) = changeAssoc e u i
 get' e (Identify u h) = identifyUser e u h
 

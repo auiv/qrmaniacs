@@ -138,8 +138,10 @@ main = do
 
                                         ["Domande",i] -> sendResponse g $ do
                                                         return $ Domande i 
-                                        ["ChangeAssoc",i] -> onuser user $ \u -> sendResponse g $ do
-                                                        return $ ChangeAssoc u i 
+                                        ["ChangeAssoc",i] -> case user of
+                                                                 Just u -> sendResponse g $ return $ ChangeAssoc u i 
+                                                                 Nothing -> sendResponse' g (Just $ AddAssoc i) (\(UserAndArgomento u q) ->
+                                                                          (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                         ["QR","Identify"] -> onuser user $ \u -> do
                                                 let url = reloc ++ "/Identify/" ++ u
                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""

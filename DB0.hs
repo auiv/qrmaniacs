@@ -275,7 +275,7 @@ changeAssoc e u h = checkUtente e u $ \u -> checkRisorsa e h $ \i _ -> etransact
 
 data UserAndArgomento = UserAndArgomento User Questionario
 
-newUser e h = do
+addAssoc e h = do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
         q <- etransaction e $ do
                 eexecute e "insert into utenti (hash) values (?)" (Only new)

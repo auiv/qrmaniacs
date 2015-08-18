@@ -117,7 +117,7 @@ cs.controller("HomeController",function ($scope,$http,$modal,$timeout,$interval,
         }
     });  
 
-cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
+cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window,$cookies) {
     $scope.goBack = function () {$window.history.back()};
     Page.setTitle("Visitatore di QR"); 
     $scope.feedback= function (r) {
