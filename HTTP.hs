@@ -100,10 +100,9 @@ main = do
                                                         v' <- readMaybe v
                                                         return $ ChangeRispostaValue u i' v'
 
-                                        ["AddFeedback",i,v] -> onuser user $ \u -> responseP $ do
+                                        ["AddFeedback",i] -> onuser user $ \u -> responseP $ do
                                                         i' <- readMaybe i
-                                                        v' <- readMaybe v
-                                                        return $ AddFeedback u i' v'
+                                                        return $ AddFeedback u i'
                                         _ -> return $ sendJSON BadRequest $ JSNull
 
                             POST -> do 
@@ -139,37 +138,39 @@ main = do
 
                                         ["Domande",i] -> sendResponse g $ do
                                                         return $ Domande i 
+                                        ["ChangeAssoc",i] -> onuser user $ \u -> sendResponse g $ do
+                                                        return $ ChangeAssoc u i 
+                                        ["QR","Identify"] -> onuser user $ \u -> do
+                                                let url = reloc ++ "/Identify/" ++ u
+                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                callCommand c
+                                                qr <- BSF.readFile "qr.tmp"
+                                                return $ sendPng qr
+                                        ["QR","Login"] -> onuser user $ \u -> do
+                                                let url = reloc ++ "/Login/" ++ u
+                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                callCommand c
+                                                qr <- BSF.readFile "qr.tmp"
+                                                return $ sendPng qr
                                         ["QR",h] -> do
-                                                let url = reloc ++ "/api/Resource/" ++ h
+                                                let url = reloc ++ "#/Resource/" ++ h
                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
-                                        {-
-                                        ["ArgomentiFeedback"] -> onuser user $ \u ->
+                                        ["Visitati"] -> onuser user $ \u ->
                                                 fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
                                                         . sendResponse g $ do
-                                                        return $ ArgomentiFeedback u 
-                                        ["Feedback",u,d] -> onuser user $ \u ->
-                                                fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
-                                                        . sendResponse g $ do
-                                                        return $ Feedback u d
-                                        -}
-                                        ["Resource","Personal"] -> onuser user $ \u -> do
+                                                        return $ Visitati u 
+                                        ["QR"] -> do
                                                 let url = reloc
-                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
-                                                callCommand c
-                                                qr <- BSF.readFile "qr.tmp"
-                                                return $ sendPng qr
-                                        ["Resource","Identify"] -> onuser user $ \u -> do
-                                                let url = reloc ++ "/api/Identify/" ++ u
                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
                                         ["Identify",h] -> onuser user $ \u -> sendResponse g $ Just $ Identify u h
                                         ["Resource",h] -> do
-                                                v <- readFile "questionario.html"
+                                                v <- readFile "static/questionario.html"
                                                 let v' = replace "acca"  h v
                                                 return $ sendHTML OK $  v'
                                         ["ResourceJ",h] -> do
@@ -178,6 +179,13 @@ main = do
                                                         Nothing -> sendResponse' g (Just $ AddAssoc h) (\(UserAndArgomento u q) ->
                                                                 (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                                         Just u -> sendResponse g $ Just (ChangeAssoc u h)
+                                        ["Logout"] -> fmap (insertHeader HdrSetCookie ("userName=;Path=/;Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
+                                                        $ return $ sendText OK "Bye!"
+
+                                        [""] -> do
+                                                v <- readFile "static/index.html"
+                                                
+                                                return $ sendHTML OK $  v
                                         
        --                                 ["Risorsa",h] -> return ()
                                                 -- controllo utente
@@ -188,7 +196,8 @@ main = do
                                                         -- redirect to play drugged h
                                                 -- utente vecchio:
                                                         -- redirect to play drugged h
-                                        _ -> return $ sendJSON BadRequest $ JSNull
+                                        _ -> do print $ url_path url 
+                                                return $ sendJSON BadRequest $ JSNull
         --when t $ void $ responseP $ Just $ Boot mailbooter reloc 
         serverWith defaultConfig { srvLog = quietLogger, srvPort = 8889 }
                 $ \_ url request -> do

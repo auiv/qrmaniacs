@@ -74,11 +74,12 @@ CREATE TABLE feedback (
         "utente" integer not null references utenti(id) on delete cascade,
         "domanda" integer not null references domande(id) on delete cascade,
         "risposta" integer not null references risposte(id)  on delete cascade,
-        constraint "pkfeedback" unique ("utente","domanda")
+        constraint "uniquedomanda" unique ("utente","domanda")
         );
 CREATE TABLE assoc (        
         "utente" integer not null references utenti(id) on delete cascade,
-        "argomento" integer not null references argomenti(id) on delete cascade
+        "argomento" integer not null references argomenti(id) on delete cascade,
+        constraint "uniqueassoc" unique ("utente","argomento")
         );
 INSERT INTO "assoc" VALUES(2,1);
 INSERT INTO "assoc" VALUES(3,1);

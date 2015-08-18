@@ -1,8 +1,7 @@
 
-<a class=relink href="#/">Riferimenti</a>
-<div class=op </div>
-<h3 class=argomento> {{argomento.text}} </h3>
-<ul class="list-group"> 
+<a class=homelink href="#/">Home</a>
+<a class=backlink ng-click="goBack()">Back</a>
+<ul class="domande list-group"> 
 
         <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
                 <button class="delete btn btn-danger btn-xs" ng-click="checkDelete(deleteDomanda,item.index)">X</button>

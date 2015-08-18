@@ -35,7 +35,7 @@ data Put
         | ChangeRisposta User Integer String
         | ChangeRispostaValue User Integer Value
         | DeleteRisposta User Integer
-        | AddFeedback User Integer Integer
+        | AddFeedback User Integer
         deriving Read
 
 put' :: Env -> Put -> ConnectionMonad ()
@@ -49,7 +49,7 @@ put' e (ChangeDomanda u i s) = changeDomanda e u i s
 put' e (ChangeArgomento u i s) = changeArgomento e u i s
 put' e (ChangeRisposta u i s) = changeRisposta e u i s
 put' e (ChangeRispostaValue u i v) = changeRispostaValue e u i v
-put' e (AddFeedback u d r)= addFeedback e u d r
+put' e (AddFeedback u r)= addFeedback e u r
       
 put :: Env -> Put -> WriterT [Event] IO (Either DBError ())
 put e l = runErrorT (put' e l)
@@ -58,7 +58,7 @@ data Get a where
         Argomenti :: User -> Get [Argomento]
         Domande :: String -> Get Questionario
         Feedback :: User -> Get [Integer]
-        ArgomentiFeedback :: User -> Get [Argomento]
+        Visitati :: User -> Get [Argomento]
         AddAssoc :: String -> Get UserAndArgomento
         ChangeAssoc :: User -> String -> Get Questionario
         Identify :: User -> User -> Get ()
@@ -66,7 +66,7 @@ data Get a where
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (Argomenti u) = listArgomenti e u 
 get' e (Domande i) = listDomande e i
-get' e (ArgomentiFeedback u) = feedbackArgomenti e u
+get' e (Visitati u) = feedbackArgomenti e u
 get' e (Feedback u) = feedbackUtente e u
 get' e (AddAssoc i) = newUser e i
 get' e (ChangeAssoc u i) = changeAssoc e u i

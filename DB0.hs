@@ -170,6 +170,7 @@ instance FromRow Argomento where
 listArgomenti :: Env -> User -> ConnectionMonad [Argomento]
 listArgomenti e u = checkAuthor e u $ \u -> equery e "select risorsa,argomento from argomenti where autore = ?" (Only u)
 
+
 changeArgomento ::Env -> User -> String -> String -> ConnectionMonad ()
 changeArgomento e u i s = checkAuthorOf e u i $ \i -> eexecute e "update argomenti set argomento = ? where id = ?" (s,i)
 
@@ -254,16 +255,22 @@ changeRispostaValue e u i v = checkRisposta e u i $ eexecute e "update risposte 
 deleteRisposta :: Env -> User -> Integer -> ConnectionMonad ()
 deleteRisposta e u i = checkRisposta e u i $ eexecute e "delete from risposte where id= ?" $ Only i
 
-feedbackArgomenti e u = checkUtente e u $ \u -> equery e "select argomenti.risorsa,argomenti.txt from argomenti join domande join feedback on feedback.domanda = domande.id and domande.argomento = argomenti.id where feedback.utente = ?" (Only u)
+feedbackArgomenti e u = checkUtente e u $ \u -> equery e "select argomenti.risorsa,argomenti.argomento from argomenti join domande join feedback on feedback.domanda = domande.id and domande.argomento = argomenti.id where feedback.utente = ?" (Only u)
 
 feedbackUtente :: Env -> String -> ConnectionMonad [Integer]
 feedbackUtente e u =  map fromOnly `fmap` equery e "select risposta from feedback where utente = ?" (Only u)
 
-addFeedback e u d r = checkAssoc e u d $ \u -> eexecute e "insert or replace into feedback values (?,?,?)" (u,d,r)
+addFeedback e u r = checkUtente e u $ \u -> etransaction e $ do
+                c <- equery e "select risposte.id,domande.id from assoc join domande join risposte on assoc.argomento = domande.argomento and domande.id = risposte.domanda where assoc.utente = ? and risposte.id = ?" (u,r)
+                case (c::[(Integer,Integer)]) of 
+                        [(r,d)] ->  eexecute e "insert or replace into feedback values (?,?,?)" (u,d,r)
+                        _ -> throwError $ DatabaseError $ "User not associated with the QR of this answer"
+                        
 
 changeAssoc :: Env -> String -> String -> ConnectionMonad Questionario
 changeAssoc e u h = checkUtente e u $ \u -> checkRisorsa e h $ \i _ -> etransaction e $ do 
-        eexecute e "replace into assoc values (?,?)" (u,i)
+        eexecute e "delete from assoc where utente = ? " (Only u)
+        eexecute e "insert into assoc values (?,?)" (u,i)
         listDomande' e h
 
 data UserAndArgomento = UserAndArgomento User Questionario

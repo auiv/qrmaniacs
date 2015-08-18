@@ -1,5 +1,5 @@
 
-var cs = angular.module("cs", ["xeditable",'ui.bootstrap']);
+var cs = angular.module("cs", ["xeditable",'ui.bootstrap','ngCookies']);
 
 cs.controller('Input', function ($scope, $modalInstance) {
 
@@ -11,12 +11,34 @@ cs.controller('Input', function ($scope, $modalInstance) {
             $modalInstance.dismiss('cancel');
           };
         });
-
-cs.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log','$location',function ($scope,$http,$modal,$timeout,$log,$location) {
+cs.controller("LogoutController",function ($scope,$http,$modal,$timeout,$log,$location,$cookies) {
+    $scope.cookie = $cookies.get("userName");
+    $scope.logout = function () {
+        $http.get("Logout").then(function(xs){
+                        $location.url("/");
+                        });
+        }
+        }
+        );
+cs.factory('Page', function() {
+   var title = 'default';
+   return {
+     title: function() { return title; },
+     setTitle: function(newTitle) { title = newTitle; }
+   };
+});
+cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page) {
+        $scope.Page=Page; 
+        }
+        );
+cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page,$window) {
+    $scope.goBack = function () {$window.history.back()};
     $scope.selected=null;
     $scope.argomenti = [];
+    Page.setTitle("Autore di QR");
+    $timeout(function () {$scope.cookie = $cookies.get("userName")});
     $scope.update = function () {
-                $http.get("api/Argomenti").then(function(xs){
+                $http.get("Argomenti").then(function(xs){
                         $scope.argomenti=xs.data.result;
                         $log.log(xs.data);
                         });
@@ -24,14 +46,14 @@ cs.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log'
    $scope.update();
    $scope.input={};
    $scope.qr=function(h){
-         window.location.href = "api/QR/"+h;
+         window.location.href = "QR/"+h;
         }
 
    $scope.qrpersonal=function(){
-         window.location.href = "api/Resource/Personal";
+         window.location.href = "QR";
         }
    $scope.qridentify=function(){
-         window.location.href = "api/QR/Identify";
+         window.location.href = "QR/Identify";
         }
      $scope.checkDelete = function (f,i) {
                 var modalInstance = $modal.open({
@@ -57,7 +79,7 @@ cs.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log'
                         });
                 modalInstance.result.then(
                         function () {
-                                $http.post("api/AddArgomento",$scope.input.argomento).success($scope.update);}, 
+                                $http.post("AddArgomento",$scope.input.argomento).success($scope.update);}, 
                         function () {}
                         );
                 };
@@ -67,20 +89,59 @@ cs.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log'
         return "unselected"
         }
     $scope.changeArgomento = function(value,index)  {
-        return $http.post("api/ChangeArgomento/" + index,value);
+        return $http.post("ChangeArgomento/" + index,value);
         }
     $scope.deleteArgomento = function(index)  {
-        $http.put("api/DeleteArgomento/" + index).success($scope.update);
+        $http.put("DeleteArgomento/" + index).success($scope.update);
         }
-}]);
+});
 
+cs.controller("VisitatoreController",function ($scope,Page,$http,$window) {
+    $scope.goBack = function () {$window.history.back()};
+    Page.setTitle("Visitatore");
+    $scope.update = function () {
+                $http.get("Visitati").then(function(xs){
+                        $scope.argomenti=xs.data.result;
+                        $log.log(xs.data);
+                        });
+        }
+    $scope.update();
 
-cs.controller("DomandeController",['$scope','$http','$modal','$timeout','$log','$routeParams',function ($scope,$http,$modal,$timeout,$log,$routeParams) {
+});
+ 
+cs.controller("HomeController",function ($scope,$http,$modal,$timeout,$interval,$log,$routeParams,$cookies,$location,$route,Page) {
+        $scope.cookie=$cookies.get("userName");
+        Page.setTitle("QR Maniacs");
+        $scope.qrlogin=function(){
+                window.location.href = "QR/Login";
+        }
+    });  
+
+cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
+    $scope.goBack = function () {$window.history.back()};
+    Page.setTitle("Visitatore di QR"); 
+    $scope.feedback= function (r) {
+                $http.put("AddFeedback/"+r).success(function(xs){
+                        });}
+    $scope.items = [];
+    $scope.hash = $routeParams.hash;
+    $scope.update = function () {
+                $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
+                        $scope.items=xs.result.domande;
+                        $scope.argomento={'text':xs.result.text};
+                        });
+                }
+   $scope.update();
+        
+        });
+cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
+    $scope.goBack = function () {$window.history.back()};
+    Page.setTitle("Autore domande QR");
     $scope.items = [];
     $scope.valori=['Giusta','Sbagliata','Accettabile'];
     $scope.hash = $routeParams.hash;
     $scope.update = function () {
-                $http.get("api/Domande/"+$scope.hash).success(function(xs){
+                $http.get("Domande/"+$scope.hash).success(function(xs){
                         $scope.items=xs.result.domande;
                         $scope.argomento={'text':xs.result.text};
                         });
@@ -113,7 +174,7 @@ cs.controller("DomandeController",['$scope','$http','$modal','$timeout','$log','
                         });
                 modalInstance.result.then(
                         function () {
-                                $http.post("api/AddDomanda/"+ $scope.hash,$scope.input.domanda).success($scope.update);}, 
+                                $http.post("AddDomanda/"+ $scope.hash,$scope.input.domanda).success($scope.update);}, 
                         function () {}
                         );
                 };    
@@ -127,27 +188,27 @@ cs.controller("DomandeController",['$scope','$http','$modal','$timeout','$log','
                         });
                 modalInstance.result.then(
                         function () {
-                                $http.post("api/AddRisposta/"+ i + "/" + $scope.input.value,$scope.input.risposta).success($scope.update);}, 
+                                $http.post("AddRisposta/"+ i + "/" + $scope.input.value,$scope.input.risposta).success($scope.update);}, 
                         function () {}
                         );
                 };
 
     $scope.changeDomanda = function(value,index)  {
-        return $http.post("api/ChangeDomanda/" + index,value);
+        return $http.post("ChangeDomanda/" + index,value);
         }
     $scope.deleteDomanda = function(index)  {
-        $http.put("api/DeleteDomanda/" + index).success($scope.update);
+        $http.put("DeleteDomanda/" + index).success($scope.update);
         }
     $scope.deleteRisposta = function(index)  {
-        $http.put("api/DeleteRisposta/" + index).success($scope.update);
+        $http.put("DeleteRisposta/" + index).success($scope.update);
         }
     
     $scope.changeRisposta = function(value,index)  {
-        return $http.post("api/ChangeRisposta/" + index,value);
+        return $http.post("ChangeRisposta/" + index,value);
         }
     $scope.changeRispostaValue = function(value,index)  {
-        return $http.put("api/ChangeRispostaValue/" + index + "/" + value);
+        return $http.put("ChangeRispostaValue/" + index + "/" + value);
         }
-}]);
+});
 
 

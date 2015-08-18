@@ -1,0 +1,24 @@
+
+
+<a class=homelink href="#/">Home</a>
+<a class=backlink ng-click="goBack()">Back</a>
+<div class=op </div>
+<ul class="domande list-group"> 
+
+        <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
+                                {{ item.text}}
+                                        
+                
+                <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
+
+                                <button class="btn" ng-click="feedback(item.answers[$index].index)">
+                                {{ item.answers[$index].text}}
+                                </button>
+                         
+
+                        </li>
+                </ul>
+        </li>
+</ul>
+</div>
