@@ -128,6 +128,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
     $scope.update = function () {
                 $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
                         $scope.items=xs.result.domande;
+                        $scope.author=xs.result.autore;
                         $scope.argomento={'text':xs.result.text};
                         });
                 }

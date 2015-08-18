@@ -1,6 +1,7 @@
 
 <a class=homelink href="#/">Home</a>
 <a class=backlink ng-click="goBack()">Back</a>
+<div class="well title"> I tuoi contributi </div> 
 <ul class="domande list-group"> 
         <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"> 
                 <a  class=link href="#Resource/{{argomento.index}}">{{argomento.text}}</a>

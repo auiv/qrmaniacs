@@ -1,15 +1,14 @@
 
 <a class=homelink href="#/">Home</a>
 <a class=backlink ng-click="goBack()">Back</a>
+
+<div class="well title"> I tuoi QR </div> 
 <ul class="domande list-group"> 
         <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"> 
                 <button  class="delete btn btn-danger btn-lg" ng-click="checkDelete(deleteArgomento,argomento.index)">X</button>
                 <button   class="seleziona btn btn-primary btn-lg" ng-click="qr(argomento.index)">QR</button>
                 
-        <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data,argomento.index)" e-rows="2" e-cols="20">
-                                {{ argomento.text || 'Argomento..' }}</a>
-        <a class=link href="#/Autore/Resource/{{argomento.index}}">Domande</a>
-        <a class=link href="#/Resource/{{argomento.index}}">Risultato</a>
+        <a  href="#/Resource/{{argomento.index}}"> {{ argomento.text}}</a>
         </li>
         <li class="list-group-item">
 <button class="btn btn-success btn-lg" ng-click="addArgomento($index)">Nuovo Argomento</button>

@@ -87,8 +87,8 @@ body{font-size:xx-large ;}
     margin-left: 35px;
 }
 .btn {margin-bottom:5px;}
-.homelink  {background-color: green;padding:13px;border-radius:5px;font-weight:normal;color:white;position:fixed;margin-top:-20px;z-index: 100;}
-.backlink  {background-color: green;padding:13px;border-radius:5px;font-weight:normal;color:white;position:fixed;margin-top:80px;z-index: 100;}
+.homelink  {background-color: green;padding:13px;border-radius:5px;border-top-right-radius:50px;font-weight:normal;color:white;position:fixed;margin-top:0px;z-index: 100;}
+.backlink  {background-color: green;padding:13px;border-radius:5px;border-top-right-radius:50px;font-weight:normal;color:white;position:fixed;margin-top:80px;z-index: 100;}
 .link:hover{color:white;background-color:green;text-decoration:none;}
 .link  {margin-left:15px;background-color: darkgreen;padding:13px;border-radius:5px;font-weight:normal;color:white;}
 .op{}
@@ -97,3 +97,6 @@ body{font-size:xx-large ;}
 .logo{float:right}
 .navigation{width: 500px}
 .domande{margin-left: 100px;}
+.title{margin-left: 150px;padding-left:50px;font-size:40px;}
+.editlink{}
+.editlink  {background-color: green;padding:13px;border-radius:5px;border-top-right-radius:50px;font-weight:normal;color:white;position:fixed;margin-top:160px;z-index: 100;}

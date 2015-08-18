@@ -1,6 +1,12 @@
 
 <a class=homelink href="#/">Home</a>
 <a class=backlink ng-click="goBack()">Back</a>
+<a class=editlink href="#/Resource/{{hash}}">Render</a>
+
+<div class="well title"> 
+<a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data,argomento.index)" e-rows="2" e-cols="20">
+                                {{ argomento.text || 'Argomento..' }}</a>
+</div>
 <ul class="domande list-group"> 
 
         <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
