@@ -290,7 +290,7 @@ checkAssoc e u d f = do
                 [Only i] -> f i
                 _ -> throwError $ DatabaseError "Unknown user-argument Association"
 
-identifyUser e u h = checkIdentificatore e u $ \u -> checkUtente e h $ \h -> eexecute e "insert or replace into identificati values (?,?)" (u,h)
+identifyUser e u h = checkIdentificatore e u $ \u -> checkUtente e h $ \h -> eexecute e "insert or replace realizzatore,utente into identificati values (?,?)" (u,h)
 
 checkIdentificatore e u f = checkUtente e u $ \u -> do
         r <- equery e "select id from realizzatori where id=?" (Only u)
