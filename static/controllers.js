@@ -58,7 +58,7 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
      $scope.checkDelete = function (f,i) {
                 var modalInstance = $modal.open({
                         animation: true,
-                        templateUrl: 'deleting.html',
+                        templateUrl: 'static/deleting.html',
                         controller: 'Input',
                         size: 'lg',
                         scope:$scope
@@ -72,7 +72,7 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
       $scope.addArgomento = function () {
                 var modalInstance = $modal.open({
                         animation: true,
-                        templateUrl: 'argomento.html',
+                        templateUrl: 'static/argomento.html',
                         controller: 'Input',
                         size: 'lg',
                         scope:$scope
@@ -153,7 +153,7 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
      $scope.checkDelete = function (f,i) {
                 var modalInstance = $modal.open({
                         animation: true,
-                        templateUrl: 'deleting.html',
+                        templateUrl: 'static/deleting.html',
                         controller: 'Input',
                         size: 'lg',
                         scope:$scope
@@ -167,7 +167,7 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
       $scope.addDomanda = function (i) {
                 var modalInstance = $modal.open({
                         animation: true,
-                        templateUrl: 'domanda.html',
+                        templateUrl: 'static/domanda.html',
                         controller: 'Input',
                         size: 'sm',
                         scope:$scope
@@ -181,7 +181,7 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
       $scope.addRisposta = function (i) {
                 var modalInstance = $modal.open({
                         animation: true,
-                        templateUrl: 'risposta.html',
+                        templateUrl: 'static/risposta.html',
                         controller: 'Input',
                         size: 'sm',
                         scope:$scope
