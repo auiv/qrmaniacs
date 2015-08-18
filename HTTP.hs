@@ -153,7 +153,7 @@ main = do
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
                                         ["QR",h] -> do
-                                                let url = reloc ++ "#/Resource/" ++ h
+                                                let url = reloc ++ "/#/Resource/" ++ h
                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
