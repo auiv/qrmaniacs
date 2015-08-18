@@ -183,19 +183,8 @@ main = do
                                                 v <- readFile "static/index.html"
                                                 
                                                 return $ sendHTML OK $  v
-                                        
-       --                                 ["Risorsa",h] -> return ()
-                                                -- controllo utente
-                                                -- utente editore:
-                                                        -- redirect to editor drugged h
-                                                -- utente nuovo:
-                                                        -- new cookie
-                                                        -- redirect to play drugged h
-                                                -- utente vecchio:
-                                                        -- redirect to play drugged h
                                         _ -> do print $ url_path url 
                                                 return $ sendJSON BadRequest $ JSNull
-        --when t $ void $ responseP $ Just $ Boot mailbooter reloc 
         serverWith defaultConfig { srvLog = quietLogger, srvPort = 8889 }
                 $ \_ url request -> do
                         resp <- responser url request
