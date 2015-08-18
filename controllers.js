@@ -28,7 +28,7 @@ cs.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log'
         }
 
    $scope.qrpersonal=function(){
-         window.location.href = "api/QR/Personal";
+         window.location.href = "api/Resource/Personal";
         }
    $scope.qridentify=function(){
          window.location.href = "api/QR/Identify";
