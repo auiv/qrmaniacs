@@ -1,8 +1,12 @@
         <ul class="list-group"> 
                 <li class=list-group-item> 
-                <button   class="seleziona btn btn-primary btn-lg" ng-click="qrlogout()">QR</button>
-                Qr di logout per i visitatori
-                <li>
+                <button   class="seleziona btn btn-primary btn-lg" ng-click="qrpersonal()">QR</button>
+                Qr di interrogazione cookie
+                </li>
+                <li class=list-group-item> 
+                <button   class="seleziona btn btn-primary btn-lg" ng-click="qridentify()">QR</button>
+                Qr di validazione cookie
+                </li>
                 <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"> 
                 <button  class="delete btn btn-danger btn-lg" ng-click="checkDelete(deleteArgomento,argomento.index)">X</button>
                 <button   class="seleziona btn btn-primary btn-lg" ng-click="qr(argomento.index)">QR</button>

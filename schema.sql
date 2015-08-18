@@ -2,7 +2,7 @@ PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 CREATE TABLE "utenti" (
         "id"  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        "hash" text unique not null 
+        "hash" text unique not null
         );
 INSERT INTO "utenti" VALUES(1,'LYL85EwHXYX9PYYkTxFOaW6CHy45ndGUeiG447B0v3E5fcd6Sh');
 INSERT INTO "utenti" VALUES(2,'dnHaJ1OJm1tiZXSVD0dIljK7Gq0fAwCcmbcG1UbHDc6Lmse7Fn');
@@ -13,6 +13,17 @@ CREATE TABLE "autori" (
         "mail" text unique not null
         );
 INSERT INTO "autori" VALUES(1,'paolo.veronelli@gmail.com');
+CREATE TABLE "realizzatori" (
+        "id" integer not null unique references utenti(id) on delete cascade,
+        "mail" text unique not null
+        );
+insert into realizzatori values(1,'paolo.veronelli@gmail.com');
+CREATE TABLE "identificati" ( 
+        "realizzatore" integer not null unique references realizzatori(id) on delete cascade,
+        "utente" integer not null unique references utenti(id) on delete cascade,
+        "date" text not null DEFAULT (datetime('now','localtime'))
+        );
+insert into identificati (utente,realizzatore) values (1,1);
 CREATE TABLE "argomenti" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     "argomento" TEXT unique NOT NULL,

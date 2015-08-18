@@ -61,6 +61,7 @@ data Get a where
         ArgomentiFeedback :: User -> Get [Argomento]
         AddAssoc :: String -> Get UserAndArgomento
         ChangeAssoc :: User -> String -> Get Questionario
+        Identify :: User -> User -> Get ()
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (Argomenti u) = listArgomenti e u 
@@ -69,6 +70,7 @@ get' e (ArgomentiFeedback u) = feedbackArgomenti e u
 get' e (Feedback u) = feedbackUtente e u
 get' e (AddAssoc i) = newUser e i
 get' e (ChangeAssoc u i) = changeAssoc e u i
+get' e (Identify u h) = identifyUser e u h
 
 get :: Env -> Get a -> WriterT [Event] IO (Either DBError a)
 get e l = runErrorT (get' e l)

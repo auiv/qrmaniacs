@@ -27,8 +27,11 @@ cs.controller("ArgomentiController",['$scope','$http','$modal','$timeout','$log'
          window.location.href = "api/QR/"+h;
         }
 
-   $scope.qrlogout=function(){
-         window.location.href = "api/QR/Logout";
+   $scope.qrpersonal=function(){
+         window.location.href = "api/QR/Personal";
+        }
+   $scope.qridentify=function(){
+         window.location.href = "api/QR/Identify";
         }
      $scope.checkDelete = function (f,i) {
                 var modalInstance = $modal.open({

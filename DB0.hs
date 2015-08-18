@@ -282,10 +282,19 @@ checkUtente e u f = do
         r <- equery e "select id from utenti where hash=?" (Only u)
         case (r :: [Only Integer]) of
                 [Only i] -> f i
-                _ -> throwError $ DatabaseError "Unknown Hash"
+                _ -> throwError $ DatabaseError "Unknown Hash for User"
 
 checkAssoc e u d f = do
         r <- equery e "select utenti.id from assoc  join domande join utenti on assoc.utente = utenti.id and assoc.argomento = domande.argomento where utenti.hash = ? and domande.id = ?" (u,d)
         case (r :: [Only Integer]) of
                 [Only i] -> f i
-                _ -> throwError $ DatabaseError "Unknown user argument association"
+                _ -> throwError $ DatabaseError "Unknown user-argument Association"
+
+identifyUser e u h = checkIdentificatore e u $ \u -> checkUtente e h $ \h -> eexecute e "insert or replace into identificati values (?,?)" (u,h)
+
+checkIdentificatore e u f = checkUtente e u $ \u -> do
+        r <- equery e "select id from realizzatori where id=?" (Only u)
+        case (r :: [Only Integer]) of
+                [Only i] -> f i
+                _ -> throwError $ DatabaseError "Unknown Hash for Identifier"
+

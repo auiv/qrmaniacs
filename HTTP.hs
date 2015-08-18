@@ -10,6 +10,7 @@ import Data.Time.LocalTime
 import Protocol
 import DB0
 import System.Process
+import System.Time
 import qualified Data.ByteString.UTF8 as BS
 import qualified Data.ByteString as BSF
 import Text.Read 
@@ -78,7 +79,9 @@ main = do
                           let   URI a (Just (URIAuth _ b _)) _ _ _  = rqURI request
                                 href = reloc
                                 user = findHeader HdrCookie request >>= findUserName
-                          print $ findHeader HdrCookie request
+                          
+                          putStr "Request: "
+                          getClockTime >>= print
                           print request
                           
                           case rqMethod request of
@@ -105,6 +108,8 @@ main = do
 
                             POST -> do 
                                 let msg = BS.toString $ rqBody request
+                                putStrLn "Body:"
+                                print $ rqBody request
                                 case splitOn "/" $ url_path url of
                                         ["AddArgomento"] -> onuser user $ \u -> responseP $ do
                                                         return $ AddArgomento u msg
@@ -150,10 +155,19 @@ main = do
                                                         . sendResponse g $ do
                                                         return $ Feedback u d
                                         -}
-                                        ["Resource","Logout"] -> onuser user $ \u -> do
-                                                v <- readFile "logout.html"
-                                                let v' = replace "utente"  u v
-                                                return $ sendHTML OK $  v'
+                                        ["Resource","Personal"] -> onuser user $ \u -> do
+                                                let url = reloc
+                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                callCommand c
+                                                qr <- BSF.readFile "qr.tmp"
+                                                return $ sendPng qr
+                                        ["Resource","Identify"] -> onuser user $ \u -> do
+                                                let url = reloc ++ "/api/Identify/" ++ u
+                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                callCommand c
+                                                qr <- BSF.readFile "qr.tmp"
+                                                return $ sendPng qr
+                                        ["Identify",h] -> onuser user $ \u -> sendResponse g $ Just $ Identify u h
                                         ["Resource",h] -> do
                                                 v <- readFile "questionario.html"
                                                 let v' = replace "acca"  h v
@@ -179,9 +193,12 @@ main = do
         serverWith defaultConfig { srvLog = quietLogger, srvPort = 8889 }
                 $ \_ url request -> do
                         resp <- responser url request
-                        putStrLn "||||"
+                        putStr "Response: "
+                        getClockTime >>= print
                         print resp
+                        putStrLn "Body:"
                         print $ rspBody resp
+                        print "--------------------------------------------------"
                         return resp      
 sendPng :: BS.ByteString -> Response BS.ByteString
 sendPng s = 
