@@ -95,7 +95,7 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
         return "unselected"
         }
     $scope.changeArgomento = function(value,index)  {
-        return $http.post("ChangeArgomento/" + index,value);
+        $http.post("ChangeArgomento/" + index,value);
         }
     $scope.deleteArgomento = function(index)  {
         $http.put("DeleteArgomento/" + index).success($scope.update);
