@@ -153,7 +153,7 @@ checkAuthorOf e u i f = checkAuthor e u $ \u -> do
         r <- equery e "select id from argomenti where autore =? and risorsa = ?" (u,i)
         case (r :: [Only Integer]) of
                 [Only i] -> f i
-                _ -> throwError $ DatabaseError "Unknown User"
+                _ -> throwError $ DatabaseError "Not author"
 
 addArgomento :: Env -> User -> String -> ConnectionMonad ()
 addArgomento e u s = checkAuthor e u $ \u -> do
@@ -195,11 +195,13 @@ data Risposta = Risposta Integer String Value deriving Show
 
 instance FromRow Risposta where
    fromRow = Risposta <$> field <*> field <*> field 
+data RispostaV = RispostaV Integer String Bool
 
 data Domanda = Domanda 
         Integer  --index
         String   --text
         [Risposta] deriving Show
+data DomandaV = DomandaV Integer String [RispostaV]
 
 checkRisorsa :: Env -> String -> (Integer -> String -> ConnectionMonad a) -> ConnectionMonad a
 checkRisorsa e i f = do 
@@ -219,15 +221,17 @@ checkRisposta e u i f = do
                 [Only i] -> f 
                 _ -> throwError $ DatabaseError "Unknown User"
 
-data Questionario = Questionario 
+data Questionario = QuestionarioAutore
         String --testo titolo
         [Domanda]
+	| QuestionarioVisitatore String [DomandaV]
 
-listDomande :: Env -> String -> ConnectionMonad Questionario
-listDomande e i = etransaction e $ listDomande' e i 
+listDomande :: Env -> User -> String -> ConnectionMonad Questionario
+listDomande e u i = etransaction e $ listDomande' e u i 
 
-listDomande' e i =  checkRisorsa e i $ \i n -> do 
-                ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
+listDomande' e u i =  checkRisorsa e i $ \i n -> do 
+		
+                ds <- equery e "select id,domanda,autore from domande where argomento = ? " $ Only i
                 fs <- forM ds $ \(i,d) -> do
                         rs <- equery e "select id,risposta,valore from risposte where domanda = ?" $ Only i
                         return $ Domanda i d rs
