@@ -37,13 +37,15 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
     $scope.argomenti = [];
     Page.setTitle("Autore di QR");
     $timeout(function () {$scope.cookie = $cookies.get("userName")});
-    $scope.update = function () {
+    $scope.update_ = function (f) {
                 $http.get("Argomenti").then(function(xs){
                         $scope.argomenti=xs.data.result;
                         $log.log(xs.data);
+                        f();
                         });
         }
-   $scope.update();
+   $scope.update=function(){$scope.update_(function(){})};
+        $scope.update();
    $scope.input={};
    $scope.qr=function(h){
          window.location.href = "QR/"+h;
@@ -79,19 +81,14 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
                 };
 
       $scope.addArgomento = function () {
-                var modalInstance = $modal.open({
-                        animation: true,
-                        templateUrl: 'static/argomento.html',
-                        controller: 'Input',
-                        size: 'lg',
-                        scope:$scope
-                        });
-                modalInstance.result.then(
-                        function () {
-                                $http.post("AddArgomento",$scope.input.argomento).success($scope.update);}, 
-                        function () {}
-                        );
-                };
+                                $http.post("AddArgomento","argomento ...").
+                                        success(function(){
+                                                $scope.update_(function(){
+                                                $location.url("/Autore/Resource/" + $scope.argomenti[$scope.argomenti.length-1].index);
+                                                });
+                                        })
+                                        
+                                }; 
 
     $scope.selectedClass = function (index)  {
         if(index==$scope.selected) return "selected"
@@ -150,12 +147,14 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
     $scope.items = [];
     $scope.valori=['Giusta','Sbagliata','Accettabile'];
     $scope.hash = $routeParams.hash;
-    $scope.update = function () {
+    $scope.update_ = function (f) {
                 $http.get("Domande/"+$scope.hash).success(function(xs){
                         $scope.items=xs.result.domande;
                         $scope.argomento={'text':xs.result.text};
+                        f();
                         });
                 }
+   $scope.update=function(){$scope.update_(function(){})};
    $scope.update();
                 
    $scope.input={};
@@ -175,33 +174,10 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
                 };
 
       $scope.addDomanda = function (i) {
-                var modalInstance = $modal.open({
-                        animation: true,
-                        templateUrl: 'static/domanda.html',
-                        controller: 'Input',
-                        size: 'sm',
-                        scope:$scope
-                        });
-                modalInstance.result.then(
-                        function () {
-                                $http.post("AddDomanda/"+ $scope.hash,$scope.input.domanda).success($scope.update);}, 
-                        function () {}
-                        );
-                };    
+                                $http.post("AddDomanda/"+ $scope.hash,"domanda ...").success($scope.update);};
+                
       $scope.addRisposta = function (i) {
-                var modalInstance = $modal.open({
-                        animation: true,
-                        templateUrl: 'static/risposta.html',
-                        controller: 'Input',
-                        size: 'sm',
-                        scope:$scope
-                        });
-                modalInstance.result.then(
-                        function () {
-                                $http.post("AddRisposta/"+ i + "/" + $scope.input.value,$scope.input.risposta).success($scope.update);}, 
-                        function () {}
-                        );
-                };
+                                $http.post("AddRisposta/"+ i + "/Accettabile" ,"risposta ...").success($scope.update);} 
 
     $scope.changeDomanda = function(value,index)  {
         return $http.post("ChangeDomanda/" + index,value);
