@@ -1,8 +1,9 @@
-
-<a class=homelink href="#/">Home</a>
-<a class=backlink ng-click="goBack()">Back</a>
+<div class=navlinks>
+        <a class=link href="#/">Home</a>
+        <a class=link ng-click="goBack()">Back</a>
+</div>
 <div class="well title"> I tuoi contributi </div> 
-<ul class="domande list-group"> 
+<ul class="content list-group"> 
         <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"> 
                 <a  class=link href="#Resource/{{argomento.index}}">{{argomento.text}}</a>
         </li>
