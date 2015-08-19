@@ -94,9 +94,6 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
         if(index==$scope.selected) return "selected"
         return "unselected"
         }
-    $scope.changeArgomento = function(value,index)  {
-        $http.post("ChangeArgomento/" + index,value);
-        }
     $scope.deleteArgomento = function(index)  {
         $http.put("DeleteArgomento/" + index).success($scope.update);
         }
@@ -189,6 +186,9 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
         $http.put("DeleteRisposta/" + index).success($scope.update);
         }
     
+    $scope.changeArgomento = function(value)  {
+        return $http.post("ChangeArgomento/" + $scope.hash,value);
+        }
     $scope.changeRisposta = function(value,index)  {
         return $http.post("ChangeRisposta/" + index,value);
         }
