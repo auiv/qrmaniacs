@@ -1,17 +1,23 @@
 
-<a class=homelink href="#/">Home</a>
-<a class=backlink ng-click="goBack()">Back</a>
+<div class=navlinks>
+        <a class=link href="#/">Home</a>
+        <a class=link ng-click="goBack()">Back</a>
+</div>
 
 <div class="well title"> I tuoi QR </div> 
-<ul class="domande list-group"> 
-        <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"> 
-                <button  class="delete btn btn-danger btn-lg" ng-click="checkDelete(deleteArgomento,argomento.index)">X</button>
-                <button   class="seleziona btn btn-primary btn-lg" ng-click="qr(argomento.index)">QR</button>
-                
-        <a  href="#/Resource/{{argomento.index}}"> {{ argomento.text}}</a>
-        </li>
-        <li class="list-group-item">
-<button class="btn btn-success btn-lg" ng-click="addArgomento($index)">Nuovo Argomento</button>
+<ul class="content list-group"> 
+<a class=nuovo ng-click="addArgomento($index)"><span class="glyphicon glyphicon-plus"></span></a>
+        <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)" ng-click="gotoResource(argomento.index)"> 
+                <div class=delete>
+                        <button  class="btn btn-default" ng-click="gotoEditResource(argomento.index);$event.stopPropagation()">
+                               <span class="glyphicon glyphicon-pencil"></span> </button>
+                        <button  class="btn btn-default"  ng-click="gotoQR(argomento.index);$event.stopPropagation()">
+                                <span class="glyphicon glyphicon-qrcode"></span> </a>
+                        <button  class="btn btn-default" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
+                               <span class="glyphicon glyphicon-trash"></span> </button>
+
+                </div>
+                {{ argomento.text}}
         </li>
 </ul> 
 

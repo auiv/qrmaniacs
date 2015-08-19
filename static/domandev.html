@@ -1,10 +1,11 @@
 
-
-<a class=homelink href="#/">Home</a>
-<a class=backlink ng-click="goBack()">Back</a>
-<a class=editlink href="#/Autore/Resource/{{hash}}">Edit</a>
+<div class=navlinks>
+        <a class=link href="#/">Home</a>
+        <a class=link ng-click="goBack()">Back</a>
+        <a class=link href="#/Autore/Resource/{{hash}}">Edit</a>
+</div>
 <div class="well title"> {{argomento.text}}</div> 
-<ul class="domande list-group"> 
+<ul class="content list-group"> 
 
         <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
                                 {{ item.text}}
@@ -13,7 +14,7 @@
                 <ul class="list-group">
                         <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
 
-                                <button class="btn" ng-click="feedback(item.answers[$index].index)">
+                                <button class="btn default" ng-click="feedback(item.answers[$index].index)">
                                 {{ item.answers[$index].text}}
                                 </button>
                          

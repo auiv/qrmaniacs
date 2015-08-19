@@ -55,6 +55,15 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
    $scope.qridentify=function(){
          window.location.href = "QR/Identify";
         }
+   $scope.gotoResource = function(i) {
+        $location.url("/Resource/"+i);
+        }
+   $scope.gotoEditResource = function(i) {
+        $location.url("/Autore/Resource/"+i);
+        }
+   $scope.gotoQR = function(i) {
+        window.location.href="QR/"+i;
+        }
      $scope.checkDelete = function (f,i) {
                 var modalInstance = $modal.open({
                         animation: true,
