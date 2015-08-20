@@ -153,7 +153,7 @@ checkAuthorOf e u i f = checkAuthor e u $ \u -> do
         r <- equery e "select id from argomenti where autore =? and risorsa = ?" (u,i)
         case (r :: [Only Integer]) of
                 [Only i] -> f i
-                _ -> throwError $ DatabaseError "Unknown User"
+                _ -> throwError $ DatabaseError "Not author"
 
 addArgomento :: Env -> User -> String -> ConnectionMonad ()
 addArgomento e u s = checkAuthor e u $ \u -> do
@@ -195,17 +195,19 @@ data Risposta = Risposta Integer String Value deriving Show
 
 instance FromRow Risposta where
    fromRow = Risposta <$> field <*> field <*> field 
+data RispostaV = RispostaV Integer String Bool
 
 data Domanda = Domanda 
         Integer  --index
         String   --text
         [Risposta] deriving Show
+data DomandaV = DomandaV Integer String [RispostaV]
 
-checkRisorsa :: Env -> String -> (Integer -> String -> ConnectionMonad a) -> ConnectionMonad a
+checkRisorsa :: Env -> String -> (Integer -> String -> Integer -> ConnectionMonad a) -> ConnectionMonad a
 checkRisorsa e i f = do 
-        r <- equery e "select id,argomento from argomenti where risorsa = ?" (Only i)
-        case (r :: [(Integer,String)]) of
-                [(i,x)] -> f i x
+        r <- equery e "select id,argomento,autore from argomenti where risorsa = ?" (Only i)
+        case (r :: [(Integer,String,String)]) of
+                [(i,x,a)] -> f i x a
                 _ -> throwError $ DatabaseError $ "Unknown Resource:" ++ i
 checkDomanda e u i f = do
         r <- equery e "select argomenti.id from argomenti join domande join utenti on domande.argomento = argomenti.id and  utenti.id = argomenti.autore where hash =? and domande.id = ?" (u,i)
@@ -219,19 +221,29 @@ checkRisposta e u i f = do
                 [Only i] -> f 
                 _ -> throwError $ DatabaseError "Unknown User"
 
-data Questionario = Questionario 
+data Questionario = QuestionarioAutore
         String --testo titolo
         [Domanda]
+	| QuestionarioVisitatore String [DomandaV]
 
-listDomande :: Env -> String -> ConnectionMonad Questionario
-listDomande e i = etransaction e $ listDomande' e i 
+listDomande :: Env -> User -> String -> ConnectionMonad Questionario
+listDomande e u i = etransaction e $ listDomande' e u i 
 
-listDomande' e i =  checkRisorsa e i $ \i n -> do 
-                ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
-                fs <- forM ds $ \(i,d) -> do
-                        rs <- equery e "select id,risposta,valore from risposte where domanda = ?" $ Only i
-                        return $ Domanda i d rs
-                return $ Questionario n fs
+listDomande' e u i =  checkUtente e u $ \u -> checkRisorsa e i $ \i n y -> do 
+                if y == u then do
+                        ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
+                        fs <- forM ds $ \(i,d) -> do
+                                rs <- equery e "select id,risposta,valore from risposte where domanda = ?" $ Only i
+                                return $ Domanda i d rs
+                        return $ QuestionarioAutore n fs
+                else do
+                        ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
+                        fs <- forM ds $ \(i,d) -> do
+                                rs <- equery e "select id,risposta from risposte where domanda = ?" $ Only i
+                                zs <- equery e "select risposta from feedback where domanda = ? and utente=?" $ (i,u)
+                                return $ DomandaV i d $ map (\(i,r) -> RispostaV i r $ i `elem` map fromOnly zs) rs
+                        return $ QuestionarioVisitatore n fs
+                        
 
 addDomanda :: Env -> User -> String -> String -> ConnectionMonad ()
 addDomanda e u i s = checkAuthorOf e u i $ \i -> eexecute e "insert into domande (domanda,argomento) values (?,?)" (s,i)
@@ -268,7 +280,7 @@ addFeedback e u r = checkUtente e u $ \u -> etransaction e $ do
                         
 
 changeAssoc :: Env -> String -> String -> ConnectionMonad UserAndArgomento
-changeAssoc e u' h = checkUtente' e u' (\u -> checkRisorsa e h $ \i _ -> etransaction e $ do 
+changeAssoc e u' h = checkUtente' e u' (\u -> checkRisorsa e h $ \i _ _ -> etransaction e $ do 
         eexecute e "delete from assoc where utente = ? " (Only u)
         eexecute e "insert into assoc values (?,?)" (u,i)
         l <- listDomande' e h
@@ -281,7 +293,7 @@ addAssoc e h = do
         q <- etransaction e $ do
                 eexecute e "insert into utenti (hash) values (?)" (Only new)
                 u <- lastRow e 
-                checkRisorsa e h $ \i _ -> eexecute e "insert into assoc values (?,?)" (u,i)
+                checkRisorsa e h $ \i _ _ -> eexecute e "insert into assoc values (?,?)" (u,i)
                 listDomande' e h
         return $ UserAndArgomento new q
 
