@@ -13,6 +13,9 @@ cs.controller('Input', function ($scope, $modalInstance) {
         });
 cs.controller("LogoutController",function ($scope,$http,$modal,$timeout,$log,$location,$cookies) {
     $scope.cookie = $cookies.get("userName");
+        $scope.qrlogin=function(){
+                window.location.href = "QR/Login";
+        }
     $scope.logout = function () {
         $http.get("Logout").then(function(xs){
                         $location.url("/");
@@ -113,11 +116,16 @@ cs.controller("VisitatoreController",function ($scope,Page,$http,$window) {
 });
  
 cs.controller("HomeController",function ($scope,$http,$modal,$timeout,$interval,$log,$routeParams,$cookies,$location,$route,Page) {
-        $scope.user=$cookies.get("userName").slice(1,6);
+        var a = $cookies.get("userName");
+        if(a){$scope.user=a.slice(1,6)};
+        
+        $scope.active=false;
+        $http.get("Role").success(function(xs){
+                $scope.isAuthor=xs.result.author;
+                $scope.isValidatore=xs.result.validatore;
+                $scope.active=true;
+                });
         Page.setTitle("QR Maniacs");
-        $scope.qrlogin=function(){
-                window.location.href = "QR/Login";
-        }
     });  
 
 cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window,$cookies) {

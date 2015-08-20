@@ -1,18 +1,20 @@
 
+<div class=navlinks>
+        <a class=link href="#/">Home</a>
+        <a class=link ng-click="goBack()">Back</a>
+        <a class=link ng-click="logout()">Logout</a>
+</div>
 
-<ul class=list-group>
+<ul class="content list-group">
         <li class=list-group-item>
-                 <form novalidate role="form">
-                  <div class="form-group">
-                    <label for="email">Salva la tua connessione via mail:</label>
-                    <input type="email" class="form-control" ng-model="email">
-                  </div>
-                  <button type="submit" ng-click="saveviamail()" class="btn btn-default">Salva</button>
-                </form>
+                QR di ingresso
+                  <img  src="QR/Login"></img>
         </li> 
         <li class=list-group-item>
-                Cancella la tua connessione (se non l'hai salvata in precedenza sarà irrecuperabile)
-                <button class=btn ng-click="logout()"> Cancella </button>
-        </li>
+                Link di ingresso
+                  <a href="Login/{{cookie}}">{{cookie.slice(1,20)}}........</a>
+        </li> 
+        <li class=list-group-item>
+        </li> 
 </ul>
                 

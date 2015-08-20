@@ -180,6 +180,7 @@ main = do
                                                 return $ sendHTML OK $  v'
                                         ["Logout"] -> fmap (insertHeader HdrSetCookie ("userName=;Path=/;Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
                                                         $ return $ sendText OK "Bye!"
+                                        ["Role"] -> onuser user $ \u -> sendResponse g $ Just $ Role u
 
                                         [""] -> do
                                                 v <- readFile "static/index.html"

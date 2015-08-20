@@ -322,3 +322,9 @@ checkIdentificatore e u f = checkUtente e u $ \u -> do
                 [Only i] -> f i
                 _ -> throwError $ DatabaseError "Unknown Hash for Identifier"
 
+data Roles = Roles Bool Bool
+
+role e u = checkUtente e u $ \u -> do
+        b1 <- equery e "select id from  autori where id=?" (Only u)
+        b2 <- equery e "select id from  realizzatori where id=?" (Only u)
+        return $ Roles (not . null $ (b1 :: [Only Integer])) (not . null $ (b2 :: [Only Integer]))

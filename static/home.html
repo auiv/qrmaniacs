@@ -1,11 +1,10 @@
-<div class=user>
-{{user}}
+<div class=logo>
+<div class=user>{{user}}</div>
+<img src="QR"/>
 </div>
-<img class=logo src="QR"/>
-<div class=navlinks>
-                <a class=link href="#/Autore">Autore</a>
+<div ng-show=active class=navlinks>
+                <a ng-show="isAuthor" class=link href="#/Autore">Autore</a>
                 <a class=link href="#/Visitatore">Visitatore</a>
-                <a class=link href="#/Validatore">Validatore</a>
-                <a class=link href="#/Logout">Logout</a>
-                <a  class=link ng-click="qrlogin()">Login</a>
+                <a ng-show="isValidatore" class=link href="#/Validatore">Validatore</a>
+                <a class=link href="#/Logout">Profilo</a>
 </div>
