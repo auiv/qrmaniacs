@@ -2,7 +2,7 @@
 <div class=navlinks>
         <a class=link href="#/">Home</a>
         <a class=link ng-click="goBack()">Back</a>
-        <a class=link href="#/Autore/Resource/{{hash}}">Edit</a>
+        <a ng-show=author class=link href="#/Autore/Resource/{{hash}}">Edit</a>
 </div>
 <div class="well title"> {{argomento.text}}</div> 
 <ul class="content list-group"> 
@@ -17,6 +17,8 @@
                                 <button class="btn default" ng-click="feedback(item.answers[$index].index)">
                                 {{ item.answers[$index].text}}
                                 </button>
+                                <span ng-show="item.answers[$index].chosen"  class="glyphicon glyphicon-ok"></span></button>
+
                          
 
                         </li>

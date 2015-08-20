@@ -136,8 +136,10 @@ main = do
                                         ["Login",u] -> return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
                                                         $ redirectHome   reloc                                                   
 
-                                        ["Domande",i] -> sendResponse g $ do
-                                                        return $ Domande i 
+                                        ["Domande",i] -> onuser user $ \u -> sendResponse g $ do
+                                                        return $ Domande u i 
+                                        ["DomandeAutore",i] -> onuser user $ \u -> sendResponse g $ do
+                                                        return $ DomandeAutore u i 
                                         ["ChangeAssoc",i] -> case user of
                                                                  Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndArgomento u q) ->
                                                                           (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))

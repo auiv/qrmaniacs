@@ -56,7 +56,8 @@ put e l = runErrorT (put' e l)
    
 data Get a where
         Argomenti :: User -> Get [Argomento]
-        Domande :: String -> Get Questionario
+        Domande :: User -> String -> Get QuestionarioVisitatore
+        DomandeAutore :: User -> String -> Get QuestionarioAutore
         Feedback :: User -> Get [Integer]
         Visitati :: User -> Get [Argomento]
         AddAssoc :: String -> Get UserAndArgomento
@@ -65,7 +66,8 @@ data Get a where
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (Argomenti u) = listArgomenti e u 
-get' e (Domande i) = listDomande e i
+get' e (Domande u i) = listDomandeVisitatore e u i
+get' e (DomandeAutore u i) = listDomandeAutore e u i
 get' e (Visitati u) = feedbackArgomenti e u
 get' e (Feedback u) = feedbackUtente e u
 get' e (AddAssoc i) = addAssoc e i
