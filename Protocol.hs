@@ -60,8 +60,8 @@ data Get a where
         DomandeAutore :: User -> String -> Get QuestionarioAutore
         Feedback :: User -> Get [Integer]
         Visitati :: User -> Get [Argomento]
-        AddAssoc :: String -> Get UserAndArgomento
-        ChangeAssoc :: User -> String -> Get UserAndArgomento
+        AddAssoc :: String -> Get UserAndQuestionario
+        ChangeAssoc :: User -> String -> Get UserAndQuestionario
         Identify :: User -> User -> Get ()
         
 get'  :: Env -> Get a -> ConnectionMonad a

@@ -282,14 +282,14 @@ addFeedback e u r = checkUtente e u $ \u -> etransaction e $ do
                         _ -> throwError $ DatabaseError $ "User not associated with the QR of this answer"
                         
 
-changeAssoc :: Env -> String -> String -> ConnectionMonad UserAndArgomento
+changeAssoc :: Env -> String -> String -> ConnectionMonad UserAndQuestionario
 changeAssoc e u' h = checkUtente' e u' (\u -> checkRisorsa e h $ \i _ _ -> etransaction e $ do 
         eexecute e "delete from assoc where utente = ? " (Only u)
         eexecute e "insert into assoc values (?,?)" (u,i)
         l <- listDomandeVisitatore' e u' h
-        return $ UserAndArgomento u' l) $ addAssoc e h
+        return $ UserAndQuestionario u' l) $ addAssoc e h
 
-data UserAndArgomento = UserAndArgomento User QuestionarioVisitatore
+data UserAndQuestionario = UserAndQuestionario User QuestionarioVisitatore
 
 addAssoc e h = do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
@@ -298,7 +298,7 @@ addAssoc e h = do
                 u <- lastRow e 
                 checkRisorsa e h $ \i _ _ -> eexecute e "insert into assoc values (?,?)" (u,i)
                 listDomandeVisitatore' e u h
-        return $ UserAndArgomento new q
+        return $ UserAndQuestionario new q
 
         
 checkUtente' e u f g = do
