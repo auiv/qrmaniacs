@@ -113,7 +113,7 @@ cs.controller("VisitatoreController",function ($scope,Page,$http,$window) {
 });
  
 cs.controller("HomeController",function ($scope,$http,$modal,$timeout,$interval,$log,$routeParams,$cookies,$location,$route,Page) {
-        $scope.cookie=$cookies.get("userName");
+        $scope.user=$cookies.get("userName").slice(1,6);
         Page.setTitle("QR Maniacs");
         $scope.qrlogin=function(){
                 window.location.href = "QR/Login";

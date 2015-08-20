@@ -297,7 +297,7 @@ addAssoc e h = do
                 eexecute e "insert into utenti (hash) values (?)" (Only new)
                 u <- lastRow e 
                 checkRisorsa e h $ \i _ _ -> eexecute e "insert into assoc values (?,?)" (u,i)
-                listDomandeVisitatore' e u h
+                listDomandeVisitatore' e new h
         return $ UserAndQuestionario new q
 
         
