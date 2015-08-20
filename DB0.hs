@@ -206,7 +206,7 @@ data DomandaV = DomandaV Integer String [RispostaV]
 checkRisorsa :: Env -> String -> (Integer -> String -> Integer -> ConnectionMonad a) -> ConnectionMonad a
 checkRisorsa e i f = do 
         r <- equery e "select id,argomento,autore from argomenti where risorsa = ?" (Only i)
-        case (r :: [(Integer,String,String)]) of
+        case (r :: [(Integer,String,Integer)]) of
                 [(i,x,a)] -> f i x a
                 _ -> throwError $ DatabaseError $ "Unknown Resource:" ++ i
 checkDomanda e u i f = do
@@ -227,9 +227,9 @@ data Questionario = QuestionarioAutore
 	| QuestionarioVisitatore String [DomandaV]
 
 listDomande :: Env -> User -> String -> ConnectionMonad Questionario
-listDomande e u i = etransaction e $ listDomande' e u i 
+listDomande e u i = etransaction e $ checkUtente e u $ \u -> listDomande' e u i 
 
-listDomande' e u i =  checkUtente e u $ \u -> checkRisorsa e i $ \i n y -> do 
+listDomande' e u i =  checkRisorsa e i $ \i n y -> do 
                 if y == u then do
                         ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
                         fs <- forM ds $ \(i,d) -> do
@@ -279,14 +279,14 @@ addFeedback e u r = checkUtente e u $ \u -> etransaction e $ do
                         _ -> throwError $ DatabaseError $ "User not associated with the QR of this answer"
                         
 
-changeAssoc :: Env -> String -> String -> ConnectionMonad UserAndArgomento
+changeAssoc :: Env -> String -> String -> ConnectionMonad UserAndQuestionario
 changeAssoc e u' h = checkUtente' e u' (\u -> checkRisorsa e h $ \i _ _ -> etransaction e $ do 
         eexecute e "delete from assoc where utente = ? " (Only u)
         eexecute e "insert into assoc values (?,?)" (u,i)
-        l <- listDomande' e h
-        return $ UserAndArgomento u' l) $ addAssoc e h
+        l <- listDomande' e u h
+        return $ UserAndQuestionario u' l) $ addAssoc e h
 
-data UserAndArgomento = UserAndArgomento User Questionario
+data UserAndQuestionario = UserAndQuestionario User Questionario
 
 addAssoc e h = do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
@@ -294,8 +294,8 @@ addAssoc e h = do
                 eexecute e "insert into utenti (hash) values (?)" (Only new)
                 u <- lastRow e 
                 checkRisorsa e h $ \i _ _ -> eexecute e "insert into assoc values (?,?)" (u,i)
-                listDomande' e h
-        return $ UserAndArgomento new q
+                listDomande' e u h
+        return $ UserAndQuestionario new q
 
         
 checkUtente' e u f g = do

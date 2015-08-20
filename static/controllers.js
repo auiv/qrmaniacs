@@ -125,13 +125,14 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
     Page.setTitle("Visitatore di QR"); 
     $scope.feedback= function (r) {
                 $http.put("AddFeedback/"+r).success(function(xs){
+                        $scope.update();
                         });}
     $scope.items = [];
     $scope.hash = $routeParams.hash;
     $scope.update = function () {
                 $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
+                        $scope.author=xs.result.author;
                         $scope.items=xs.result.domande;
-                        $scope.author=xs.result.autore;
                         $scope.argomento={'text':xs.result.text};
                         });
                 }
