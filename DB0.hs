@@ -270,7 +270,7 @@ changeRispostaValue e u i v = checkRisposta e u i $ eexecute e "update risposte 
 deleteRisposta :: Env -> User -> Integer -> ConnectionMonad ()
 deleteRisposta e u i = checkRisposta e u i $ eexecute e "delete from risposte where id= ?" $ Only i
 
-feedbackArgomenti e u = checkUtente e u $ \u -> equery e "select argomenti.risorsa,argomenti.argomento from argomenti join domande join feedback on feedback.domanda = domande.id and domande.argomento = argomenti.id where feedback.utente = ?" (Only u)
+feedbackArgomenti e u = checkUtente e u $ \u -> equery e "select argomenti.risorsa,argomenti.argomento from argomenti join domande join feedback on feedback.domanda = domande.id and domande.argomento = argomenti.id where feedback.utente = ? group by argomenti.risorsa" (Only u)
 
 feedbackUtente :: Env -> String -> ConnectionMonad [Integer]
 feedbackUtente e u =  map fromOnly `fmap` equery e "select risposta from feedback where utente = ?" (Only u)
