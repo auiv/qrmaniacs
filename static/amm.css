@@ -137,6 +137,7 @@ body{font-size:xx-large ;}
 .pointer{background-color: lightyellow;cursor:pointer;}
 .pointer:hover{background-color:yellow;}
 .comment{font-size:large}
-.footer{position:fixed;bottom:80px;right:10px;
+.footer{position:fixed;bottom:10px;right:10px;
        background-color:lightgrey;width:230px;height:25px;}
-.sponsored{position:absolute;color:white;right:10px;bottom:0px;font-size:medium}
+.sponsored{position:absolute;color:white;right:10px;bottom:3px;font-size:medium}
+.sponsor{position:absolute;bottom:0px;}
