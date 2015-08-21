@@ -104,14 +104,14 @@ body{font-size:xx-large ;}
        padding:20px;
        border-radius: 20px
        }
-.link:hover{text-decoration:none;}
+.link:hover{text-decoration:none;background-color:#f5f5f5}
 .link  {display:block;
        margin-left:1px;
-       background-color: lightgreen;
+       background-color:#48bdc4;
        padding:13px;
        border-radius:5px;
        font-weight:normal;
-       color:brown;width:180px;margin-top:15px;border-top-right-radius: 30px;
+       color:white;width:180px;margin-top:15px;border-top-right-radius: 30px;
        border-color:aliceblue;
        }
 .button:hover{text-decoration:none;}
@@ -139,7 +139,7 @@ body{font-size:xx-large ;}
 .comment{font-size:large}
 .intro{font-size:20px;margin-left:50px;}
 .footer{position:fixed;bottom:10px;right:10px;
-       background-color:lightgrey;width:230px;height:25px;}
-.sponsored{position:absolute;color:white;right:10px;bottom:3px;font-size:medium}
+       background-color:#f5f5f5;width:230px;height:25px;}
+.sponsored{position:absolute;color:black;right:10px;bottom:3px;font-size:medium}
 .sponsor{position:absolute;bottom:0px;}
 .qrmaniacs{float:right;}
