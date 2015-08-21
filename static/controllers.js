@@ -1,44 +1,58 @@
 
 var cs = angular.module("cs", ["xeditable",'ui.bootstrap','ngCookies']);
 
-cs.controller('Input', function ($scope, $modalInstance) {
 
-          $scope.gotMessage = function () {
-            $modalInstance.close();
-          };
-
-          $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-          };
-        });
-cs.controller("LogoutController",function ($scope,$http,$modal,$timeout,$log,$location,$cookies) {
-    $scope.cookie = $cookies.get("userName");
-        $scope.qrlogin=function(){
-                window.location.href = "QR/Login";
-        }
-    $scope.logout = function () {
-        $http.get("Logout").then(function(xs){
-                        $location.url("/");
-                        });
-        }
-        }
-        );
-cs.factory('Page', function() {
+cs.factory('Page', function($location,$window) {
    var title = 'default';
    return {
      title: function() { return title; },
-     setTitle: function(newTitle) { title = newTitle; }
+     setTitle: function(newTitle) { title = newTitle; },
+     qr: function(h){
+         window.location.href = "QR/"+h;
+        },
+
+     qrpersonal:function(){
+         window.location.href = "QR";
+        },
+      qridentify:function(){
+         window.location.href = "QR/Identify";
+        },
+      gotoResource:function(i) {
+        $location.url("/Resource/"+i);
+        },
+       gotoEditResource :function(i) {
+        $location.url("/Autore/Resource/"+i);
+        },
+        gotoQR :function(i) {
+        window.location.href="QR/"+i;
+        },
+        goBack : function () {window.history.back()}
    };
 });
+
+cs.controller('Input', function ($scope, $modalInstance) {
+          $scope.gotMessage = function () {$modalInstance.close();};
+          $scope.cancel = function () {$modalInstance.dismiss('cancel');};
+        });
+
+cs.controller("LogoutController",function ($scope,$http,$modal,$timeout,$log,$location,$cookies) {
+    $scope.cookie = $cookies.get("userName");
+        $scope.qrlogin=function(){window.location.href = "QR/Login";}
+    $scope.logout = function () {
+        $http.get("Logout").then(function(xs){$location.url("/");});
+        }
+    });
+
 cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page) {
         $scope.Page=Page; 
-        }
-        );
+        });
+
 cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page,$window) {
-    $scope.goBack = function () {$window.history.back()};
+    $scope.Page=Page;
+    Page.setTitle("Autore di QR");
+    
     $scope.selected=null;
     $scope.argomenti = [];
-    Page.setTitle("Autore di QR");
     $timeout(function () {$scope.cookie = $cookies.get("userName")});
     $scope.update_ = function (f) {
                 $http.get("Argomenti").then(function(xs){
@@ -50,25 +64,6 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
    $scope.update=function(){$scope.update_(function(){})};
         $scope.update();
    $scope.input={};
-   $scope.qr=function(h){
-         window.location.href = "QR/"+h;
-        }
-
-   $scope.qrpersonal=function(){
-         window.location.href = "QR";
-        }
-   $scope.qridentify=function(){
-         window.location.href = "QR/Identify";
-        }
-   $scope.gotoResource = function(i) {
-        $location.url("/Resource/"+i);
-        }
-   $scope.gotoEditResource = function(i) {
-        $location.url("/Autore/Resource/"+i);
-        }
-   $scope.gotoQR = function(i) {
-        window.location.href="QR/"+i;
-        }
      $scope.checkDelete = function (f,i) {
                 var modalInstance = $modal.open({
                         animation: true,
@@ -102,17 +97,30 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
         }
 });
 
-cs.controller("VisitatoreController",function ($scope,Page,$http,$window) {
-    $scope.goBack = function () {$window.history.back()};
+cs.controller("VisitatoreController",function ($scope,Page,$http,$window,$location,Page) {
+    $scope.Page = Page;
     Page.setTitle("Visitatore");
     $scope.update = function () {
                 $http.get("Visitati").then(function(xs){
                         $scope.argomenti=xs.data.result;
-                        $log.log(xs.data);
                         });
         }
     $scope.update();
-
+     $scope.checkDelete = function (f,i) {
+                var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'static/deleting.html',
+                        controller: 'Input',
+                        size: 'lg',
+                        scope:$scope
+                        });
+                modalInstance.result.then(
+                        function () {f(i);},
+                        function () {}
+                        );
+                };
+     $scope.deleteArgomento = function(i) {
+        $http.put("RemoveFeedback/"++i).success(function (){$scope.update()})}
 });
  
 cs.controller("HomeController",function ($scope,$http,$modal,$timeout,$interval,$log,$routeParams,$cookies,$location,$route,Page) {
@@ -129,7 +137,7 @@ cs.controller("HomeController",function ($scope,$http,$modal,$timeout,$interval,
     });  
 
 cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window,$cookies) {
-    $scope.goBack = function () {$window.history.back()};
+    $scope.Page = Page;
     Page.setTitle("Visitatore di QR"); 
     $scope.feedback= function (r) {
                 $http.put("AddFeedback/"+r).success(function(xs){
@@ -148,7 +156,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         
         });
 cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
-    $scope.goBack = function () {$window.history.back()};
+    $scope.Page = Page;
     Page.setTitle("Autore domande QR");
     $scope.items = [];
     $scope.valori=['Giusta','Sbagliata','Accettabile'];

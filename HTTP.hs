@@ -100,6 +100,9 @@ main = do
                                                         v' <- readMaybe v
                                                         return $ ChangeRispostaValue u i' v'
 
+                                        ["RemoveFeedback",i] -> onuser user $ \u -> responseP $ do
+                                                        i' <- readMaybe i
+                                                        return $ RemoveFeedback u i'
                                         ["AddFeedback",i] -> onuser user $ \u -> responseP $ do
                                                         i' <- readMaybe i
                                                         return $ AddFeedback u i'

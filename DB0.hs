@@ -280,8 +280,15 @@ addFeedback e u r = checkUtente e u $ \u -> etransaction e $ do
                 case (c::[(Integer,Integer)]) of 
                         [(r,d)] ->  eexecute e "insert or replace into feedback values (?,?,?)" (u,d,r)
                         _ -> throwError $ DatabaseError $ "User not associated with the QR of this answer"
-                        
-
+  
+removeFeedback = undefined         
+{-             
+removeFeedback e u i = checkUtente e u $ \u -> checkRisorsa e i $ \i _ _ -> etransaction e $ do
+                c <- equery e "select domande.id from argomenti join domande  on argomento.id = domande.argomento  argomento.id = ?" (Only i)
+                case (c::[Only Integer]) of 
+                        [Only d] ->  eexecute e "delete from feedback where utente=? and domanda=?" (u,d)
+                        _ -> throwError $ DatabaseError $ "User not associated with the QR of this answer"
+-}
 changeAssoc :: Env -> String -> String -> ConnectionMonad UserAndQuestionario
 changeAssoc e u' h = checkUtente' e u' (\u -> checkRisorsa e h $ \i _ _ -> etransaction e $ do 
         eexecute e "delete from assoc where utente = ? " (Only u)

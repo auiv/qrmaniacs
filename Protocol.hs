@@ -36,6 +36,7 @@ data Put
         | ChangeRispostaValue User Integer Value
         | DeleteRisposta User Integer
         | AddFeedback User Integer
+        | RemoveFeedback User Integer
         deriving Read
 
 put' :: Env -> Put -> ConnectionMonad ()
@@ -50,6 +51,7 @@ put' e (ChangeArgomento u i s) = changeArgomento e u i s
 put' e (ChangeRisposta u i s) = changeRisposta e u i s
 put' e (ChangeRispostaValue u i v) = changeRispostaValue e u i v
 put' e (AddFeedback u r)= addFeedback e u r
+put' e (RemoveFeedback u r)= removeFeedback e u r
       
 put :: Env -> Put -> WriterT [Event] IO (Either DBError ())
 put e l = runErrorT (put' e l)

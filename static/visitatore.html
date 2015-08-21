@@ -1,11 +1,17 @@
 <div class=navlinks>
         <a class=link href="#/">Home</a>
-        <a class=link ng-click="goBack()">Back</a>
+        <a class=link ng-click="Page.goBack()">Back</a>
 </div>
-<div class="well title"> I tuoi contributi </div> 
+<div class="well title"> Le tue risposte </div> 
 <ul class="content list-group"> 
-        <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"> 
-                <a  class=link href="#Resource/{{argomento.index}}">{{argomento.text}}</a>
+        <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
+                {{argomento.text}}
+                <div class=delete>
+                        <button  class="btn btn-default"  ng-click="Page.gotoQR(argomento.index);$event.stopPropagation()">
+                                <span class="glyphicon glyphicon-qrcode"></span> </a>
+                        <button  class="btn btn-default" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
+                               <span class="glyphicon glyphicon-trash"></span> </button>
+                <div>
         </li>
 </ul> 
 
