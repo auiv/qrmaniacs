@@ -81,7 +81,7 @@ body{font-size:xx-large ;}
 .list-group-item{margin:1px;border:0px;border-bottom:4px;}
 .list-group-item .list-group .list-group-item{margin:0px;border: 0px;}
 .form-control{font-size:34px;}
-.btn{font-size:xx-large}
+.btn{font-size:xx-large;white-space:normal;}
 .modal-footer{margin-bottom:15px}
 
 .modal-footer .btn + .btn {
