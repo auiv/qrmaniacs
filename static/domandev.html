@@ -17,7 +17,7 @@
                 <ul class="list-group">
                         <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
 
-                                <button class="btn default" ng-click="feedback(item.answers[$index].index)">
+                                <button class="btn risposte" ng-click="feedback(item.answers[$index].index)">
                                 {{ item.answers[$index].text}}
                                 </button>
                                 <span ng-show="item.answers[$index].chosen"  class="glyphicon glyphicon-ok"></span></button>

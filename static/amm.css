@@ -142,6 +142,7 @@ body{font-size:xx-large ;}
 .intro{font-size:20px;margin-left:50px;}
 .footer{position:fixed;top:10px;left:10px;
        background-color:#f5f5f5;width:230px;height:25px;border:1px solid #e3e3e3}
-.sponsored{position:absolute;color:black;right:15px;bottom:1px;font-size:medium}
+.sponsored{position:absolute;color:black;right:5px;bottom:1px;font-size:medium}
 .sponsor{position:absolute;top:0px;}
 .qrmaniacs{float:right;}
+.risposte{background-color:#e5f6fd;border:2px solid #e3e3e3 }
