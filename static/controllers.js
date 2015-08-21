@@ -120,7 +120,7 @@ cs.controller("VisitatoreController",function ($scope,Page,$http,$window,$locati
                         );
                 };
      $scope.deleteArgomento = function(i) {
-        $http.put("RemoveFeedback/"++i).success(function (){$scope.update()})}
+        $http.put("RemoveFeedback/"+i).success(function (){$scope.update()})}
 });
  
 cs.controller("HomeController",function ($scope,$http,$modal,$timeout,$interval,$log,$routeParams,$cookies,$location,$route,Page) {
