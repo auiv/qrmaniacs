@@ -1,6 +1,13 @@
 <div class=logo>
-<div class=user>{{user}}</div>
+<div ng-show=user class=user>{{user}}</div>
 <img src="QR"/>
+</div>
+<h3 class=title> <em>QR Maniacs</em> <span class=comment> QR code related services <span> </h3>
+<div ng-hide=active class=content>
+<p> I servizi di <em>QR Maniacs</em> (fase alpha) sono accessibili tramite QR argomento (URL inerni) di questo dominio. </p>
+<p> Per diventare autore contatta 
+<a href="mailto:paolo.veronelli@gmail.com">mail</a>
+</p>
 </div>
 <div ng-show=active class=navlinks>
                 <a ng-show="isAuthor" class=link href="#/Autore">Autore</a>
