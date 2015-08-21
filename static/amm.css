@@ -79,7 +79,7 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 }
 body{font-size:40px;}
 .list-group-item{margin:1px;border:0px;border-bottom:4px;}
-.list-group-item .list-group .list-group-item{margin:0px;border: 0px;}
+.list-group-item .list-group .list-group-item{margin-left:25px;border: 0px;}
 .form-control{font-size:40px;}
 .btn{font-size:40px;white-space:normal;}
 .modal-footer{margin-bottom:15px}
@@ -128,7 +128,7 @@ body{font-size:40px;}
        }
 .op{}
 .argomento{margin-left:500px;font-size:40px;background-color: lightgrey;padding:7px;width:700px;border-radius:8px;}
-.domanda{margin-left:23px;font-size:40px;background-color: #eee;padding:7px;border-radius:8px;color:black;}
+.domanda{margin-top:15px;font-size:45px;padding:0px;border-radius:8px;color:black;}
 .logo{float:right}
 .navigation{width: 500px}
 .content{margin-left: 200px;}
@@ -145,4 +145,4 @@ body{font-size:40px;}
 .sponsored{position:absolute;color:black;right:5px;bottom:1px;font-size:16px}
 .sponsor{position:absolute;top:0px;}
 .qrmaniacs{float:right;}
-.risposte{background-color:#e5f6fd;border:2px solid #e3e3e3 }
+.risposte{background-color:#e5f6fd;border:1px solid #e3e3e3 }
