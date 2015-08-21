@@ -9,8 +9,6 @@
 <a class=nuovo ng-click="addArgomento($index)"><span class="glyphicon glyphicon-plus"></span></a>
         <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)" ng-click="Page.gotoResource(argomento.index)"> 
                 <div class=delete>
-                        <button  class="btn btn-default" ng-click="Page.gotoEditResource(argomento.index);$event.stopPropagation()">
-                               <span class="glyphicon glyphicon-pencil"></span> </button>
                         <button  class="btn btn-default"  ng-click="Page.gotoQR(argomento.index);$event.stopPropagation()">
                                 <span class="glyphicon glyphicon-qrcode"></span> </a>
                         <button  class="btn btn-default" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
