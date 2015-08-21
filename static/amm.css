@@ -77,11 +77,11 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
        padding:30px;
        
 }
-body{font-size:xx-large ;}
+body{font-size:40px;}
 .list-group-item{margin:1px;border:0px;border-bottom:4px;}
 .list-group-item .list-group .list-group-item{margin:0px;border: 0px;}
-.form-control{font-size:34px;}
-.btn{font-size:xx-large;white-space:normal;}
+.form-control{font-size:40px;}
+.btn{font-size:40px;white-space:normal;}
 .modal-footer{margin-bottom:15px}
 
 .modal-footer .btn + .btn {
@@ -138,11 +138,11 @@ body{font-size:xx-large ;}
 .login{float:right;font-size:16px;color:#999}
 .pointer{background-color:#e5f6fd;cursor:pointer;}
 .pointer:hover{background-color:#43c2c4;color:white}
-.comment{font-size:large}
+.comment{font-size:30px}
 .intro{font-size:20px;margin-left:50px;}
 .footer{position:fixed;top:10px;left:10px;
        background-color:#f5f5f5;width:230px;height:25px;border:1px solid #e3e3e3}
-.sponsored{position:absolute;color:black;right:5px;bottom:1px;font-size:medium}
+.sponsored{position:absolute;color:black;right:5px;bottom:1px;font-size:16px}
 .sponsor{position:absolute;top:0px;}
 .qrmaniacs{float:right;}
 .risposte{background-color:#e5f6fd;border:2px solid #e3e3e3 }
