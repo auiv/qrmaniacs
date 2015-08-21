@@ -6,7 +6,7 @@
 </div>
 
 <div class="well title"> 
-<div  class=user>{{Page.user()}}</div>
+<div  ng-include="'static/title.html'"></div>
 <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data)" e-rows="2" e-cols="20">
                                 {{ argomento.text || 'Argomento..' }}</a>
 </div>

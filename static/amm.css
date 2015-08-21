@@ -134,7 +134,8 @@ body{font-size:xx-large ;}
 .content{margin-left: 200px;}
 .title{margin-left: 300px;padding-left:50px;font-size:40px;}
 .form-inline{border:1px solid;border-radius:5px;padding:3px;border-color:blue;}
-.user{float:right;margin-right:5px;font-style:oblique;font-size:12px}
+.user{margin-right:5px;font-style:oblique;font-size:25px}
+.login{float:right;font-size:16px;color:#999}
 .pointer{background-color: lightyellow;cursor:pointer;}
 .pointer:hover{background-color:yellow;}
 .comment{font-size:large}
