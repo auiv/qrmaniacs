@@ -4,7 +4,10 @@
         <a class=link ng-click="Page.goBack()">Back</a>
         <a ng-show=author class=link href="#/Autore/Resource/{{hash}}">Edit</a>
 </div>
-<div class="well title"> {{argomento.text}}</div> 
+<div class="well title"> {{argomento.text}}
+
+<div  class=user>{{Page.user()}}</div>
+</div> 
 <ul class="content list-group"> 
 
         <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 

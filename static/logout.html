@@ -5,6 +5,10 @@
         <a class=link ng-click="logout()">Logout</a>
 </div>
 
+<div class="well title"> Il tuo profilo 
+<div  class=user>{{Page.user()}}</div>
+</div> 
+
 <ul class="content list-group">
         <li class=list-group-item>
                 QR di ingresso
@@ -12,7 +16,7 @@
         </li> 
         <li class=list-group-item>
                 Link di ingresso
-                  <a href="Login/{{cookie}}">{{cookie.slice(1,20)}}........</a>
+                  <a href="Login/{{cookie}}">{{Page.user().slice(1,20)}}........</a>
         </li> 
         <li class=list-group-item>
         </li> 
