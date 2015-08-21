@@ -128,7 +128,7 @@ body{font-size:40px;}
        }
 .op{}
 .argomento{margin-left:500px;font-size:40px;background-color: lightgrey;padding:7px;width:700px;border-radius:8px;}
-.domanda{margin-top:15px;font-size:45px;padding:0px;border-radius:8px;color:black;}
+.domanda{margin-top:15px;margin-bottom:10px;font-size:40px;background-color:#43c2c4;padding:5px;padding-left:10px;border-radius:5px;color:white;}
 .logo{float:right}
 .navigation{width: 500px}
 .content{margin-left: 200px;}
@@ -141,8 +141,9 @@ body{font-size:40px;}
 .comment{font-size:30px}
 .intro{font-size:20px;margin-left:50px;}
 .footer{position:fixed;top:10px;left:10px;
-       background-color:#f5f5f5;width:230px;height:25px;border:1px solid #e3e3e3}
-.sponsored{position:absolute;color:black;right:5px;bottom:1px;font-size:16px}
+       background-color:#f5f5f5;width:185px;height:45px;border:1px solid #e3e3e3;border-radius:5px}
+.sponsored{position:absolute;color:black;right:5px;bottom:20px;font-size:16px}
+.code{position:absolute;color:black;right:5px;bottom:1px;font-size:16px}
 .sponsor{position:absolute;top:0px;}
 .qrmaniacs{float:right;}
-.risposte{background-color:#e5f6fd;border:1px solid #e3e3e3 }
+.risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:3px; }
