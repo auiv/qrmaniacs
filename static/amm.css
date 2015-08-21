@@ -134,3 +134,5 @@ body{font-size:xx-large ;}
 .title{margin-left: 300px;padding-left:50px;font-size:40px;}
 .form-inline{border:1px solid;border-radius:5px;padding:3px;border-color:blue;}
 .user{float:right;margin-right:5px;font-style:oblique}
+.pointer{background-color: lightyellow;cursor:pointer;}
+.pointer:hover{background-color:yellow;}

@@ -4,7 +4,7 @@
 </div>
 <div class="well title"> Le tue risposte </div> 
 <ul class="content list-group"> 
-        <li class="list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
+        <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
                 {{argomento.text}}
                 <div class=delete>
                         <button  class="btn btn-default"  ng-click="Page.gotoQR(argomento.index);$event.stopPropagation()">
