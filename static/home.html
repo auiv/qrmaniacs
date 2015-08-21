@@ -1,14 +1,13 @@
+<div ng-show=active class=navlinks>
+                <a ng-if="isAuthor" class=link href="#/Autore">Autore</a>
+                <a class=link href="#/Visitatore">Visitatore</a>
+                <a ng-if="false" class=link href="#/Validatore">Validatore</a>
+</div>
 
 <div class="well title"> 
         <em>QR Maniacs</em>  
         <span class=comment> QR code related services <span>
         <span  ng-include="'static/title.html'"></span>
-</div>
-<div ng-show=active class=navlinks>
-                <a ng-show="isAuthor" class=link href="#/Autore">Autore</a>
-                <a class=link href="#/Visitatore">Visitatore</a>
-                <a ng-show="false" class=link href="#/Validatore">Validatore</a>
-                <a class=link href="#/Logout">Profilo</a>
 </div>
 <div ng-hide=active class="content">
         <div class="intro">
