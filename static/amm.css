@@ -136,8 +136,8 @@ body{font-size:xx-large ;}
 .form-inline{border:1px solid;border-radius:5px;padding:3px;border-color:blue;}
 .user{margin-right:5px;font-style:oblique;font-size:25px}
 .login{float:right;font-size:16px;color:#999}
-.pointer{background-color:#f5f5f5;cursor:pointer;}
-.pointer:hover{background-color:#43c2c4;}
+.pointer{background-color:#c7ecfc;cursor:pointer;}
+.pointer:hover{background-color:#43c2c4;color:white}
 .comment{font-size:large}
 .intro{font-size:20px;margin-left:50px;}
 .footer{position:fixed;top:10px;left:10px;
