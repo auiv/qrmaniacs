@@ -162,15 +162,15 @@ addArgomento e u s = checkAuthor e u $ \u _ -> do
         
 --  promoteUser :: Env -> Mail -> User ->
 
-data Argomento = Argomento String String deriving Show
+data Argomento = Argomento String String String deriving Show
 
 instance FromRow Argomento where
-   fromRow = Argomento <$> field <*> field 
+   fromRow = Argomento <$> field <*> field <*> field
 
 data Argomenti = Argomenti String [Argomento]
 listArgomenti :: Env -> User -> ConnectionMonad Argomenti
 listArgomenti e u = checkAuthor e u $ \u l -> do 
-        as <- equery e "select risorsa,argomento from argomenti where autore = ?" (Only u)
+        as <- equery e "select risorsa,argomento,logo  from argomenti join autori on argomenti.autore = autori.id where autore = ?" (Only u)
         return $ Argomenti l as
 
 
@@ -274,7 +274,8 @@ changeRispostaValue e u i v = checkRisposta e u i $ eexecute e "update risposte 
 deleteRisposta :: Env -> User -> Integer -> ConnectionMonad ()
 deleteRisposta e u i = checkRisposta e u i $ eexecute e "delete from risposte where id= ?" $ Only i
 
-feedbackArgomenti e u = checkUtente e u $ \u -> equery e "select argomenti.risorsa,argomenti.argomento from argomenti join domande join feedback on feedback.domanda = domande.id and domande.argomento = argomenti.id where feedback.utente = ? group by argomenti.risorsa" (Only u)
+feedbackArgomenti :: Env -> User -> ConnectionMonad [Argomento]
+feedbackArgomenti e u = checkUtente e u $ \u -> equery e "select argomenti.risorsa,argomenti.argomento,autori.logo from argomenti join domande join feedback join autori on feedback.domanda = domande.id and domande.argomento = argomenti.id and argomenti.autore = autori.id where feedback.utente = ? group by argomenti.risorsa" (Only u)
 
 feedbackUtente :: Env -> String -> ConnectionMonad [Integer]
 feedbackUtente e u =  map fromOnly `fmap` equery e "select risposta from feedback where utente = ?" (Only u)

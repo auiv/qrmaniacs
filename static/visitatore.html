@@ -7,6 +7,7 @@
 </div> 
 <ul class="content list-group"> 
         <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
+                <img class=logov width=40 height=40 src={{argomento.logo}} />
                 {{argomento.text}}
                 <div class=delete>
                         <button  class="btn btn-default"  ng-click="Page.gotoQR(argomento.index);$event.stopPropagation()">
