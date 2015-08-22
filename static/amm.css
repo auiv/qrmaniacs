@@ -52,7 +52,7 @@ a.editable-click:hover {
     border-bottom-color: #47a447;
 }
 
-
+.editable-input{height: 80px;width:300px}
 
 .editable-radiolist label {
     font-weight:100;
@@ -66,7 +66,7 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 .delete{position:absolute;right:0px;top:0px;}
 
 .modal-dialog {
-    width: 500px;
+    width: 700px;
     margin: 30px;
     margin-top:5px;
 }
@@ -80,6 +80,7 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 body{font-size:40px;}
 .list-group-item{margin:1px;border:0px;border-bottom:4px;}
 .list-group-item .list-group .list-group-item{margin-left:25px;border: 0px;}
+.list-group-item a{margin-left:30px;}
 .form-control{font-size:40px;}
 .btn{font-size:40px;white-space:normal;}
 .modal-footer{margin-bottom:15px}

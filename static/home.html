@@ -1,15 +1,32 @@
-<div ng-show=active class=navlinks>
+
+<div ng-show=active>
+        <div ng-show=active class=navlinks>
                 <a ng-if="isAuthor" class=link href="#/Autore">Autore</a>
                 <a class=link href="#/Visitatore">Visitatore</a>
                 <a ng-if="false" class=link href="#/Validatore">Validatore</a>
+                <a class=link ng-click="logout()">Logout</a>
+        </div>
+
+        <div class="well title"> Il tuo profilo </div> 
+
+        <ul class="content list-group">
+                <li class=list-group-item>
+                        Indirizzo di posta:
+                        <a  href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
+                                {{mail || 'mail....'}}</a>
+                </li> 
+                <li class=list-group-item>
+                        QR di login:<a href="QR/Login">QR</a>
+                </li> 
+        </ul>
+                
 </div>
 
-<div class="well title"> 
-        <em>QR Maniacs</em>  
-        <span class=comment> QR code related services <span>
-        <span  ng-include="'static/title.html'"></span>
-</div>
 <div ng-hide=active class="content">
+        <div class="well title"> 
+                <em>QR Maniacs</em>  
+                <span class=comment> QR code related services <span>
+        </div>
         <div class="intro">
                 <img class=qrmaniacs src="QR"/>
                         <p> I servizi di <em>QR Maniacs</em> (fase alpha) sono accessibili tramite QR argomento (URL inerni) di questo dominio. </p>

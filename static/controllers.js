@@ -21,28 +21,40 @@ cs.factory('Page', function($location,$window,$cookies) {
         loginQR : function(){window.location.href = "QR/Login"}
         };
         });
-
-cs.controller("HomeController",function ($scope,$http,Page) {
-        $scope.Page=Page; 
-        Page.setTitle("QR Maniacs");
-        Page.setLogo("static/immagini/logo.png");
-        $scope.active=false;
-        $http.get("Role").success(function(xs){
-                $scope.isAuthor=xs.result.author;
-                $scope.isValidatore=xs.result.validatore;
-                $scope.active=true;
-                });
-    });  
 cs.controller('Input', function ($scope, $modalInstance) {
           $scope.gotMessage = function () {$modalInstance.close();};
           $scope.cancel = function () {$modalInstance.dismiss('cancel');};
         });
 
+cs.controller("HomeController",function ($scope,$http,Page,$modal) {
+        $scope.Page=Page; 
+        Page.setTitle("QR Maniacs");
+        Page.setLogo("static/immagini/logo.png");
+        $scope.active=false;
+        $scope.logout = function () {
+                var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'static/logginout.html',
+                        controller: 'Input',
+                        size: 'lg',
+                        scope:$scope
+                        });
+                modalInstance.result.then(
+                        function () {$http.get("Logout").then(function(xs){$scope.active=false;})},
+                        function () {}
+                        );
+                };
+
+         $http.get("Role").success(function(xs){
+                $scope.isAuthor=xs.result.author;
+                $scope.isValidatore=xs.result.validatore;
+                $scope.active=true;
+                });
+    });  
+
 cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
         $scope.Page = Page;
         Page.setLogo("static/immagini/logo.png");
-        $scope.logout = function () { $http.get("Logout").then(function(xs){$location.url("/");});
-                                }
         });
 
 cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page) {
