@@ -142,21 +142,21 @@ lastRow e = do
 
 type User = String
 
-checkAuthor :: Env -> User -> (Integer -> ConnectionMonad a) -> ConnectionMonad a
+checkAuthor :: Env -> User -> (Integer -> String -> ConnectionMonad a) -> ConnectionMonad a
 checkAuthor e u f = do
         liftIO $ print u
-        r <- equery e "select autori.id from autori join utenti on autori.id = utenti.id where hash=?" (Only u)
-        case (r :: [Only Integer]) of
-                [Only i] -> f i
+        r <- equery e "select autori.id,autori.logo from autori join utenti on autori.id = utenti.id where hash=?" (Only u)
+        case (r :: [(Integer,String)]) of
+                [(i,l)] -> f i l
                 _ -> throwError $ DatabaseError "Unknown Author"
-checkAuthorOf e u i f = checkAuthor e u $ \u -> do
+checkAuthorOf e u i f = checkAuthor e u $ \u _ -> do
         r <- equery e "select id from argomenti where autore =? and risorsa = ?" (u,i)
         case (r :: [Only Integer]) of
                 [Only i] -> f i
                 _ -> throwError $ DatabaseError "Not author"
 
 addArgomento :: Env -> User -> String -> ConnectionMonad ()
-addArgomento e u s = checkAuthor e u $ \u -> do
+addArgomento e u s = checkAuthor e u $ \u _ -> do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
         eexecute e "insert into argomenti (argomento,autore,risorsa) values (?,?,?)" $ (s,u,new)
         
@@ -167,8 +167,11 @@ data Argomento = Argomento String String deriving Show
 instance FromRow Argomento where
    fromRow = Argomento <$> field <*> field 
 
-listArgomenti :: Env -> User -> ConnectionMonad [Argomento]
-listArgomenti e u = checkAuthor e u $ \u -> equery e "select risorsa,argomento from argomenti where autore = ?" (Only u)
+data Argomenti = Argomenti String [Argomento]
+listArgomenti :: Env -> User -> ConnectionMonad Argomenti
+listArgomenti e u = checkAuthor e u $ \u l -> do 
+        as <- equery e "select risorsa,argomento from argomenti where autore = ?" (Only u)
+        return $ Argomenti l as
 
 
 changeArgomento ::Env -> User -> String -> String -> ConnectionMonad ()
@@ -224,7 +227,8 @@ checkRisposta e u i f = do
 data QuestionarioAutore = QuestionarioAutore
         String --testo titolo
         [Domanda]
-data QuestionarioVisitatore =  QuestionarioVisitatore Bool String [DomandaV]
+        String
+data QuestionarioVisitatore =  QuestionarioVisitatore Bool String [DomandaV] String
 
 listDomandeAutore :: Env -> User -> String -> ConnectionMonad QuestionarioAutore
 listDomandeAutore e u i = etransaction e $ listDomandeAutore' e u i 
@@ -232,20 +236,20 @@ listDomandeAutore e u i = etransaction e $ listDomandeAutore' e u i
 listDomandeVisitatore :: Env ->  User -> String -> ConnectionMonad QuestionarioVisitatore
 listDomandeVisitatore e u i = etransaction e $ listDomandeVisitatore' e u  i 
 listDomandeAutore' e u i = checkAuthorOf e u i $ \i -> do 
-                        [Only n] <- equery e "select argomento from argomenti where id=?" $ Only i
+                        [(n,lo)] <- equery e "select argomento,logo  from argomenti join autori on autori.id = argomenti.autore where argomenti.id=?" $ Only i
                         ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
                         fs <- forM ds $ \(i,d) -> do
                                 rs <- equery e "select id,risposta,valore from risposte where domanda = ?" $ Only i
                                 return $ Domanda i d rs
-                        return $ QuestionarioAutore n fs
+                        return $ QuestionarioAutore n fs lo
 listDomandeVisitatore' e u i = checkUtente e u $ \u -> checkRisorsa e i $ \i _ y -> do
-                        [Only n] <- equery e "select argomento from argomenti where id=?" $ Only i
+                        [(n,lo)] <- equery e "select argomento,logo  from argomenti join autori on autori.id = argomenti.autore where argomenti.id=?" $ Only i
                         ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
                         fs <- forM ds $ \(i,d) -> do
                                 rs <- equery e "select id,risposta from risposte where domanda = ?" $ Only i
                                 zs <- equery e "select risposta from feedback where domanda = ? and utente=?" $ (i,u)
                                 return $ DomandaV i d $ map (\(i,r) -> RispostaV i r $ i `elem` map fromOnly zs) rs
-                        return $ QuestionarioVisitatore (u==y) n fs
+                        return $ QuestionarioVisitatore (u==y) n fs lo
                         
 
 addDomanda :: Env -> User -> String -> String -> ConnectionMonad ()

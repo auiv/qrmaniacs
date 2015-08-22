@@ -57,7 +57,7 @@ put :: Env -> Put -> WriterT [Event] IO (Either DBError ())
 put e l = runErrorT (put' e l)
    
 data Get a where
-        Argomenti :: User -> Get [Argomento]
+        ArgomentiAutore :: User -> Get Argomenti
         Domande :: User -> String -> Get QuestionarioVisitatore
         DomandeAutore :: User -> String -> Get QuestionarioAutore
         Feedback :: User -> Get [Integer]
@@ -68,7 +68,7 @@ data Get a where
         Role :: User  -> Get Roles
         
 get'  :: Env -> Get a -> ConnectionMonad a
-get' e (Argomenti u) = listArgomenti e u 
+get' e (ArgomentiAutore u) = listArgomenti e u 
 get' e (Domande u i) = listDomandeVisitatore e u i
 get' e (DomandeAutore u i) = listDomandeAutore e u i
 get' e (Visitati u) = feedbackArgomenti e u

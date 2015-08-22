@@ -142,8 +142,8 @@ body{font-size:40px;}
 .comment{font-size:12px}
 .intro{font-size:20px;margin-left:50px;}
 .footer{position:fixed;top:10px;left:10px;}
-.sponsored{position:absolute;color:black;right:5px;bottom:20px;font-size:16px}
+
 .code{position:absolute;color:black;right:5px;bottom:1px;font-size:16px}
-.sponsor{position:absolute;top:0px;}
+.sponsor{position:fixed;top:10px;left:20px;background-color:#f8f8f8;padding:6px;margin;border:1px solid #e3e3e3}
 .qrmaniacs{float:right;}
 .risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:3px; }

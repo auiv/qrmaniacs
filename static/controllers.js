@@ -4,9 +4,12 @@ var cs = angular.module("cs", ["xeditable",'ui.bootstrap','ngCookies']);
 
 cs.factory('Page', function($location,$window,$cookies) {
    var title = 'default';
+   var logo = "";
    return {
         title: function() { return title; },
         setTitle: function(newTitle) { title = newTitle; },
+        logo: function(newTitle) {return logo},
+        setLogo: function(newLogo) { logo = newLogo},
         qr: function(h){window.location.href = "QR/"+h},
         qrpersonal:function(){window.location.href = "QR"},
         qridentify:function(){window.location.href = "QR/Identify"},
@@ -22,6 +25,7 @@ cs.factory('Page', function($location,$window,$cookies) {
 cs.controller("HomeController",function ($scope,$http,Page) {
         $scope.Page=Page; 
         Page.setTitle("QR Maniacs");
+        Page.setLogo("static/immagini/logo.png");
         $scope.active=false;
         $http.get("Role").success(function(xs){
                 $scope.isAuthor=xs.result.author;
@@ -35,7 +39,8 @@ cs.controller('Input', function ($scope, $modalInstance) {
         });
 
 cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
-        $scope.Page = Page
+        $scope.Page = Page;
+        Page.setLogo("static/immagini/logo.png");
         $scope.logout = function () { $http.get("Logout").then(function(xs){$location.url("/");});
                                 }
         });
@@ -51,9 +56,9 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
         $scope.selected=null;
         $scope.argomenti = [];
         $scope.update_ = function (f) {
-                $http.get("Argomenti").then(function(xs){
-                        $scope.argomenti=xs.data.result;
-                        $log.log(xs.data);
+                $http.get("ArgomentiAutore").then(function(xs){
+                        $scope.argomenti=xs.data.result.argomenti;
+                        Page.setLogo(xs.data.result.logo);
                         f();
                         });
         }
@@ -88,10 +93,10 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
                 $http.put("DeleteArgomento/" + index).success($scope.update);
                 }
         });
-
 cs.controller("VisitatoreController",function ($scope,Page,$http,$window,$location,Page) {
         $scope.Page = Page;
         Page.setTitle("Visitatore");
+        Page.setLogo("static/immagini/logo.png");
         $scope.update = function () {
                 $http.get("Visitati").then(function(xs){
                         $scope.argomenti=xs.data.result;
@@ -130,6 +135,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
                         $scope.author=xs.result.author;
                         $scope.items=xs.result.domande;
                         $scope.argomento={'text':xs.result.text};
+                        Page.setLogo (xs.result.logo);
                         });
                 }
         $scope.update();
@@ -145,6 +151,7 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
                 $http.get("DomandeAutore/"+$scope.hash).success(function(xs){
                         $scope.items=xs.result.domande;
                         $scope.argomento={'text':xs.result.text};
+                        Page.setLogo (xs.result.logo);
                         f();
                         });
                 }
