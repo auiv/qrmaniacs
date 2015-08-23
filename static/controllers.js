@@ -105,7 +105,7 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
                 $http.put("DeleteArgomento/" + index).success($scope.update);
                 }
         });
-cs.controller("VisitatoreController",function ($scope,Page,$http,$window,$location,Page) {
+cs.controller("VisitatoreController",function ($scope,Page,$http,$window,$location,Page,$modal) {
         $scope.Page = Page;
         Page.setTitle("Visitatore");
         Page.setLogo("static/immagini/logo.png");
