@@ -14,8 +14,9 @@
                         Indirizzo di posta:
                         <a  href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                 {{mail || 'mail....'}}</a>
+                        <button class="btn" ng-click="aggiorna()">aggiornami</button>
                 </li> 
-                <li class=list-group-item>
+                <li ng-if="isAuthor" class=list-group-item>
                         QR di login:<a href="QR/Login">QR</a>
                 </li> 
         </ul>
