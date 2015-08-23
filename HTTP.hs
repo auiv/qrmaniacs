@@ -148,7 +148,7 @@ main = do
                                         ["DomandeAutore",i] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ DomandeAutore u i 
                                         ["ChangeAssoc",i] -> case user of
-                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndQuestionario u q) -> (id,q))
+                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndQuestionario u q) -> (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                                                  Nothing -> sendResponse' g (Just $ AddAssoc i) (\(UserAndQuestionario u q) ->
                                                                           (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                         ["QR","Identify"] -> onuser user $ \u -> do
