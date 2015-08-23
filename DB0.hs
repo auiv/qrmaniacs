@@ -198,13 +198,13 @@ data QuestionarioAutore = QuestionarioAutore
         String --testo titolo
         [Domanda]
         String
-data QuestionarioVisitatore =  QuestionarioVisitatore Bool String [DomandaV] String
+data QuestionarioVisitatore =  QuestionarioVisitatore Bool String [DomandaV] String Bool
 
 listDomandeAutore :: Env -> User -> String -> ConnectionMonad QuestionarioAutore
 listDomandeAutore e u i = etransaction e $ listDomandeAutore' e u i 
 
 listDomandeVisitatore :: Env ->  User -> String -> ConnectionMonad QuestionarioVisitatore
-listDomandeVisitatore e u i = etransaction e $ listDomandeVisitatore' e u  i 
+listDomandeVisitatore e u i = etransaction e $ listDomandeVisitatore' e u  i False 
 listDomandeAutore' e u i = checkAuthorOf e u i $ \i -> do 
                         [(n,lo)] <- equery e "select argomento,logo  from argomenti join autori on autori.id = argomenti.autore where argomenti.id=?" $ Only i
                         ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
@@ -212,14 +212,14 @@ listDomandeAutore' e u i = checkAuthorOf e u i $ \i -> do
                                 rs <- equery e "select id,risposta,valore from risposte where domanda = ?" $ Only i
                                 return $ Domanda i d rs
                         return $ QuestionarioAutore n fs lo
-listDomandeVisitatore' e u i = checkUtente e u $ \u -> checkRisorsa e i $ \i _ y -> do
+listDomandeVisitatore' e u i nu = checkUtente e u $ \u -> checkRisorsa e i $ \i _ y -> do
                         [(n,lo)] <- equery e "select argomento,logo  from argomenti join autori on autori.id = argomenti.autore where argomenti.id=?" $ Only i
                         ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
                         fs <- forM ds $ \(i,d) -> do
                                 rs <- equery e "select id,risposta from risposte where domanda = ?" $ Only i
                                 zs <- equery e "select risposta from feedback where domanda = ? and utente=?" $ (i,u)
                                 return $ DomandaV i d $ map (\(i,r) -> RispostaV i r $ i `elem` map fromOnly zs) rs
-                        return $ QuestionarioVisitatore (u==y) n fs lo
+                        return $ QuestionarioVisitatore (u==y) n fs lo nu
                         
 
 addDomanda :: Env -> User -> String -> String -> ConnectionMonad ()
@@ -268,7 +268,7 @@ changeAssoc :: Env -> String -> String -> ConnectionMonad UserAndQuestionario
 changeAssoc e u' h = checkUtente' e u' (\u -> checkRisorsa e h $ \i _ _ -> etransaction e $ do 
         eexecute e "delete from assoc where utente = ? " (Only u)
         eexecute e "insert into assoc values (?,?)" (u,i)
-        l <- listDomandeVisitatore' e u' h
+        l <- listDomandeVisitatore' e u' h False
         return $ UserAndQuestionario u' l) $ addAssoc e h
 
 data UserAndQuestionario = UserAndQuestionario User QuestionarioVisitatore
@@ -279,7 +279,7 @@ addAssoc e h = do
                 eexecute e "insert into utenti (hash,conferma) values (?,0)" (Only new)
                 u <- lastRow e 
                 checkRisorsa e h $ \i _ _ -> eexecute e "insert into assoc values (?,?)" (u,i)
-                listDomandeVisitatore' e new h
+                listDomandeVisitatore' e new h True
         return $ UserAndQuestionario new q
 
         

@@ -33,6 +33,10 @@ myApp.config(['$routeProvider',
         templateUrl: 'static/logout.html',
         controller: 'LogoutController'
       }).
+      when('/loggedout', {
+        templateUrl: 'static/loggedout.html',
+        controller: 'LoggedOutController'
+      }).
       otherwise({
         redirectTo: '/'
       });

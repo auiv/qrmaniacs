@@ -5,6 +5,7 @@ var cs = angular.module("cs", ["xeditable",'ui.bootstrap','ngCookies']);
 cs.factory('Page', function($location,$window,$cookies) {
    var title = 'default';
    var logo = "";
+   var unlogged=false;
    return {
         title: function() { return title; },
         setTitle: function(newTitle) { title = newTitle; },
@@ -18,7 +19,9 @@ cs.factory('Page', function($location,$window,$cookies) {
         gotoQR :function(i) {window.location.href="QR/"+i},
         goBack : function () {window.history.back()},
         user : function (){return $cookies.get("userName")},
-        loginQR : function(){window.location.href = "QR/Login"}
+        loginQR : function(){window.location.href = "QR/Login"},
+        setUnlogged: function (){unlogged=true},
+        unlogged: function(){if(unlogged)window.history.back()}
         };
         });
 cs.controller('Input', function ($scope, $modalInstance) {
@@ -26,7 +29,9 @@ cs.controller('Input', function ($scope, $modalInstance) {
           $scope.cancel = function () {$modalInstance.dismiss('cancel');};
         });
 
-cs.controller("HomeController",function ($scope,$http,Page,$modal) {
+cs.controller('LoggedOutController', function () {
+        });
+cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         $scope.Page=Page; 
         Page.setTitle("QR Maniacs");
         Page.setLogo("static/immagini/logo.png");
@@ -43,7 +48,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal) {
                         scope:$scope
                         });
                 modalInstance.result.then(
-                        function () {$http.get("Logout").then(function(xs){$scope.active=false;})},
+                        function () {$http.get("Logout").then(function(xs){$location.url("/loggedout");})},
                         function () {}
                         );
                 };
@@ -145,24 +150,40 @@ cs.controller("VisitatoreController",function ($scope,Page,$http,$window,$locati
                 });
  
 
-cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window,$cookies) {
+cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window,$cookies,$location) {
         $scope.Page = Page;
+        $scope.items = [];
+        $scope.hash = $routeParams.hash;
         Page.setTitle("Visitatore di QR"); 
+        $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
+                $scope.author=xs.result.author;
+                $scope.items=xs.result.domande;
+                $scope.argomento={'text':xs.result.text};
+                Page.setLogo (xs.result.logo);
+                if(xs.result.nuovo){
+                        var modalInstance = $modal.open({
+                                animation: true,
+                                templateUrl: 'static/firstloging.html',
+                                controller: 'Input',
+                                size: 'lg',
+                                scope:$scope
+                                });
+                        modalInstance.result.then(
+                                function () {},
+                                function () {}
+                                );
+                        }
+                        
+                });
         $scope.feedback= function (r) {
                 $http.put("AddFeedback/"+r).success(function(xs){
                 $scope.update();
                         });}
-        $scope.items = [];
-        $scope.hash = $routeParams.hash;
         $scope.update = function () {
                 $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
-                        $scope.author=xs.result.author;
                         $scope.items=xs.result.domande;
-                        $scope.argomento={'text':xs.result.text};
-                        Page.setLogo (xs.result.logo);
                         });
-                }
-        $scope.update();
+                        }
         });
 
 cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
