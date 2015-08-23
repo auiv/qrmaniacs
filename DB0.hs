@@ -276,7 +276,7 @@ data UserAndQuestionario = UserAndQuestionario User QuestionarioVisitatore
 addAssoc e h = do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
         q <- etransaction e $ do
-                eexecute e "insert into utenti (hash,confirm) values (?,0)" (Only new)
+                eexecute e "insert into utenti (hash,conferma) values (?,0)" (Only new)
                 u <- lastRow e 
                 checkRisorsa e h $ \i _ _ -> eexecute e "insert into assoc values (?,?)" (u,i)
                 listDomandeVisitatore' e new h
