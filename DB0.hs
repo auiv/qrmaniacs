@@ -84,42 +84,11 @@ mkEnv conn = Env
                         Right x -> do
                                 liftIO $ execute_ conn "commit transaction"
                                 return  x
-data CheckLogin = CheckLogin UserId Mail (Maybe UserId)
-
-instance FromRow CheckLogin where
-   fromRow = CheckLogin <$> field <*> field <*> field
-
--- | wrap an action in a check of the login presence
-checkingLogin :: Env -> Login -> (CheckLogin -> ConnectionMonad a) -> ConnectionMonad a
-checkingLogin e l f = do
-        r <- equery e "select id,email,inviter from users where login=?" (Only l)
-        case (r :: [CheckLogin]) of
-                [i] -> f i
-                _ -> throwError $ DatabaseError "Unknown User"
-
-transactOnLogin :: Env -> Login -> (UserId -> ConnectionMonad a) -> ConnectionMonad a
-transactOnLogin e l f = etransaction e $ checkingLogin e l $  \(CheckLogin ui _ _) -> f ui
-
-data UserType 
-        = Author
-        | Visitor
-        | Dispenser
-        deriving (Eq,Show)
 
 data ParseException = ParseException deriving Show
 
 instance Exception ParseException
 
-instance FromField UserType where
-        fromField (fieldData -> SQLInteger 0) = Ok Author
-        fromField (fieldData -> SQLInteger 1) = Ok Visitor
-        fromField (fieldData -> SQLInteger 2) = Ok Dispenser
-        fromField _ = Errors [SomeException ParseException]
-
-instance ToField UserType where
-        toField Author = SQLInteger 0
-        toField Visitor = SQLInteger 1
-        toField Dispenser = SQLInteger 2
 
 -- run :: (Env -> ConnectionMonad a) -> IO (a,[Event])
 run f = do        
@@ -307,7 +276,7 @@ data UserAndQuestionario = UserAndQuestionario User QuestionarioVisitatore
 addAssoc e h = do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
         q <- etransaction e $ do
-                eexecute e "insert into utenti (hash) values (?)" (Only new)
+                eexecute e "insert into utenti (hash,confirm) values (?,0)" (Only new)
                 u <- lastRow e 
                 checkRisorsa e h $ \i _ _ -> eexecute e "insert into assoc values (?,?)" (u,i)
                 listDomandeVisitatore' e new h
@@ -335,11 +304,16 @@ checkIdentificatore e u f = checkUtente e u $ \u -> do
                 [Only i] -> f i
                 _ -> throwError $ DatabaseError "Unknown Hash for Identifier"
 
-data Roles = Roles Bool Bool (Maybe String)
+data Roles = Roles Bool Bool (Maybe String) Bool
 
 role e u = checkUtente e u $ \u -> do
         b1 <- equery e "select id from  autori where id=?" (Only u)
         b2 <- equery e "select id from  realizzatori where id=?" (Only u)
-        em  <- equery e "select email from utenti where id= ?" (Only u)
-        return $ Roles (not . null $ (b1 :: [Only Integer])) (not . null $ (b2 :: [Only Integer])) (join . fmap fromOnly  . listToMaybe $ em)
-setMail e u r = checkUtente e u $ \u -> eexecute e "update utenti set email=? where id =?" (r,u)
+        em  <- equery e "select email,conferma from utenti where id= ?" (Only u)
+        let (en,c) = case em of 
+                [] -> (Nothing,False)
+                [(a,b)] -> (a,b)
+        return $ Roles (not . null $ (b1 :: [Only Integer])) (not . null $ (b2 :: [Only Integer])) en c
+setMail e u r = checkUtente e u $ \u -> eexecute e "update utenti set email=? ,conferma=0 where id =?" (r,u)
+confirmMail e u = checkUtente e u $ \u -> eexecute e "update utenti set conferma=1 where id =?" (Only u)
+

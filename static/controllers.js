@@ -32,7 +32,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal) {
         Page.setLogo("static/immagini/logo.png");
         $scope.active=false;
         $scope.updateMail = function (d) {
-                $http.put("SetMail/" + d).success(function(xs){$scope.update()});
+                return $http.put("SetMail/" + d).success(function(xs){$scope.update()});
                 }
         $scope.logout = function () {
                 var modalInstance = $modal.open({
@@ -47,12 +47,16 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal) {
                         function () {}
                         );
                 };
-        
+        $scope.confermato = function () {
+                if($scope.conferma) return 'confermato';
+                return "non confermato";
+                }
         $scope.update = function (f) {
          $http.get("Role").success(function(xs){
                 $scope.isAuthor=xs.result.author;
                 $scope.isValidatore=xs.result.validatore;
                 $scope.mail=xs.result.email;
+                $scope.conferma=xs.result.conferma;
                 $scope.active=true;
                 });
         }

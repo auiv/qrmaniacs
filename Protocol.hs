@@ -38,6 +38,7 @@ data Put
         | AddFeedback User Integer
         | RemoveFeedback User Integer
         | SetMail User String
+        | ConfirmMail User
         deriving Read
 
 put' :: Env -> Put -> ConnectionMonad ()
@@ -54,6 +55,7 @@ put' e (ChangeRispostaValue u i v) = changeRispostaValue e u i v
 put' e (AddFeedback u r)= addFeedback e u r
 put' e (RemoveFeedback u r)= removeFeedback e u r
 put' e (SetMail u r)= setMail e u r
+put' e (ConfirmMail u)= confirmMail e u
       
 put :: Env -> Put -> WriterT [Event] IO (Either DBError ())
 put e l = runErrorT (put' e l)

@@ -1,15 +1,15 @@
-Sei stato invitato da invitante su MootZoo 0.2, la foresta delle discussioni.
 
-Il tuo link di login è:
+Il tuo link di login su qrmaniacs.com è:
 
 linklogin
 
+Sarà confermato solo dopo il primo utilizzo che puoi effettuare da ora.
 
-Mootzoo è un servizio di sole conversazioni tra anonimi. Le conversazioni sono pubbliche e la partecipazione è ad invito.
-Le conversazioni tra due persone non sono interrompibili dall'esterno ma ogni messaggio del passato rappresenta un punto di aggancio per sviluppare nuove conversazioni.
+Lo potrai utilizzare per recuperare la tua connessione al sistema su un'altro device o per rientrare dopo un logout.
+Su questo indirizzo verrai notificato della chiusura dei QR ai quali hai contribuito con le tue risposte.
 
-Attualmente lo stato del servizio è beta  e quindi non è assicurata alcuna sicurezza sulle funzioni.
-Grazie per la partecipazione alla sperimentazione.
+Questo indirizzo email non verrà utilizzato per altri scopi e non verrà rivelato ad altri servizi.
 
-MootZoo team.
+Distinti Saluti.
 
+lambdasistemi.net services

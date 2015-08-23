@@ -29,6 +29,7 @@ import Control.Concurrent
 
 import System.Environment
 import JSON
+import Mailer
 jsError x = makeObj [("error",showJSON $ show x)]
 jsDBError x  = makeObj [("dberror",showJSON $ show x)]
 jsCompund x y = makeObj [("result",showJSON x)]
@@ -67,7 +68,7 @@ redirectHome r = insertHeader HdrLocation r $ (respond SeeOther :: Response BS.B
 logoutAsError = insertHeader HdrSetCookie ""  
 main :: IO ()
 main = do
-        [reloc] <- getArgs
+        [mailer,pwd,reloc] <- getArgs
         (t,p,g) <- prepare
         let onuser Nothing f = return $ logoutAsError $ sendJSON BadRequest $ jsDBError $ DatabaseError "Unknown user"
             onuser (Just u) f = f u
@@ -106,7 +107,9 @@ main = do
                                         ["AddFeedback",i] -> onuser user $ \u -> responseP $ do
                                                         i' <- readMaybe i
                                                         return $ AddFeedback u i'
-                                        ["SetMail",e] -> onuser user $ \u -> responseP $ return $ SetMail u e
+                                        ["SetMail",e] -> onuser user $ \u -> do 
+                                                        sendAMail mailer pwd e reloc  (LoginMail u) 
+                                                        responseP $ return $ SetMail u e 
                                         _ -> return $ sendJSON BadRequest $ JSNull
 
                             POST -> do 
@@ -133,20 +136,19 @@ main = do
                                         _ -> return $ sendJSON BadRequest $ JSNull
                             GET -> do 
                                 case splitOn "/" $ url_path url of
-                                        ["ArgomentiAutore"] -> onuser user $ \u ->
-                                                        fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
-                                                                . sendResponse g $ do
+                                        ["ArgomentiAutore"] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ ArgomentiAutore u 
-                                        ["Login",u] -> return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
-                                                        $ redirectHome   reloc                                                   
+                                        ["Login",u] -> do
+                                                        responseP (Just $ ConfirmMail u)
+                                                        return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                                $ redirectHome   reloc                                                   
 
                                         ["Domande",i] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ Domande u i 
                                         ["DomandeAutore",i] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ DomandeAutore u i 
                                         ["ChangeAssoc",i] -> case user of
-                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndQuestionario u q) ->
-                                                                          (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
+                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndQuestionario u q) -> (id,q))
                                                                  Nothing -> sendResponse' g (Just $ AddAssoc i) (\(UserAndQuestionario u q) ->
                                                                           (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                         ["QR","Identify"] -> onuser user $ \u -> do
