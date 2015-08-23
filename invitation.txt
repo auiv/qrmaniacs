@@ -1,11 +1,10 @@
-
 Il tuo link di login su qrmaniacs.com è:
 
 linklogin
 
 Sarà confermato solo dopo il primo utilizzo che puoi effettuare da ora.
 
-Lo potrai utilizzare per recuperare la tua connessione al sistema su un'altro device o per rientrare dopo un logout.
+Lo potrai utilizzare per recuperare la tua connessione al sistema su un altro device o per rientrare dopo un logout.
 Su questo indirizzo verrai notificato della chiusura dei QR ai quali hai contribuito con le tue risposte.
 
 Questo indirizzo email non verrà utilizzato per altri scopi e non verrà rivelato ad altri servizi.
