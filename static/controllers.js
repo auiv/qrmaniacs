@@ -31,6 +31,9 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal) {
         Page.setTitle("QR Maniacs");
         Page.setLogo("static/immagini/logo.png");
         $scope.active=false;
+        $scope.updateMail = function (d) {
+                $http.put("SetMail/" + d).success(function(xs){$scope.update()});
+                }
         $scope.logout = function () {
                 var modalInstance = $modal.open({
                         animation: true,
@@ -44,12 +47,17 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal) {
                         function () {}
                         );
                 };
-
+        
+        $scope.update = function (f) {
          $http.get("Role").success(function(xs){
                 $scope.isAuthor=xs.result.author;
                 $scope.isValidatore=xs.result.validatore;
+                $scope.mail=xs.result.email;
                 $scope.active=true;
                 });
+        }
+        $scope.update();
+
     });  
 
 cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {

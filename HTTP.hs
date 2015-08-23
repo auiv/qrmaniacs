@@ -106,6 +106,7 @@ main = do
                                         ["AddFeedback",i] -> onuser user $ \u -> responseP $ do
                                                         i' <- readMaybe i
                                                         return $ AddFeedback u i'
+                                        ["SetMail",e] -> onuser user $ \u -> responseP $ return $ SetMail u e
                                         _ -> return $ sendJSON BadRequest $ JSNull
 
                             POST -> do 

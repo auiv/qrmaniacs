@@ -11,6 +11,7 @@ import System.Console.Haskeline hiding (catch)
 import Control.Applicative
 import Data.String
 import Data.Char
+import Data.Maybe
 import Control.Monad
 import Control.Monad.Writer
 import Database.SQLite.Simple hiding (Error)
@@ -334,9 +335,11 @@ checkIdentificatore e u f = checkUtente e u $ \u -> do
                 [Only i] -> f i
                 _ -> throwError $ DatabaseError "Unknown Hash for Identifier"
 
-data Roles = Roles Bool Bool
+data Roles = Roles Bool Bool (Maybe String)
 
 role e u = checkUtente e u $ \u -> do
         b1 <- equery e "select id from  autori where id=?" (Only u)
         b2 <- equery e "select id from  realizzatori where id=?" (Only u)
-        return $ Roles (not . null $ (b1 :: [Only Integer])) (not . null $ (b2 :: [Only Integer]))
+        em  <- equery e "select email from utenti where id= ?" (Only u)
+        return $ Roles (not . null $ (b1 :: [Only Integer])) (not . null $ (b2 :: [Only Integer])) (join . fmap fromOnly  . listToMaybe $ em)
+setMail e u r = checkUtente e u $ \u -> eexecute e "update utenti set email=? where id =?" (r,u)

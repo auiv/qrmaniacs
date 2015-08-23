@@ -22,4 +22,5 @@ instance JSON Domanda where
 instance JSON DomandaV where
         showJSON (DomandaV i s rs) = makeObj $ [("index",showJSON i),("text",showJSON s),("answers", showJSON rs)]
 instance JSON Roles where
-        showJSON (Roles i j) = makeObj $ [("author",showJSON i),("validatore",showJSON j)]
+        showJSON (Roles i j Nothing) = makeObj $ [("author",showJSON i),("validatore",showJSON j),("email",showJSON JSNull)]
+        showJSON (Roles i j (Just e)) = makeObj $ [("author",showJSON i),("validatore",showJSON j),("email",showJSON e)]
