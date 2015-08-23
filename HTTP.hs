@@ -50,18 +50,17 @@ sendResponse' g v f = case v of
                         Right x -> do 
                                         let (t,y) = f x 
                                         return $ t $ sendJSON OK $  jsCompund y w
-sendResponseP p v = case v of 
+
+sendResponseP' p v f = case v of 
         Nothing -> return $ sendJSON BadRequest $ jsError $ "Not parsed"
         Just v -> do
                 (x,w) <- runWriterT $ p v
-                forM_ w $ \y ->
-                        case y of
-                                EvSendMail s m h -> do
-                                        return () --void $ forkIO $ sendAMail mail pwd s h m
-                                _ -> return ()
                 case x of 
                         Left x -> return $ sendJSON BadRequest $ jsDBError $ x
-                        Right () -> return $ sendJSON OK $ jsCompund JSNull w
+                        Right () -> f >> return (sendJSON OK $ jsCompund JSNull w)
+
+sendResponseP p v = sendResponseP' p v $ return ()
+
 redirectHome :: String -> Response BS.ByteString
 redirectHome r = insertHeader HdrLocation r $ (respond SeeOther :: Response BS.ByteString)
 
@@ -108,8 +107,7 @@ main = do
                                                         i' <- readMaybe i
                                                         return $ AddFeedback u i'
                                         ["SetMail",e] -> onuser user $ \u -> do 
-                                                        sendAMail mailer pwd e reloc  (LoginMail u) 
-                                                        responseP $ return $ SetMail u e 
+                                                        sendResponseP' p (Just  $ SetMail u e) $ sendAMail mailer pwd e reloc  (LoginMail u) 
                                         _ -> return $ sendJSON BadRequest $ JSNull
 
                             POST -> do 
