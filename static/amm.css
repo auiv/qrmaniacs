@@ -149,3 +149,7 @@ body{font-size:40px;}
 .qrmaniacs{float:right;}
 .risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:3px; }
 .logov{background-color:#f8f8f8;padding:1px;margin-right:15px;border:1px solid #e3e3e3;}
+.content .well{margin:5px;}
+.timepicker {display:inline;}
+.form-control{height:60px}
+.label{font-size:110%;color:black;}

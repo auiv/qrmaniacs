@@ -39,8 +39,13 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         Page.setTitle("QR Maniacs");
         Page.setLogo("static/immagini/logo.png");
         $scope.active=false;
-        $scope.expire="1";
-        $scope.$watch('expire',function(a,b) {alert(b)});
+        $scope.campagna={};
+        $scope.campagna.hour=new Date();
+        $scope.$watch('campagna',function(a,b) {alert(a)});
+        $scope.changeLogo = function (x) {
+                alert(1);
+                return true;
+                }
         $scope.updateMail = function (d) {
                 return $http.put("SetMail/" + d).success(function(xs){$scope.update()});
                 }
@@ -67,6 +72,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 $scope.isValidatore=xs.result.validatore;
                 $scope.mail=xs.result.email;
                 $scope.conferma=xs.result.conferma;
+                $scope.campagna = xs.result.campagna;
                 $scope.active=true;
                 });
         }
