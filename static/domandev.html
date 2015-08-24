@@ -8,7 +8,13 @@
 
 </div> 
 <ul class="content list-group"> 
-
+        <li class="list-group-item" ng-if="1">
+                <div class="well notvalid">
+                <p> La tua partecipazione a questa campagna non è stata ancora validata.
+                <p> Hai tempo fino a {{autore.expire | date:'dd/MM/yy alle HH:MM'}} per validarla 
+                <a href={{autore.place}}>qui</a>
+                </div>
+        <li>
         <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
         <div class=domanda>                                {{ item.text}}</div>
                                         

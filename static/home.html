@@ -9,7 +9,18 @@
 
         <div class="well title"> Il tuo profilo </div> 
 
-        <ul class="content list-group">
+        <ul class="content list-group"> 
+                <li class="list-group-item"> 
+                link logo campagna: <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeLogo($data)" e-rows="2" e-cols="20">
+                                {{ campagna.logo || 'link al logo..' }}</a>
+                </li>
+                <li class="list-group-item"> 
+                data fine campagna: {{expire}} <datepicker ng-model="expire"/> 
+                </li>
+                <li class="list-group-item"> 
+                link luogo validazione:  <a  href="#"  editable-textarea="campagna.place" onbeforesave="changePlace($data)" e-rows="2" e-cols="20">
+                                {{ campagna.place || 'link al luogo..' }}</a>
+                </li>
                 <li class=list-group-item>
                         Indirizzo di posta:&nbsp
                         <a  href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">

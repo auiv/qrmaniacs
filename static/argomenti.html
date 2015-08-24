@@ -5,17 +5,19 @@
 
 <div class="well title"> I tuoi questionari 
 </div>
-<ul class="content list-group"> 
-<a class=nuovo ng-click="addArgomento($index)"><span class="glyphicon glyphicon-plus"></span></a>
-        <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)" ng-click="Page.gotoResource(argomento.index)"> 
-                <div class=delete>
-                        <button  class="btn btn-default"  ng-click="Page.gotoQR(argomento.index);$event.stopPropagation()">
-                                <span class="glyphicon glyphicon-qrcode"></span> </a>
-                        <button  class="btn btn-default" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
-                               <span class="glyphicon glyphicon-trash"></span> </button>
+<div class=content>
+        <ul class="list-group"> 
+        <a class=nuovo ng-click="addArgomento($index)"><span class="glyphicon glyphicon-plus"></span></a>
+                <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)" ng-click="Page.gotoResource(argomento.index)"> 
+                        <div class=delete>
+                                <button  class="btn btn-default"  ng-click="Page.gotoQR(argomento.index);$event.stopPropagation()">
+                                        <span class="glyphicon glyphicon-qrcode"></span> </a>
+                                <button  class="btn btn-default" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
+                                       <span class="glyphicon glyphicon-trash"></span> </button>
 
-                </div>
-                {{ argomento.text}}
-        </li>
-</ul> 
+                        </div>
+                        {{ argomento.text}}
+                </li>
+        </ul> 
+</div>
 

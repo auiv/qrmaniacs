@@ -198,7 +198,12 @@ data QuestionarioAutore = QuestionarioAutore
         String --testo titolo
         [Domanda]
         String
-data QuestionarioVisitatore =  QuestionarioVisitatore Bool String [DomandaV] String Bool
+data QuestionarioVisitatore =  QuestionarioVisitatore Bool String [DomandaV] String Bool Campagna
+
+data Campagna = Campagna String String String 
+
+instance FromRow Campagna where
+   fromRow = Campagna <$> field <*> field <*> field 
 
 listDomandeAutore :: Env -> User -> String -> ConnectionMonad QuestionarioAutore
 listDomandeAutore e u i = etransaction e $ listDomandeAutore' e u i 
@@ -219,7 +224,8 @@ listDomandeVisitatore' e u i nu = checkUtente e u $ \u -> checkRisorsa e i $ \i 
                                 rs <- equery e "select id,risposta from risposte where domanda = ?" $ Only i
                                 zs <- equery e "select risposta from feedback where domanda = ? and utente=?" $ (i,u)
                                 return $ DomandaV i d $ map (\(i,r) -> RispostaV i r $ i `elem` map fromOnly zs) rs
-                        return $ QuestionarioVisitatore (u==y) n fs lo nu
+                        [c] <- equery e "select logo,expire,place from autori where id=?" (Only y)
+                        return $ QuestionarioVisitatore (u==y) n fs lo nu c
                         
 
 addDomanda :: Env -> User -> String -> String -> ConnectionMonad ()

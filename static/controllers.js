@@ -1,6 +1,9 @@
 
 var cs = angular.module("cs", ["xeditable",'ui.bootstrap','ngCookies']);
 
+cs.run(function(editableOptions) {
+  editableOptions.theme = 'bs2';
+});
 
 cs.factory('Page', function($location,$window,$cookies) {
    var title = 'default';
@@ -36,6 +39,8 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         Page.setTitle("QR Maniacs");
         Page.setLogo("static/immagini/logo.png");
         $scope.active=false;
+        $scope.expire="1";
+        $scope.$watch('expire',function(a,b) {alert(b)});
         $scope.updateMail = function (d) {
                 return $http.put("SetMail/" + d).success(function(xs){$scope.update()});
                 }
@@ -157,6 +162,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         Page.setTitle("Visitatore di QR"); 
         $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
                 $scope.author=xs.result.author;
+                $scope.autore=xs.result.autore;
                 $scope.items=xs.result.domande;
                 $scope.argomento={'text':xs.result.text};
                 Page.setLogo (xs.result.logo);
