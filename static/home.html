@@ -14,9 +14,11 @@
                         Email:
                         <a  href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                 {{mail || 'mail....'}}</a>
+                        <div>
                         Conferma:
                         <span ng-show="confermato()" class="glyphicon glyphicon-ok"> </span>
-                        <span ng-hide="confermato()" class="glyphicon glyphicon-warning"> </span>
+                        <span ng-hide="confermato()" class="glyphicon glyphicon-warning"> </span>       
+                        </div>
                 </li> 
                                 <li class="well list-group-item">
                                         QR di validazione:<a href="QR/Validate"><span class="glyphicon glyphicon-qrcode"></span></a>
