@@ -29,13 +29,13 @@
                                         Inizio campagna: <div class=label> {{campagna.begin | date:'HH:mm dd-MM-yyyy'}}</div>
                                         <p> 
                                         <datepicker class="well well-sm" style="display:inline-block" ng-model="campagna.begin"/> 
-                                        <timepicker style="display:inline-block;margin-bottom:300px;" ng-model="campagna.begin" ></timepicker>
+                                        <timepicker show-meridian=false style="display:inline-block;margin-bottom:300px;" ng-model="campagna.begin" ></timepicker>
                                 </li>
                                 <li class="well list-group-item"> 
                                         Fine campagna: <div class=label> {{campagna.expire | date:'HH:mm dd-MM-yyyy'}}</div>
                                         <p> 
                                         <datepicker style="display:inline-block" ng-model="campagna.expire"/> 
-                                        <timepicker style="display:inline-block;margin-bottom:200px;" ng-model="campagna.expire" ></timepicker>
+                                        <timepicker show-meridian=false style="display:inline-block;margin-bottom:200px;" ng-model="campagna.expire" ></timepicker>
                                 </li>
                                 <li class="well list-group-item"> 
                                 Luogo validazione:  <a  href="#"  editable-textarea="campagna.place" onbeforesave="setPlace($data)" e-rows="2" e-cols="20">

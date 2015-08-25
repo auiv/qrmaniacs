@@ -82,7 +82,7 @@ body{font-size:40px;}
 .list-group-item .list-group .list-group-item{margin-left:50px;border: 0px;}
 .list-group-item a{margin-left:30px;}
 .list-group{margin-top:40px}
-.form-control{font-size:40px;}
+.form-control{font-size:30px;}
 .btn{font-size:40px;white-space:normal;}
 .modal-footer{margin-bottom:15px}
 
@@ -150,7 +150,10 @@ body{font-size:40px;}
 .qrmaniacs{float:right;}
 .risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:3px; }
 .logov{background-color:#f8f8f8;padding:1px;margin-right:15px;border:1px solid #e3e3e3;}
-.content .well{margin:0px;font-size:90%}
+.content .well{margin:0px}
 .timepicker {display:inline;}
-.form-control{height:60px}
+.form-control{height:60px;}
 .label{font-size:110%;color:black;}
+.btn-sm{font-size:40%;padding:10px}
+small{font-size:40%}
+td .btn{font-size:60%}
