@@ -11,18 +11,21 @@
 
         <ul class="content list-group"> 
                 <li class="well list-group-item">
-                        Indirizzo di posta:&nbsp
+                        Email:
                         <a  href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                 {{mail || 'mail....'}}</a>
-                        
-                        <span ng-show="confermato()"> (confermato) </span>
-                        <span ng-hide="confermato()"> (non confermato) </span>
+                        Conferma:
+                        <span ng-show="confermato()" class="glyphicon glyphicon-ok"> </span>
+                        <span ng-hide="confermato()" class="glyphicon glyphicon-warning"> </span>
                 </li> 
+                                <li class="well list-group-item">
+                                        QR di validazione:<a href="QR/Validate"><span class="glyphicon glyphicon-qrcode"></span></a>
+                                </li> 
                 <li class="list-group-item">
                         <ul ng-if="isAuthor" class=list-group>  
                                 <li class="well list-group-item"> 
                                 Logo campagna: <a  href="#"  editable-textarea="campagna.logo" onbeforesave="setLogo($data)" e-rows="2" e-cols="20">
-                                                <img width=100 height=100 ng-src="{{campagna.logo}}" alt="{{campagna.logo.slice(1,20) || 'link al logo'}}"/></a>
+                                                <img class=logolink width=100 height=100 ng-src="{{campagna.logo}}" alt="{{campagna.logo.slice(1,20) || 'link al logo'}}"/></a>
                                 </li>
 
                                 <li class="well list-group-item"> 
@@ -41,10 +44,11 @@
                                 Luogo validazione:  <a  href="#"  editable-textarea="campagna.place" onbeforesave="setPlace($data)" e-rows="2" e-cols="20">
                                                 {{campagna.place}}
                                                 </a>
-                                                <a class=vaisugooglemaps href="http://maps.google.com">(maps)</a>
+                                                
+                                                <a class=vaisugooglemaps href="http://maps.google.com"><img width=70 height=70 src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSfBezxeGH2wju3Tm55MT9GN1xvKst2pUNV6JKlu4u_c0HrpJa8XNkviw"></a>
                                 </li>
                                 <li ng-if="isAuthor" class="well list-group-item">
-                                        QR di login:<a href="QR/Login">QR</a>
+                                        QR di login:<a href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span></a>
                                 </li> 
                         </ul>
                 </li>
