@@ -79,8 +79,9 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 }
 body{font-size:40px;}
 .list-group-item{margin:1px;border:0px;border-bottom:4px;}
-.list-group-item .list-group .list-group-item{margin-left:25px;border: 0px;}
+.list-group-item .list-group .list-group-item{margin-left:50px;border: 0px;}
 .list-group-item a{margin-left:30px;}
+.list-group{margin-top:40px}
 .form-control{font-size:40px;}
 .btn{font-size:40px;white-space:normal;}
 .modal-footer{margin-bottom:15px}

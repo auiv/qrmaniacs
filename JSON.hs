@@ -12,10 +12,10 @@ instance JSON Argomento where
 instance JSON QuestionarioAutore where
         showJSON (QuestionarioAutore n ds lo) = makeObj $ [("author",showJSON True),("text",showJSON n),("domande",showJSON ds),("logo",showJSON lo)]
 instance JSON QuestionarioVisitatore where
-        showJSON (QuestionarioVisitatore l n ds lo nu a) = makeObj $ [("autore",showJSON a),("author",showJSON l),("text",showJSON n),("domande",showJSON ds),("logo",showJSON lo),
+        showJSON (QuestionarioVisitatore l n ds lo nu a) = makeObj $ [("campagna",showJSON a),("author",showJSON l),("text",showJSON n),("domande",showJSON ds),("logo",showJSON lo),
                 ("nuovo",showJSON nu)]
 instance JSON Campagna where
-        showJSON (Campagna lo ex pl) = makeObj $ [("logo",showJSON lo),("expire",showJSON ex),("place",showJSON pl)]
+        showJSON (Campagna lo be ex pl) = makeObj $ [("logo",showJSON lo),("begin",showJSON be),("expire",showJSON ex),("place",showJSON pl)]
 instance JSON Risposta where
         showJSON (Risposta i s v) = makeObj $ [("index",showJSON i),("text",showJSON s),("value",showJSON $ show v)]
 instance JSON RispostaV where
@@ -25,5 +25,9 @@ instance JSON Domanda where
 instance JSON DomandaV where
         showJSON (DomandaV i s rs) = makeObj $ [("index",showJSON i),("text",showJSON s),("answers", showJSON rs)]
 instance JSON Roles where
-        showJSON (Roles i j Nothing c) = makeObj $ [("author",showJSON i),("validatore",showJSON j),("email",showJSON JSNull),("conferma",showJSON c)]
-        showJSON (Roles i j (Just e) c) = makeObj $ [("author",showJSON i),("validatore",showJSON j),("email",showJSON e),("conferma",showJSON c)]
+        showJSON (Roles i j e c campagna) = makeObj $ [
+                ("author",showJSON i),
+                ("validatore",showJSON j),
+                ("email",maybe (showJSON JSNull) showJSON e),
+                ("conferma",showJSON c),
+                ("campagna",maybe (showJSON JSNull) showJSON campagna)]

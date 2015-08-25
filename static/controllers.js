@@ -39,9 +39,6 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         Page.setTitle("QR Maniacs");
         Page.setLogo("static/immagini/logo.png");
         $scope.active=false;
-        $scope.campagna={};
-        $scope.campagna.hour=new Date();
-        $scope.$watch('campagna',function(a,b) {alert(a)});
         $scope.changeLogo = function (x) {
                 alert(1);
                 return true;
@@ -71,11 +68,23 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 $scope.isAuthor=xs.result.author;
                 $scope.isValidatore=xs.result.validatore;
                 $scope.mail=xs.result.email;
-                $scope.conferma=xs.result.conferma;
-                $scope.campagna = xs.result.campagna;
+                $scope.campagna=xs.result.campagna;
+
                 $scope.active=true;
                 });
         }
+        $scope.$watch("campagna.begin",function(a,b) {
+                        if(b){
+                                $http.post("SetBegin",a,$scope.update);
+                                }
+                        });
+        $scope.$watch("campagna.expire",function(a,b) {
+                        if(b)$http.post("SetExpire",a,$scope.update)});
+        $scope.setLogo = function (a) {
+                        return $http.post("SetLogo",a,$scope.update)};
+        $scope.setPlace = function (a) {
+                        return $http.post("SetPlace",a,$scope.update)};
+
         $scope.update();
 
     });  
@@ -168,7 +177,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         Page.setTitle("Visitatore di QR"); 
         $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
                 $scope.author=xs.result.author;
-                $scope.autore=xs.result.autore;
+                $scope.campagna=xs.result.campagna;
                 $scope.items=xs.result.domande;
                 $scope.argomento={'text':xs.result.text};
                 Page.setLogo (xs.result.logo);

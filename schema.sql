@@ -14,9 +14,9 @@ INSERT INTO "utenti" VALUES(42,'J4FAZ0h7hE87XUSe5LCbUcLSjQDRByxFnX47SLZutEiQW6oQ
 INSERT INTO "utenti" VALUES(43,'0VJc8Hw6135YGxkEOQhOdOYsGXNzKpX3n86jOyXmmwWOU6GKXm',NULL,0);
 CREATE TABLE "autori" (
         "id" integer not null unique references utenti(id) on delete cascade,
-         logo text not null, expire text not null,place text not null);
-INSERT INTO "autori" VALUES(1,'http://www.p46.it/wp-content/uploads/2014/06/logo-p46-70x70@x2-e1405693109885.jpg','2015-09-13 23:00','https://goo.gl/maps/v9rwK');
-INSERT INTO "autori" VALUES(8,'http://lambdasistemi.net/logo.png','2015-09-13 23:00','https://goo.gl/maps/v9rwK');
+         logo text not null, begin text not null, expire text not null,place text not null);
+INSERT INTO "autori" VALUES(1,'http://www.p46.it/wp-content/uploads/2014/06/logo-p46-70x70@x2-e1405693109885.jpg','2015-09-13 23:00','2015-09-13 23:00','https://goo.gl/maps/v9rwK');
+INSERT INTO "autori" VALUES(8,'http://lambdasistemi.net/logo.png','2015-09-13 23:00','2015-09-13 23:00','https://goo.gl/maps/v9rwK');
 CREATE TABLE "realizzatori" (
         "id" integer not null unique references utenti(id) on delete cascade
         );

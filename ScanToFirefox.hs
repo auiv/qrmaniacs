@@ -12,6 +12,7 @@ main = do
         (_, Just hout, _, _) <- createProcess (shell camread){ std_out = CreatePipe }
         forever $ do
                 l <- hGetLine hout
+                createProcess (shell $ "aplay -D\"sysdefault:CARD=CODEC\" bell.wav")
                 createProcess (shell $ "firefox " ++ l)
                 return ()
                 

@@ -38,6 +38,10 @@ data Put
         | AddFeedback User Integer
         | RemoveFeedback User Integer
         | SetMail User String
+        | SetLogo User String
+        | SetBegin User String
+        | SetExpire User String
+        | SetPlace User String
         | ConfirmMail User
         deriving Read
 
@@ -55,6 +59,10 @@ put' e (ChangeRispostaValue u i v) = changeRispostaValue e u i v
 put' e (AddFeedback u r)= addFeedback e u r
 put' e (RemoveFeedback u r)= removeFeedback e u r
 put' e (SetMail u r)= setMail e u r
+put' e (SetLogo u r)= setLogo e u r
+put' e (SetBegin u r)= setBegin e u r
+put' e (SetExpire u r)= setExpire e u r
+put' e (SetPlace u r)= setPlace e u r
 put' e (ConfirmMail u)= confirmMail e u
       
 put :: Env -> Put -> WriterT [Event] IO (Either DBError ())

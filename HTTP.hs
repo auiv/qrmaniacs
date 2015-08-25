@@ -115,6 +115,17 @@ main = do
                                 putStrLn "Body:"
                                 print $ rqBody request
                                 case splitOn "/" $ url_path url of
+                                        ["SetBegin"] -> onuser user $ \u -> do 
+                                                        putStrLn "------"
+                                                        putStrLn msg
+                                                        putStrLn $ init.tail$ msg
+                                                        responseP  (Just  $ SetBegin u $ msg)
+                                        ["SetExpire"] -> onuser user $ \u -> do 
+                                                        responseP  (Just  $ SetExpire u $ msg)
+                                        ["SetPlace"] -> onuser user $ \u -> do 
+                                                       responseP  (Just  $ SetPlace u msg) 
+                                        ["SetLogo"] -> onuser user $ \u -> do 
+                                                        responseP  (Just  $ SetLogo u msg) 
                                         ["AddArgomento"] -> onuser user $ \u -> responseP $ do
                                                         return $ AddArgomento u msg
                                         ["AddDomanda",i] -> onuser user $ \u -> responseP $ do
