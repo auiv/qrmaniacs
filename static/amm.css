@@ -140,7 +140,7 @@ body{font-size:40px;}
 .domanda{margin-top:15px;margin-bottom:10px;font-size:40px;background-color:#43c2c4;padding:5px;padding-left:10px;border-radius:5px;color:white;}
 .logo{float:right}
 .navigation{width: 500px}
-.content{margin-left: 210px;}
+.content{margin-left: 210px;margin-bottom:150px;}
 .title{margin-left: 300px;padding-left:50px;font-size:50px;}
 .form-inline{border:1px solid;border-radius:5px;padding:3px;border-color:blue;}
 .user{margin-right:5px;font-style:oblique;font-size:25px}
