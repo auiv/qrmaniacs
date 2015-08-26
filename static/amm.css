@@ -164,3 +164,4 @@ body{font-size:40px;}
 small{font-size:40%}
 td .btn{font-size:60%}
 .logolink{background-color:#f8f8f8;padding:6px;margin:5px;border:1px solid #e3e3e3}
+.conferma{position:fixed;bottom:50px;right:50px;background-color: #ff3600;color:white}
