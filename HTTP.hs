@@ -115,8 +115,6 @@ main = do
                                                         return $ AddFeedback u i'
                                         ["SetMail",e] -> onuser user $ \u -> do 
                                                         sendResponseP' p (Just  $ SetMail u e) $ sendAMail mailer pwd e reloc  (LoginMail u)
-                                        ["Promote",o] -> onuser user $ \u  -> do        
-                                                        responseP (Just $ Promote u o)
                                         ["Revoke",m] -> onuser user $ \u  -> do        
                                                         responseP (Just $ Revoke u m)
                                         _ -> return $ sendJSON BadRequest $ JSNull
@@ -225,6 +223,8 @@ main = do
                                         
                                         ["IsValidate",h] -> onuser user $ \u -> do
                                                 sendResponse g (Just $ IsValidate u h)
+                                        ["Promote",o] -> onuser user $ \u  -> do        
+                                                        sendResponse g (Just $ Promote u o)
                                         [""] -> do
                                                 v <- readFile "static/index.html"
                                                 

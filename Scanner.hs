@@ -16,11 +16,11 @@ cookie :: Cookie
 cookie = Cookie { cookie_name = "userName"
                  , cookie_value = key
                  , cookie_expiry_time = future
-                 , cookie_domain = "192.168.1.119"
+                 , cookie_domain = "lambdasistemi.net"
                  , cookie_path = "/qrmaniacs"
                  , cookie_creation_time = past
                  , cookie_last_access_time = past
-                 , cookie_persistent = False
+                 , cookie_persistent = True
                  , cookie_host_only = False
                  , cookie_secure_only = False
                  , cookie_http_only = False
