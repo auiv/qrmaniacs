@@ -1,10 +1,4 @@
-@-ms-viewport{
-    width:device-width;
-    zoom:1;
-    min-zoom:1;
-    max-zoom:1;
-    user-zoom:fixed;
-}
+
     a {
     text-decoration: none;
     font-weight: bold;
@@ -12,43 +6,6 @@
     font-family: Arial, sans-serif;
     color: #333;
 }
-.nav {
-    list-style-type: none;
-}
-.nav > li {
-    border: 1px solid #2987A3;
-    background-color: #7ED3ED;
-    padding: 3px;
-    margin: 3px;
-    width: 150px;
-}
-.nav > li:hover {
-    background-color: #B1FAFA;
-    color: #fff;
-}
-.delete-item {
-    float: right;
-    margin-right: 2px;
-    color: #fff;
-    padding: 2px 6px;
-    background-color: #FC6A6A;
-    border-radius: 100%;
-}
-.edit-item {
-    float: right;
-    margin-right: 2px;
-    color: #fff;
-    padding: 2px 6px;
-    background-color: #6C6AFA;
-    border-radius: 100%;
-    
-}
-.selected {
-        background-color:#faa;
-        }
-.unselected {
-        background-color:white;
-        } 
 a.editable-click { 
     color: #262;
     border-bottom:0px;
@@ -58,7 +15,7 @@ a.editable-click:hover {
     border-bottom-color: #47a447;
 }
 
-.editable-input{height: 80px;width:300px}
+.editable-input{height:;width:;}
 
 .editable-radiolist label {
     font-weight:100;
@@ -72,9 +29,9 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 .delete{position:absolute;right:0px;top:0px;}
 
 .modal-dialog {
-    width: 700px;
-    margin: 30px;
-    margin-top:5px;
+    width:;
+    margin:;
+    margin-top:;
 }
 .modal-footer{
        position: absolute;
@@ -83,25 +40,10 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
        padding:30px;
        
 }
-body{font-size:40px;}
-.list-group-item{margin:0px;border:1px solid #aaa;border-bottom:4px solid grey; border-radius:5px;}
-.list-group-item .list-group .list-group-item{margin-left:40px;}
-.list-group-item a{margin-left:30px;}
-.list-group{margin-top:0px}
-.form-control{font-size:30px;}
-.btn{font-size:40px;white-space:normal;}
-.modal-footer{margin-bottom:15px}
-
-.modal-footer .btn + .btn {
-    margin-bottom: 0px;
-    margin-left: 35px;
+body{font-size:;}
+.btn{white-space:normal;}
+.btn-default{background-color: transparent;border: 0}
 }
-.btn-default {margin-left:10px;background-color:transparent;border:0px;margin-top:3px;}
-.navlinks  {
-       position:fixed;
-       margin-top:120px;
-       z-index: 100;
-       }
 .nuovo {
        position:fixed;
        bottom:20px;
@@ -121,7 +63,7 @@ body{font-size:40px;}
        border-radius:5px;
        font-weight:normal;
        color:black;
-       width:200px;margin-top:15px;border-top-right-radius: 30px;
+       width:6.5em;margin-top:1em;border-top-right-radius: 30px;
        border:1px solid #e3e3e3;
        }
 .button:hover{text-decoration:none;}
@@ -136,31 +78,25 @@ body{font-size:40px;}
        border-color:aliceblue;
        }
 .op{}
-.argomento{margin-left:500px;font-size:40px;background-color: lightgrey;padding:7px;width:700px;border-radius:8px;}
-.domanda{margin-top:15px;margin-bottom:10px;font-size:40px;background-color:#43c2c4;padding:5px;padding-left:10px;border-radius:5px;color:white;}
+.argomento{background-color: lightgrey;padding:7px;border-radius:8px;}
+.domanda{margin-top:15px;margin-bottom:10px;background-color:#43c2c4;padding:5px;padding-left:10px;border-radius:5px;color:white;}
 .logo{float:right}
-.navigation{width: 500px}
-.content{margin-left: 210px;}
-.title{margin-left: 300px;padding-left:50px;font-size:50px;}
-.form-inline{border:1px solid;border-radius:5px;padding:3px;border-color:blue;}
-.user{margin-right:5px;font-style:oblique;font-size:25px}
-.login{float:right;font-size:16px;color:#999}
+.navigation{width: 7em}
+.content{margin-left: 7em;margin-bottom:50px;}
+.user{margin-right:5px;font-style:oblique;font-size:50%}
+.login{float:right;font-size:30%;color:#999}
 .pointer{background-color:#e5f6fd;cursor:pointer;}
 .pointer:hover{background-color:#43c2c4;color:white}
-.comment{font-size:12px}
-.intro{font-size:20px;margin-left:50px;}
+.comment{font-size:25%}
+.intro{font-size:50%;margin-left:10px;}
 .footer{position:fixed;top:10px;left:10px;}
 
-.code{position:absolute;color:black;right:5px;bottom:1px;font-size:16px}
-.sponsor{position:fixed;top:10px;left:20px;background-color:#f8f8f8;padding:6px;margin;border:1px solid #e3e3e3}
+.code{position:absolute;color:black;right:5px;bottom:1px;font-size:25%}
+.sponsor{position:fixed;top:2px;left:2px;background-color:#f8f8f8;padding:6px;margin;border:1px solid #e3e3e3}
 .qrmaniacs{float:right;}
 .risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:3px; }
 .logov{background-color:#f8f8f8;padding:1px;margin-right:15px;border:1px solid #e3e3e3;}
-.content .well{margin:0px}
-.timepicker {display:inline;}
-.form-control{height:60px;}
 .label{font-size:110%;color:black;}
-.btn-sm{font-size:40%;padding:10px}
-small{font-size:40%}
-td .btn{font-size:60%}
 .logolink{background-color:#f8f8f8;padding:6px;margin:5px;border:1px solid #e3e3e3}
+.container{margin:0px;}
+.title{font-weight: bold;font-size:150%}
