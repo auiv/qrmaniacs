@@ -320,7 +320,9 @@ checkValidation e h f = do
         case x of 
                 [Only (u :: Integer)] -> f u
                 _ -> throwError $ DatabaseError "Unknown validation"
-validateUser e u h = checkUtente e u $ \u -> checkValidation e h $ \h -> eexecute e "insert or replace into identificati  (validatore,utente) values (?,?)" (u,h)
+validateUser e u h = checkUtente e u $ \u -> checkValidation e h $ \h -> do
+        liftIO $ print (u,h)
+        eexecute e "insert or replace into identificati  (validatore,utente) values (?,?)" (u,h)
 
 checkIdentificatore e u f = checkUtente e u $ \u -> do
         r <- equery e "select id from realizzatori where id=?" (Only u)
