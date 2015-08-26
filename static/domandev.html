@@ -1,36 +1,42 @@
-
-<div class=navlinks>
-        <a class=link href="#/">Home</a>
-        <a class=link href="#/Visitatore">Visitatore</a>
-        <a ng-show=author class=link href="#/Autore/Resource/{{hash}}">Edit</a>
-</div>
-<div class="well title"> {{argomento.text}}
-
-</div> 
-<ul class="content list-group"> 
-        <li class="list-group-item" ng-if="1">
-                <div class="well notvalid">
-                <p> La tua partecipazione a questa campagna non è stata ancora validata.
-                <p> Hai tempo fino a {{campagna.expire | date:'HH:mm dd-MM-yyyy'}} per validarla 
-                <a href={{campagna.place}}>qui</a>
+<div  class=container>
+        <div class=row>
+                <div class="col-sm-2" >
+                        <a class=link href="#/">Home</a>
+                        <a class=link href="#/Visitatore">Visitatore</a>
+                        <a ng-show=author class=link href="#/Autore/Resource/{{hash}}">Edit</a>
                 </div>
-        </li>
-        <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
-        <div class=domanda>                                {{ item.text}}</div>
+
+                <div class="col-sm-10">
+                <div class="well title"> {{argomento.text}}
+
+                </div> 
+
+                        <ul class="list-group"> 
+                                <li class="list-group-item" ng-if="1">
+                                        <div class="well notvalid">
+                                        <p> La tua partecipazione a questa campagna non è stata ancora validata.
+                                        <p> Hai tempo fino a {{campagna.expire | date:'HH:mm dd-MM-yyyy'}} per validarla 
+                                        <a href={{campagna.place}}>qui</a>
+                                        </div>
+                                </li>
+                                <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
+                                <div class=domanda>                                {{ item.text}}</div>
+                                                                
                                         
-                
-                <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
+                                        <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
 
-                                <button class="btn risposte" ng-click="feedback(item.answers[$index].index)">
-                                {{ item.answers[$index].text}}
-                                </button>
-                                <span ng-show="item.answers[$index].chosen"  class="glyphicon glyphicon-ok"></span></button>
+                                                        <button class="btn risposte" ng-click="feedback(item.answers[$index].index)">
+                                                        {{ item.answers[$index].text}}
+                                                        </button>
+                                                        <span ng-show="item.answers[$index].chosen"  class="glyphicon glyphicon-ok"></span></button>
 
 
-                        </li>
-                </ul>
-        </li>
-</ul>
-<button class="btn conferma" ng-click="conferma()">Conferma</button>
+                                                </li>
+                                        </ul>
+                                </li>
+                        </ul>
+                        <button class="btn conferma" ng-click="conferma()">Conferma</button>
+                </div>
+        </div>
 </div>
