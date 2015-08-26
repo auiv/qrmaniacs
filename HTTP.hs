@@ -212,7 +212,11 @@ main = do
                                                                 qr <- BSF.readFile "qr.tmp"
                                                                 return $ sendPng qr
                                         ["AskPromotion"] -> onuser user $ \u -> do
-                                                                let url = reloc ++ "/Promote/" ++ u
+                                                x <- dotheget g $ Just (AskValidation u)
+                                                case x of 
+                                                        Left y -> return $ sendJSON BadRequest $ showJSON y
+                                                        Right x -> do
+                                                                let url = reloc ++ "/Promote/" ++ x
                                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
                                                                 callCommand c
                                                                 qr <- BSF.readFile "qr.tmp"
