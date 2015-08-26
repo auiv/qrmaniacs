@@ -38,6 +38,10 @@ data Put
         | AddFeedback User Integer
         | RemoveFeedback User Integer
         | SetMail User String
+        | SetLogo User String
+        | SetBegin User String
+        | SetExpire User String
+        | SetPlace User String
         | ConfirmMail User
         deriving Read
 
@@ -55,6 +59,10 @@ put' e (ChangeRispostaValue u i v) = changeRispostaValue e u i v
 put' e (AddFeedback u r)= addFeedback e u r
 put' e (RemoveFeedback u r)= removeFeedback e u r
 put' e (SetMail u r)= setMail e u r
+put' e (SetLogo u r)= setLogo e u r
+put' e (SetBegin u r)= setBegin e u r
+put' e (SetExpire u r)= setExpire e u r
+put' e (SetPlace u r)= setPlace e u r
 put' e (ConfirmMail u)= confirmMail e u
       
 put :: Env -> Put -> WriterT [Event] IO (Either DBError ())
@@ -68,8 +76,9 @@ data Get a where
         Visitati :: User -> Get [Argomento]
         AddAssoc :: String -> Get UserAndQuestionario
         ChangeAssoc :: User -> String -> Get UserAndQuestionario
-        Identify :: User -> User -> Get ()
+        Validate :: User -> User -> Get ()
         Role :: User  -> Get Roles
+        AskValidation :: User -> Get String
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (ArgomentiAutore u) = listArgomenti e u 
@@ -79,8 +88,10 @@ get' e (Visitati u) = feedbackArgomenti e u
 get' e (Feedback u) = feedbackUtente e u
 get' e (AddAssoc i) = addAssoc e i
 get' e (ChangeAssoc u i) = changeAssoc e u i
-get' e (Identify u h) = identifyUser e u h
+get' e (Validate u h) = validateUser e u h
 get' e (Role u ) = role e u 
+get' e (AskValidation u ) = askValidation e u
+
 
 get :: Env -> Get a -> WriterT [Event] IO (Either DBError a)
 get e l = runErrorT (get' e l)

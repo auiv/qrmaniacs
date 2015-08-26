@@ -50,6 +50,13 @@ sendResponse' g v f = case v of
                         Right x -> do 
                                         let (t,y) = f x 
                                         return $ t $ sendJSON OK $  jsCompund y w
+dotheget ::  WGet -> Maybe (Get a) -> IO (Either DBError a)
+dotheget g v = case v of 
+        Nothing -> return $ Left $ DatabaseError "Not parsed"
+        Just v -> do
+                let (WGet g') = g
+                (x,_) <- runWriterT $ g' v
+                return x
 
 sendResponseP' p v f = case v of 
         Nothing -> return $ sendJSON BadRequest $ jsError $ "Not parsed"
@@ -115,6 +122,17 @@ main = do
                                 putStrLn "Body:"
                                 print $ rqBody request
                                 case splitOn "/" $ url_path url of
+                                        ["SetBegin"] -> onuser user $ \u -> do 
+                                                        putStrLn "------"
+                                                        putStrLn msg
+                                                        putStrLn $ init.tail$ msg
+                                                        responseP  (Just  $ SetBegin u $ msg)
+                                        ["SetExpire"] -> onuser user $ \u -> do 
+                                                        responseP  (Just  $ SetExpire u $ msg)
+                                        ["SetPlace"] -> onuser user $ \u -> do 
+                                                       responseP  (Just  $ SetPlace u msg) 
+                                        ["SetLogo"] -> onuser user $ \u -> do 
+                                                        responseP  (Just  $ SetLogo u msg) 
                                         ["AddArgomento"] -> onuser user $ \u -> responseP $ do
                                                         return $ AddArgomento u msg
                                         ["AddDomanda",i] -> onuser user $ \u -> responseP $ do
@@ -177,15 +195,20 @@ main = do
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
-                                        ["Identify",h] -> onuser user $ \u -> sendResponse g $ Just $ Identify u h
-                                        ["Resource",h] -> do
-                                                v <- readFile "static/questionario.html"
-                                                let v' = replace "acca"  h v
-                                                return $ sendHTML OK $  v'
+                                        ["Validate",h] -> onuser user $ \u -> sendResponse g $ Just $ Validate u h
                                         ["Logout"] -> fmap (insertHeader HdrSetCookie ("userName=;Path=/;Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
                                                         $ return $ sendText OK "Bye!"
                                         ["Role"] -> onuser user $ \u -> sendResponse g $ Just $ Role u
-
+                                        ["AskValidation"] -> onuser user $ \u -> do
+                                                x <- dotheget g $ Just (AskValidation u)
+                                                case x of 
+                                                        Left y -> return $ sendJSON BadRequest $ showJSON y
+                                                        Right x -> do
+                                                                let url = reloc ++ "/Validate/" ++ x
+                                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                                callCommand c
+                                                                qr <- BSF.readFile "qr.tmp"
+                                                                return $ sendPng qr
                                         [""] -> do
                                                 v <- readFile "static/index.html"
                                                 

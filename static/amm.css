@@ -1,4 +1,10 @@
-
+@-ms-viewport{
+    width:device-width;
+    zoom:1;
+    min-zoom:1;
+    max-zoom:1;
+    user-zoom:fixed;
+}
     a {
     text-decoration: none;
     font-weight: bold;
@@ -78,10 +84,11 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
        
 }
 body{font-size:40px;}
-.list-group-item{margin:1px;border:0px;border-bottom:4px;}
-.list-group-item .list-group .list-group-item{margin-left:25px;border: 0px;}
+.list-group-item{margin:0px;border:1px solid #aaa;border-bottom:4px solid grey; border-radius:5px;}
+.list-group-item .list-group .list-group-item{margin-left:40px;}
 .list-group-item a{margin-left:30px;}
-.form-control{font-size:40px;}
+.list-group{margin-top:0px}
+.form-control{font-size:30px;}
 .btn{font-size:40px;white-space:normal;}
 .modal-footer{margin-bottom:15px}
 
@@ -149,7 +156,11 @@ body{font-size:40px;}
 .qrmaniacs{float:right;}
 .risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:3px; }
 .logov{background-color:#f8f8f8;padding:1px;margin-right:15px;border:1px solid #e3e3e3;}
-.content .well{margin:5px;}
+.content .well{margin:0px}
 .timepicker {display:inline;}
-.form-control{height:60px}
+.form-control{height:60px;}
 .label{font-size:110%;color:black;}
+.btn-sm{font-size:40%;padding:10px}
+small{font-size:40%}
+td .btn{font-size:60%}
+.logolink{background-color:#f8f8f8;padding:6px;margin:5px;border:1px solid #e3e3e3}
