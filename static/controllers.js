@@ -166,6 +166,9 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         $scope.items = [];
         $scope.hash = $routeParams.hash;
         Page.setTitle("Visitatore di QR"); 
+        $scope.conferma = function (){
+                $location.url("Visitatore");
+                }
         $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
                 $scope.author=xs.result.author;
                 $scope.autore=xs.result.autore;
