@@ -33,6 +33,7 @@ import Database.SQLite.Simple.Ok
 
 type Mail = String
 type Login = String
+type Resource = String
 type UserId = Integer
 type ConvId = Integer
 type MessageId = Integer
@@ -361,3 +362,7 @@ promote e u h =  checkAuthor e u $ \u _ -> checkValidation e h $ \h -> do
         
 revoke e u m = checkAuthor e u $ \u _ -> do
         eexecute e "delete from realizzatori where autore = ? and utente = (select id from utenti where email = ?)" (u,m)
+
+isValidate e u h = checkUtente e u $ \u -> checkRisorsa e h $ \h _ a -> do
+        r <- equery e "select identificati.utente from realizzatori join identificati on realizzatori.utente = identificati.validatore where realizzatori.autore = ? and identificati.utente = ?" (a,u)
+        return (not . null $ (r :: [Only Integer]))

@@ -213,8 +213,18 @@ main = do
                                                                 callCommand c
                                                                 qr <- BSF.readFile "qr.tmp"
                                                                 return $ sendPng qr
+                                        ["AskPromotion"] -> onuser user $ \u -> do
+                                                                let url = reloc ++ "/Promote/" ++ u
+                                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                                callCommand c
+                                                                qr <- BSF.readFile "qr.tmp"
+                                                                return $ sendPng qr
+
                                         ["Validators"] -> onuser user $ \u -> do
                                                 sendResponse g (Just $ Validators u)
+                                        
+                                        ["IsValidate",h] -> onuser user $ \u -> do
+                                                sendResponse g (Just $ IsValidate u h)
                                         [""] -> do
                                                 v <- readFile "static/index.html"
                                                 

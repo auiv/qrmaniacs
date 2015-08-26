@@ -84,6 +84,7 @@ data Get a where
         Role :: User  -> Get Roles
         AskValidation :: User -> Get String
         Validators :: User -> Get [String]
+        IsValidate :: User -> Resource -> Get Bool
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (ArgomentiAutore u) = listArgomenti e u 
@@ -97,6 +98,7 @@ get' e (Validate u h) = validateUser e u h
 get' e (Role u ) = role e u 
 get' e (AskValidation u ) = askValidation e u
 get' e (Validators u ) = validators e u
+get' e (IsValidate u h) = isValidate e  u  h
 
 
 get :: Env -> Get a -> WriterT [Event] IO (Either DBError a)
