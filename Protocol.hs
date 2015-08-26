@@ -76,8 +76,9 @@ data Get a where
         Visitati :: User -> Get [Argomento]
         AddAssoc :: String -> Get UserAndQuestionario
         ChangeAssoc :: User -> String -> Get UserAndQuestionario
-        Identify :: User -> User -> Get ()
+        Validate :: User -> User -> Get ()
         Role :: User  -> Get Roles
+        AskValidation :: User -> Get String
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (ArgomentiAutore u) = listArgomenti e u 
@@ -87,8 +88,10 @@ get' e (Visitati u) = feedbackArgomenti e u
 get' e (Feedback u) = feedbackUtente e u
 get' e (AddAssoc i) = addAssoc e i
 get' e (ChangeAssoc u i) = changeAssoc e u i
-get' e (Identify u h) = identifyUser e u h
+get' e (Validate u h) = validateUser e u h
 get' e (Role u ) = role e u 
+get' e (AskValidation u ) = askValidation e u
+
 
 get :: Env -> Get a -> WriterT [Event] IO (Either DBError a)
 get e l = runErrorT (get' e l)

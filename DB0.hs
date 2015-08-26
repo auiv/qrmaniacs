@@ -314,7 +314,12 @@ checkAssoc e u d f = do
                 [Only i] -> f i
                 _ -> throwError $ DatabaseError "Unknown user-argument Association"
 
-identifyUser e u h = checkIdentificatore e u $ \u -> checkUtente e h $ \h -> eexecute e "insert or replace into identificati  (realizzatore,utente) values (?,?)" (u,h)
+checkValidation e h f = do
+        x <- equery e "select id from utenti where identification = ?" (Only h)
+        case x of 
+                [Only (u :: Integer)] -> f u
+                _ -> throwError $ DatabaseError "Unknown validation"
+validateUser e u h = checkUtente e u $ \u -> checkValidation e h $ \h -> eexecute e "insert or replace into identificati  (validatore,utente) values (?,?)" (u,h)
 
 checkIdentificatore e u f = checkUtente e u $ \u -> do
         r <- equery e "select id from realizzatori where id=?" (Only u)
@@ -322,11 +327,10 @@ checkIdentificatore e u f = checkUtente e u $ \u -> do
                 [Only i] -> f i
                 _ -> throwError $ DatabaseError "Unknown Hash for Identifier"
 
-data Roles = Roles Bool Bool (Maybe String) Bool (Maybe Campagna)
+data Roles = Roles Bool (Maybe String) Bool (Maybe Campagna)
 
 role e u = checkUtente e u $ \u -> do
         b1 <- equery e "select id from  autori where id=?" (Only u)
-        b2 <- equery e "select id from  realizzatori where id=?" (Only u)
         em  <- equery e "select email,conferma from utenti where id= ?" (Only u)
         let (en,c) = case em of 
                 [] -> (Nothing,False)
@@ -335,7 +339,12 @@ role e u = checkUtente e u $ \u -> do
                         [Only x] -> if x > 0 then fmap (map Just) $ equery e "select logo,begin,expire,place from autori where id=?" (Only u)
                                 else return [Nothing]
                         _ -> return [Nothing]
-        return $ Roles (not . null $ (b1 :: [Only Integer])) (not . null $ (b2 :: [Only Integer])) en c campagna
+        return $ Roles (not . null $ (b1 :: [Only Integer])) en c campagna
 setMail e u r = checkUtente e u $ \u -> eexecute e "update utenti set email=? ,conferma=0 where id =?" (r,u)
 confirmMail e u = checkUtente e u $ \u -> eexecute e "update utenti set conferma=1 where id =?" (Only u)
 
+askValidation e u = checkUtente e u $ \u -> do
+        new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
+        eexecute e "update utenti set identification = ? where id=?" (new,u)
+        return new
+        

@@ -3,30 +3,29 @@ BEGIN TRANSACTION;
 CREATE TABLE "utenti" (
         "id"  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         "hash" text unique not null
-        , email text unique, conferma integer not null);
-INSERT INTO "utenti" VALUES(1,'LYL85EwHXYX9PYYkTxFOaW6CHy45ndGUeiG447B0v3E5fcd6Sh','giuliano.bora@gmail.com',1);
-INSERT INTO "utenti" VALUES(8,'lwmb4vxUxv2iScU9q51mbqaVNziQmOpypPArqnHHHLrR58kYtN','paolo.veronelli@gmail.com',1);
-INSERT INTO "utenti" VALUES(38,'r8dx8LfIficR4l5y8AA3Uc6o0dcKSctVpm1SYIR4kdnwxEmFEQ',NULL,0);
-INSERT INTO "utenti" VALUES(39,'RjYGPGhy8pZ2EksGv8o6VPY3p2l2PlepZf6tAEnOYbpqN79bWJ',NULL,0);
-INSERT INTO "utenti" VALUES(40,'txLyTV8YTJ8O5SyCoNwiHivDYFZfEGiSsnqaAQT70fQ8cuVsBm',NULL,0);
-INSERT INTO "utenti" VALUES(41,'UPujTPtjpTDffzW6xN3osZdstdv5MDYf5phHtW5XGGtejPn6zx',NULL,0);
-INSERT INTO "utenti" VALUES(42,'J4FAZ0h7hE87XUSe5LCbUcLSjQDRByxFnX47SLZutEiQW6oQgz',NULL,0);
-INSERT INTO "utenti" VALUES(43,'0VJc8Hw6135YGxkEOQhOdOYsGXNzKpX3n86jOyXmmwWOU6GKXm',NULL,0);
+        , email text unique, conferma integer not null, identification text);
+INSERT INTO "utenti" VALUES(1,'LYL85EwHXYX9PYYkTxFOaW6CHy45ndGUeiG447B0v3E5fcd6Sh','giuliano.bora@gmail.com',1,NULL);
+INSERT INTO "utenti" VALUES(8,'lwmb4vxUxv2iScU9q51mbqaVNziQmOpypPArqnHHHLrR58kYtN','paolo.veronelli@gmail.com',1,NULL);
+INSERT INTO "utenti" VALUES(38,'r8dx8LfIficR4l5y8AA3Uc6o0dcKSctVpm1SYIR4kdnwxEmFEQ',NULL,0,NULL);
+INSERT INTO "utenti" VALUES(39,'RjYGPGhy8pZ2EksGv8o6VPY3p2l2PlepZf6tAEnOYbpqN79bWJ',NULL,0,NULL);
+INSERT INTO "utenti" VALUES(40,'txLyTV8YTJ8O5SyCoNwiHivDYFZfEGiSsnqaAQT70fQ8cuVsBm',NULL,0,NULL);
+INSERT INTO "utenti" VALUES(41,'UPujTPtjpTDffzW6xN3osZdstdv5MDYf5phHtW5XGGtejPn6zx',NULL,0,NULL);
+INSERT INTO "utenti" VALUES(42,'J4FAZ0h7hE87XUSe5LCbUcLSjQDRByxFnX47SLZutEiQW6oQgz',NULL,0,NULL);
+INSERT INTO "utenti" VALUES(43,'0VJc8Hw6135YGxkEOQhOdOYsGXNzKpX3n86jOyXmmwWOU6GKXm',NULL,0,NULL);
 CREATE TABLE "autori" (
         "id" integer not null unique references utenti(id) on delete cascade,
          logo text not null, begin text not null, expire text not null,place text not null);
 INSERT INTO "autori" VALUES(1,'http://www.p46.it/wp-content/uploads/2014/06/logo-p46-70x70@x2-e1405693109885.jpg','2015-09-13 23:00','2015-09-13 23:00','https://goo.gl/maps/v9rwK');
 INSERT INTO "autori" VALUES(8,'http://lambdasistemi.net/logo.png','2015-09-13 23:00','2015-09-13 23:00','https://goo.gl/maps/v9rwK');
 CREATE TABLE "realizzatori" (
-        "id" integer not null unique references utenti(id) on delete cascade
+        "autore" integer not null references autori(id) on delete cascade,
+        "utente" integer not null references utenti(id) on delete cascade
         );
-INSERT INTO "realizzatori" VALUES(1);
 CREATE TABLE "identificati" ( 
-        "realizzatore" integer not null unique references realizzatori(id) on delete cascade,
-        "utente" integer not null unique references utenti(id) on delete cascade,
+        "validatore" integer not null references autori(id) on delete cascade,
+        "utente" integer not null references utenti(id) on delete cascade,
         "date" text not null DEFAULT (datetime('now','localtime'))
         );
-INSERT INTO "identificati" VALUES(1,1,'2015-08-18 19:29:50');
 CREATE TABLE "argomenti" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     "argomento" TEXT unique NOT NULL,
