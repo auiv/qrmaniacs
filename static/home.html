@@ -49,6 +49,12 @@
                                                 
                                                 <a class=vaisugooglemaps href="http://maps.google.com"><img width=70 height=70 src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSfBezxeGH2wju3Tm55MT9GN1xvKst2pUNV6JKlu4u_c0HrpJa8XNkviw"></a>
                                 </li>
+                                <li class=list-group-item> Lista validatori:
+                                        <ul class=list-group>
+                                                <li class = list-group-item ng-repeat="v in validatori">
+                                                        {{v}}
+                                                </li>
+                                        </ul>
                                 <li ng-if="isAuthor" class="well list-group-item">
                                         QR di login:<a href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span></a>
                                 </li> 

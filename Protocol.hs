@@ -43,6 +43,8 @@ data Put
         | SetExpire User String
         | SetPlace User String
         | ConfirmMail User
+        | Promote User User
+        | Revoke User String
         deriving Read
 
 put' :: Env -> Put -> ConnectionMonad ()
@@ -64,6 +66,8 @@ put' e (SetBegin u r)= setBegin e u r
 put' e (SetExpire u r)= setExpire e u r
 put' e (SetPlace u r)= setPlace e u r
 put' e (ConfirmMail u)= confirmMail e u
+put' e (Promote u h)= promote e u h 
+put' e (Revoke u h)= revoke e u h
       
 put :: Env -> Put -> WriterT [Event] IO (Either DBError ())
 put e l = runErrorT (put' e l)
@@ -79,6 +83,7 @@ data Get a where
         Validate :: User -> User -> Get ()
         Role :: User  -> Get Roles
         AskValidation :: User -> Get String
+        Validators :: User -> Get [String]
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (ArgomentiAutore u) = listArgomenti e u 
@@ -91,6 +96,7 @@ get' e (ChangeAssoc u i) = changeAssoc e u i
 get' e (Validate u h) = validateUser e u h
 get' e (Role u ) = role e u 
 get' e (AskValidation u ) = askValidation e u
+get' e (Validators u ) = validators e u
 
 
 get :: Env -> Get a -> WriterT [Event] IO (Either DBError a)

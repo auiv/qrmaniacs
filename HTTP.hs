@@ -114,7 +114,11 @@ main = do
                                                         i' <- readMaybe i
                                                         return $ AddFeedback u i'
                                         ["SetMail",e] -> onuser user $ \u -> do 
-                                                        sendResponseP' p (Just  $ SetMail u e) $ sendAMail mailer pwd e reloc  (LoginMail u) 
+                                                        sendResponseP' p (Just  $ SetMail u e) $ sendAMail mailer pwd e reloc  (LoginMail u)
+                                        ["Promote",o] -> onuser user $ \u  -> do        
+                                                        responseP (Just $ Promote u o)
+                                        ["Revoke",m] -> onuser user $ \u  -> do        
+                                                        responseP (Just $ Revoke u m)
                                         _ -> return $ sendJSON BadRequest $ JSNull
 
                             POST -> do 
@@ -209,6 +213,8 @@ main = do
                                                                 callCommand c
                                                                 qr <- BSF.readFile "qr.tmp"
                                                                 return $ sendPng qr
+                                        ["Validators"] -> onuser user $ \u -> do
+                                                sendResponse g (Just $ Validators u)
                                         [""] -> do
                                                 v <- readFile "static/index.html"
                                                 

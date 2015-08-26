@@ -340,11 +340,24 @@ role e u = checkUtente e u $ \u -> do
                                 else return [Nothing]
                         _ -> return [Nothing]
         return $ Roles (not . null $ (b1 :: [Only Integer])) en c campagna
-setMail e u r = checkUtente e u $ \u -> eexecute e "update utenti set email=? ,conferma=0 where id =?" (r,u)
+setMail e u r = checkUtente e u $ \u -> etransaction e $ do
+        t <- equery e "select conferma from utenti where id=?" (Only u)
+        case t of
+                [Only False] -> eexecute e "update utenti set email=? ,conferma=0 where id =?" (r,u)
+                _ -> throwError $ DatabaseError "replacing a confirmed email"
 confirmMail e u = checkUtente e u $ \u -> eexecute e "update utenti set conferma=1 where id =?" (Only u)
 
 askValidation e u = checkUtente e u $ \u -> do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
         eexecute e "update utenti set identification = ? where id=?" (new,u)
         return new
+       
+validators :: Env -> User -> ConnectionMonad [String]
+validators e u = checkAuthor e u $ \u _ -> do
+        map fromOnly `fmap` equery e "select email from realizzatori join utenti on realizzatori.utente = utenti.id where autore = ?" (Only u)
+
+promote e u h =  checkAuthor e u $ \u _ -> checkValidation e h $ \h -> do
+        eexecute e "insert or replace into realizzatori  (autore,utente) values (?,?)" (u,h)
         
+revoke e u m = checkAuthor e u $ \u _ -> do
+        eexecute e "delete from realizzatori where autore = ? and utente = (select id from utenti where email = ?)" (u,m)

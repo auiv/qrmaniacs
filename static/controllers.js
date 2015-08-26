@@ -69,8 +69,11 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 $scope.isValidatore=xs.result.validatore;
                 $scope.mail=xs.result.email;
                 $scope.campagna=xs.result.campagna;
-
                 $scope.active=true;
+                $http.get("Validators").success(function(xs){
+                        $scope.validatori=xs.result;
+                        });
+
                 });
         }
         $scope.$watch("campagna.begin",function(a,b) {
