@@ -50,20 +50,24 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 return $http.put("SetMail/" + d).success(function(xs){$scope.update()});
                 }
         $scope.logout = function () {
-                var modalInstance = $modal.open({
-                        animation: true,
-                        templateUrl: 'static/logginout.html',
-                        controller: 'Input',
-                        size: 'lg',
-                        scope:$scope
-                        });
-                modalInstance.result.then(
-                        function () {$http.get("Logout").then(function(xs){$location.url("/loggedout");})},
-                        function () {}
-                        );
+                if($scope.conferma)
+                    $http.get("Logout").then(function(xs){$location.url("/loggedout");})
+                else {
+                  var modalInstance = $modal.open({
+                          animation: true,
+                          templateUrl: 'static/logginout.html',
+                          controller: 'Input',
+                          size: 'lg',
+                          scope:$scope
+                          });
+                  modalInstance.result.then(
+                          function () {$http.get("Logout").then(function(xs){$location.url("/loggedout");})},
+                          function () {}
+                          );
+                    }
                 };
         $scope.confermato = function () {
-                if($scope.campagna.conferma) return 'confermato';
+                if($scope.conferma) return 'confermato';
                 return "non confermato";
                 }
         $scope.update = function (f) {
@@ -71,11 +75,13 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 $scope.isAuthor=xs.result.author;
                 $scope.isValidatore=xs.result.validatore;
                 $scope.mail=xs.result.email;
+                $scope.conferma = xs.result.conferma;
                 $scope.campagna=xs.result.campagna;
                 $scope.active=true;
-                $http.get("Validators").success(function(xs){
-                        $scope.validatori=xs.result;
-                        });
+                if($scope.isAuthor)
+                  $http.get("Validators").success(function(xs){
+                          $scope.validatori=xs.result;
+                          });
 
                 });
         }
