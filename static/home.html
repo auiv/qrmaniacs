@@ -43,9 +43,16 @@
                                                 </li>
                                                 <li class="well list-group-item"> 
                                                         Fine campagna: <div class=label> {{campagna.expire | date:'HH:mm dd-MM-yyyy'}}</div>
-                                                        <p> 
-                                                        <datepicker style="display:inline-block" ng-model="campagna.expire"/> 
-                                                        <timepicker show-meridian=false style="display:inline-block;margin-bottom:200px;" ng-model="campagna.expire" ></timepicker>
+                                                        <p>
+                                                         
+                                                        <div class=row>
+                                                                <div class="col-sm-7">
+                                                                        <datepicker class="well well-sm" ng-model="campagna.expire"/> 
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                        <timepicker show-meridian=false  ng-model="campagna.expire" ></timepicker>
+                                                                </div>
+                                                        </div>
                                                 </li>
                                                 <li class="well list-group-item"> 
                                                 Luogo validazione:  <a  href="#"  editable-textarea="campagna.place" onbeforesave="setPlace($data)" e-rows="2" e-cols="20">
