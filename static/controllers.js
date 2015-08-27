@@ -188,7 +188,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
                 $scope.campagna=xs.result.campagna;
                 $scope.items=xs.result.domande;
                 $scope.argomento={'text':xs.result.text};
-                Page.setTitle($scope.argomento); 
+                Page.setTitle($scope.argomento.text); 
                 Page.setLogo (xs.result.logo);
                 if(xs.result.nuovo){
                         var modalInstance = $modal.open({
@@ -225,7 +225,7 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
                 $http.get("DomandeAutore/"+$scope.hash).success(function(xs){
                         $scope.items=xs.result.domande;
                         $scope.argomento={'text':xs.result.text};
-                        Page.setTitle($scope.argomento + "(edit)"); 
+                        Page.setTitle($scope.argomento.text + "(edit)"); 
                         Page.setLogo (xs.result.logo);
                         f();
                         });
