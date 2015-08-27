@@ -34,6 +34,8 @@ cs.controller('Input', function ($scope, $modalInstance) {
 
 cs.controller('LoggedOutController', function () {
         });
+cs.controller('CommonController', function () {
+        });
 cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         $scope.Page=Page; 
         Page.setTitle("QR Maniacs");

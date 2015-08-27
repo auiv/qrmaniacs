@@ -6,6 +6,7 @@
                         <a class=link href="#/Visitatore">Visitatore</a>
                         <a ng-if="false" class=link href="#/Validatore">Validatore</a>
                         <a class=link ng-click="logout()">Logout</a>
+                        <a class=link href="#/Common">Sistema</a>
                 </div>
 
                 <div class="col-sm-10">
@@ -70,9 +71,6 @@
                                                         {{v}}
                                                 </li>
                                         </ul>
-                                <li ng-if="isAuthor" class="well list-group-item">
-                                        QR di login:<a href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span></a>
-                                </li> 
                                 <li class="well list-group-item">
                                         QR richiesta validazione:<a href="QR/AskValidation"><span class="glyphicon glyphicon-qrcode"></span></a>
                                 </li> 

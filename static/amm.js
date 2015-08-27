@@ -9,6 +9,10 @@ myApp.config(['$routeProvider',
         templateUrl: 'static/home.html',
         controller:'HomeController'
       }).
+      when('/common', {
+        templateUrl: 'static/common.html',
+        controller:'CommonController'
+      }).
       when('/Autore', {
         templateUrl: 'static/argomenti.html',
         controller: 'AutoreController'
