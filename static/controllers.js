@@ -60,7 +60,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                         );
                 };
         $scope.confermato = function () {
-                if($scope.conferma) return 'confermato';
+                if($scope.campagna.conferma) return 'confermato';
                 return "non confermato";
                 }
         $scope.update = function (f) {
