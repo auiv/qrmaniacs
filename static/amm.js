@@ -9,7 +9,7 @@ myApp.config(['$routeProvider',
         templateUrl: 'static/home.html',
         controller:'HomeController'
       }).
-      when('/common', {
+      when('/Sistema', {
         templateUrl: 'static/common.html',
         controller:'CommonController'
       }).
