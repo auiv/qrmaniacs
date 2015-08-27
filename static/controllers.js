@@ -34,11 +34,12 @@ cs.controller('Input', function ($scope, $modalInstance) {
 
 cs.controller('LoggedOutController', function () {
         });
-cs.controller('CommonController', function () {
+cs.controller('CommonController', function (Page) {
+        Page.setTitle("Sistema");
         });
 cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         $scope.Page=Page; 
-        Page.setTitle("QR Maniacs");
+        Page.setTitle("Profilo");
         Page.setLogo("static/immagini/logo.png");
         $scope.active=false;
         $scope.changeLogo = function (x) {
@@ -105,7 +106,7 @@ cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$coo
 
 cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page,$window) {
         $scope.Page=Page;
-        Page.setTitle("Autore di QR");
+        Page.setTitle("Autore");
     
         $scope.selected=null;
         $scope.argomenti = [];
@@ -179,7 +180,6 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         $scope.Page = Page;
         $scope.items = [];
         $scope.hash = $routeParams.hash;
-        Page.setTitle("Visitatore di QR"); 
         $scope.conferma = function (){
                 $location.url("Visitatore");
                 }
@@ -188,6 +188,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
                 $scope.campagna=xs.result.campagna;
                 $scope.items=xs.result.domande;
                 $scope.argomento={'text':xs.result.text};
+                Page.setTitle($scope.argomento); 
                 Page.setLogo (xs.result.logo);
                 if(xs.result.nuovo){
                         var modalInstance = $modal.open({
@@ -217,7 +218,6 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
 
 cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
         $scope.Page = Page;
-        Page.setTitle("Autore domande QR");
         $scope.items = [];
         $scope.valori=['Giusta','Sbagliata','Accettabile'];
         $scope.hash = $routeParams.hash;
@@ -225,6 +225,7 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
                 $http.get("DomandeAutore/"+$scope.hash).success(function(xs){
                         $scope.items=xs.result.domande;
                         $scope.argomento={'text':xs.result.text};
+                        Page.setTitle($scope.argomento + "(edit)"); 
                         Page.setLogo (xs.result.logo);
                         f();
                         });
