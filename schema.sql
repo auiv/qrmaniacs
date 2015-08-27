@@ -22,7 +22,7 @@ CREATE TABLE "realizzatori" (
         "utente" integer not null references utenti(id) on delete cascade
         );
 CREATE TABLE "identificati" ( 
-        "validatore" integer not null references realizzatori(utente) on delete cascade,
+        "validatore" integer not null references utenti(id) on delete cascade,
         "utente" integer not null references utenti(id) on delete cascade,
         "date" text not null DEFAULT (datetime('now','localtime'))
         );

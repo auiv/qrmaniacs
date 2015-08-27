@@ -13,8 +13,8 @@
                                         <img class=logov width=25 height=25 src={{argomento.logo}} />
                                         {{argomento.text}}
                                         <div class=delete>
-                                                <button  class="btn btn-default"  ng-click="Page.gotoQR(argomento.index);$event.stopPropagation()">
-                                                        <span class="glyphicon glyphicon-qrcode"></span> </a>
+                                                <a  class="btn btn-default"  href="QR/{{argomento.index}}">
+                                                        <span class="glyphicon glyphicon-qrcode"></span></a>
                                                 <button  class="btn btn-default" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
                                                        <span class="glyphicon glyphicon-trash"></span> </button>
                                         <div>

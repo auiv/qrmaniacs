@@ -17,7 +17,7 @@ import Text.Read
 import Network.HTTP.Server
 import Network.HTTP.Server.Logger
 import Network.URL as URL
-import Network.URI (URI (..), URIAuth (..))
+import Network.URI (URI (..), URIAuth (..),parseURI)
 import Text.JSON
 import Text.JSON.String(runGetJSON)
 import Control.Exception(try,SomeException)
@@ -85,6 +85,9 @@ main = do
                 responser url request = do
                           let   URI a (Just (URIAuth _ b _)) _ _ _  = rqURI request
                                 href = reloc
+                                Just uri = parseURI href
+                                Just domain = uriRegName `fmap` uriAuthority  uri
+                                path = uriPath uri
                                 user = findHeader HdrCookie request >>= findUserName
                           
                           putStr "Request: "
@@ -158,7 +161,7 @@ main = do
                                                         return $ ArgomentiAutore u 
                                         ["Login",u] -> do
                                                         responseP (Just $ ConfirmMail u)
-                                                        return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                        return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
                                                                 $ redirectHome   reloc                                                   
 
                                         ["Domande",i] -> onuser user $ \u -> sendResponse g $ do
@@ -166,9 +169,9 @@ main = do
                                         ["DomandeAutore",i] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ DomandeAutore u i 
                                         ["ChangeAssoc",i] -> case user of
-                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndQuestionario u q) -> (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
+                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndQuestionario u q) -> (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                                                  Nothing -> sendResponse' g (Just $ AddAssoc i) (\(UserAndQuestionario u q) ->
-                                                                          (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
+                                                                          (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                         ["QR","Identify"] -> onuser user $ \u -> do
                                                 let url = reloc ++ "/Identify/" ++ u
                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
@@ -181,6 +184,18 @@ main = do
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
+                                        ["QR","AskValidation"]  -> do
+                                                let url = reloc ++ "/AskValidation"
+                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                callCommand c
+                                                qr <- BSF.readFile "qr.tmp"
+                                                return $ sendPng qr
+                                        ["QR","AskPromotion"]  -> do
+                                                let url = reloc ++ "/AskPromotion"
+                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
+                                                callCommand c
+                                                qr <- BSF.readFile "qr.tmp"
+                                                return $ sendPng qr
                                         ["QR",h] -> do
                                                 let url = reloc ++ "/#/Resource/" ++ h
                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
@@ -188,7 +203,7 @@ main = do
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
                                         ["Visitati"] -> onuser user $ \u ->
-                                                fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Path=/;Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
                                                         . sendResponse g $ do
                                                         return $ Visitati u 
                                         ["QR"] -> do
@@ -198,7 +213,7 @@ main = do
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
                                         ["Validate",h] -> onuser user $ \u -> sendResponse g $ Just $ Validate u h
-                                        ["Logout"] -> fmap (insertHeader HdrSetCookie ("userName=;Path=/;Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
+                                        ["Logout"] -> fmap (insertHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
                                                         $ return $ sendText OK "Bye!"
                                         ["Role"] -> onuser user $ \u -> sendResponse g $ Just $ Role u
                                         ["AskValidation"] -> onuser user $ \u -> do

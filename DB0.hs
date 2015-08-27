@@ -360,7 +360,11 @@ validators e u = checkAuthor e u $ \u _ -> do
         map fromOnly `fmap` equery e "select email from realizzatori join utenti on realizzatori.utente = utenti.id where autore = ?" (Only u)
 
 promote e u h =  checkAuthor e u $ \u _ -> checkValidation e h $ \h -> do
-        eexecute e "insert or replace into realizzatori  (autore,utente) values (?,?)" (u,h)
+        r <- equery e "select conferma from utenti where id = ? " (Only h)
+        case r of
+                [Only False] -> throwError $ DatabaseError "mail non confermata"
+                [Only True] ->  eexecute e "insert or replace into realizzatori  (autore,utente) values (?,?)" (u,h)
+                _ -> throwError $ DatabaseError "impossible happened"
         
 revoke e u m = checkAuthor e u $ \u _ -> do
         eexecute e "delete from realizzatori where autore = ? and utente = (select id from utenti where email = ?)" (u,m)

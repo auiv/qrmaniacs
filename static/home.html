@@ -21,12 +21,6 @@
                                         <span ng-hide="confermato()" class="glyphicon glyphicon-warning"> </span>       
                                         </div>
                                 </li> 
-                                                <li class="well list-group-item">
-                                                        QR di validazione:<a href="AskValidation"><span class="glyphicon glyphicon-qrcode"></span></a>
-                                                </li> 
-                                                <li class="well list-group-item">
-                                                        QR da validatore:<a href="AskPromotion"><span class="glyphicon glyphicon-qrcode"></span></a>
-                                                </li> 
                                 <li ng-if="isAuthor" class="list-group-item">
                                         <ul  class=list-group>  
                                                 <li class="well list-group-item"> 
@@ -63,9 +57,7 @@
                                                 <li ng-if="isAuthor" class="well list-group-item">
                                                         QR di login:<a href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span></a>
                                                 </li> 
-                                        </ul>
-                                </li>
-                                <li class=list-group-item> Lista validatori:
+                                <li class=list-group-item> Validatori promossi:
                                         <ul class=list-group>
                                                 <li class = list-group-item ng-repeat="v in validatori">
                                                         {{v}}
@@ -74,6 +66,15 @@
                                 <li ng-if="isAuthor" class="well list-group-item">
                                         QR di login:<a href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span></a>
                                 </li> 
+                                <li class="well list-group-item">
+                                        QR richiesta validazione:<a href="QR/AskValidation"><span class="glyphicon glyphicon-qrcode"></span></a>
+                                </li> 
+                                <li class="well list-group-item">
+                                        QR promozione validatore:<a href="QR/AskPromotion"><span class="glyphicon glyphicon-qrcode"></span></a>
+                                </li> 
+
+                                        </ul>
+                                </li>
                         </ul>
                 </div>
         </div>
