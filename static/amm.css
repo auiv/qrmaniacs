@@ -81,10 +81,10 @@ body{font-size:;}
        }
 .op{}
 .argomento{background-color: lightgrey;padding:7px;border-radius:8px;}
-.domanda{margin-top:15px;margin-bottom:10px;background-color:#43c2c4;padding:5px;padding-left:10px;border-radius:5px;color:white;}
+.domanda{margin-top:0px;margin-bottom:15px;background-color:#43c2c4;padding:5px;padding-left:10px;font-size:120%;border-radius:5px;color:white;}
 .logo{float:right}
 .navigation{width: 7em}
-.content{margin-left: 7em;margin-bottom:50px;}
+.content{margin-left: 7em;margin-bottom:50px;margin-top:20px;}
 .user{margin-right:5px;font-style:oblique;font-size:50%}
 .login{float:right;font-size:30%;color:#999}
 .pointer{background-color:#e5f6fd;cursor:pointer;}
@@ -100,9 +100,10 @@ body{font-size:;}
 .label{font-size:110%;color:black;}
 .logolink{background-color:#f8f8f8;padding:1px;margin:3px;border:1px solid #e3e3e3}
 .container{margin:0px;}
-.title{font-weight: bold;font-size:150%;margin-left:100px;}
+.well{margin-bottom:0;}
+.title{font-weight: bold;font-size:150%;margin-left:100px;margin-bottom:20px;margin-top:10px}
 .author{padding:3px;background-color: #f8f8f8;width:80px;height:80px;border: 1px solid #e3e3e3;margin:10px}
-.well{}
+.list-group-item .list-group-item{border:0}
 p{margin:0}
 .modal-dialog{width: 500px;position:fixed;left:15px}
 .modal-body{width:500px}
