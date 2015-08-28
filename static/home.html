@@ -14,13 +14,12 @@
                         <div class="title well"> Il tuo profilo </div> 
                         <ul class=" list-group"> 
                                 <li class="well list-group-item">
-                                        Email:
+                                        Indirizzo:
                                         <a  href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                                 {{mail || 'mail....'}}</a>
                                         <div>
-                                        Conferma:
-                                        <span ng-if="confermato()" class="glyphicon glyphicon-ok"> </span>
-                                        <span ng-if="!confermato()" class="glyphicon glyphicon-warning-sign"> </span>       
+                                        <span ng-if="confermato()" class="glyphicon glyphicon-ok"> Indirizzo confermato </span>
+                                        <span ng-if="!confermato()" class="glyphicon glyphicon-warning-sign"> Indirizzo non confermato </span>       
                                         </div>
                                 </li> 
                                 <li ng-if="isAuthor" class="list-group-item">
