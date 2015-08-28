@@ -19,8 +19,8 @@
                                                 {{mail || 'mail....'}}</a>
                                         <div>
                                         Conferma:
-                                        <span ng-show="confermato()" class="glyphicon glyphicon-ok"> </span>
-                                        <span class="glyphicon glyphicon-warning"> </span>       
+                                        <span ng-if="confermato()" class="glyphicon glyphicon-ok"> </span>
+                                        <span ng-if="!confermato()" class="glyphicon glyphicon-warning-sign"> </span>       
                                         </div>
                                 </li> 
                                 <li ng-if="isAuthor" class="list-group-item">
