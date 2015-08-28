@@ -26,7 +26,7 @@ a.editable-click:hover {
 .editable-buttons button{padding:13px}
 a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 
-.delete{position:absolute;right:15px;top:6px;}
+.delete{position:absolute;right:5px;top:3px;}
 
 .modal-dialog {
     width:;
@@ -87,7 +87,7 @@ body{font-size:;}
 .content{margin-left: 7em;margin-bottom:50px;}
 .user{margin-right:5px;font-style:oblique;font-size:50%}
 .login{float:right;font-size:30%;color:#999}
-.pointer{background-color:#e5f6fd;cursor:pointer;}
+.pointer{background-color:#e5f6fd;cursor:pointer;padding:5px;}
 .pointer:hover{background-color:#43c2c4;color:white}
 .comment{font-size:25%}
 .intro{font-size:50%;margin-left:10px;}
