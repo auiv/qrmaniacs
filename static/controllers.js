@@ -67,8 +67,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                     }
                 };
         $scope.confermato = function () {
-                if($scope.conferma) return 'confermato';
-                return "non confermato";
+                return $scope.conferma;
                 }
         $scope.update = function (f) {
          $http.get("Role").success(function(xs){
