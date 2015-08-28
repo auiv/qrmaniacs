@@ -26,7 +26,7 @@ a.editable-click:hover {
 .editable-buttons button{padding:13px}
 a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 
-.delete{position:absolute;right:0px;top:0px;}
+.delete{position:absolute;right:15px;top:6px;}
 
 .modal-dialog {
     width:;
