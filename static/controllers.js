@@ -188,6 +188,11 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         $scope.conferma = function (){
                 $location.url("Visitatore");
                 }
+        $scope.feedback= function (r) {
+                $http.put("AddFeedback/"+r).success(function(xs){
+                $scope.update();
+                        });}
+        $scope.update = function () {
         $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
                 $scope.author=xs.result.author;
                 $scope.campagna=xs.result.campagna;
@@ -209,16 +214,12 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
                                 );
                         }
                         
-                });
-        $scope.feedback= function (r) {
-                $http.put("AddFeedback/"+r).success(function(xs){
-                $scope.update();
-                        });}
-        $scope.update = function () {
-                $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
-                        $scope.items=xs.result.domande;
+                $http.get("IsValidate/"+ $scope.hash).success(function(xs){
+                        $scope.notValid= !xs.result;
                         });
+                });
                         }
+        $scope.update();
         });
 
 cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {

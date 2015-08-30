@@ -13,11 +13,15 @@
                 </div> 
 
                         <ul class="list-group"> 
-                                <li class="list-group-item" ng-if="1">
-                                        <div class="well notvalid">
+                                <li class="list-group-item">
+                                        <div class="well notvalid" ng-show="notValid">
                                         <p> La tua partecipazione a questa campagna non è stata ancora validata.
-                                        <p> Hai tempo fino a {{campagna.expire | date:'HH:mm dd-MM-yyyy'}} per validarla 
+                                        <p> Hai tempo fino alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} per validarla 
                                         <a href={{campagna.place}}>qui</a>
+                                        </div>
+                                        <div class="well notvalid" ng-show="!notValid">
+                                        <p> La tua partecipazione a questa campagna è stata validata.
+                                        <p> La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
                                         </div>
                                 </li>
                                 <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 

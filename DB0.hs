@@ -370,5 +370,8 @@ revoke e u m = checkAuthor e u $ \u _ -> do
         eexecute e "delete from realizzatori where autore = ? and utente = (select id from utenti where email = ?)" (u,m)
 
 isValidate e u h = checkUtente e u $ \u -> checkRisorsa e h $ \h _ a -> do
-        r <- equery e "select identificati.utente from realizzatori join identificati on realizzatori.utente = identificati.validatore where realizzatori.autore = ? and identificati.utente = ?" (a,u)
+        r <- equery e "select identificati.utente,argomenti.risorsa from realizzatori join identificati join argomenti join autori on autori.id = argomenti.autore and argomenti.autore = realizzatori.autore and realizzatori.utente = identificati.validatore where identificati.utente = ? and argomenti.id= ?  and Datetime('now') > Datetime(autori.begin)" (u,h)
         return (not . null $ (r :: [Only Integer]))
+
+validations :: Env -> User -> Int 
+validations = undefined
