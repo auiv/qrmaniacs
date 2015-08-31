@@ -179,39 +179,15 @@ main = do
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
-                                        ["QR","Login"] -> onuser user $ \u -> do
-                                                let url = reloc ++ "/Login/" ++ u
-                                                let c = "qrencode -s 10 -o- \""++ url ++ "\""
-                                                (_,qr,_) <- SPBSF.readProcessWithExitCode c [c] ""
-                                                return $ sendPng qr
-                                        ["QR","AskValidation"]  -> do
-                                                let url = reloc ++ "/AskValidation"
-                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
-                                                callCommand c
-                                                qr <- BSF.readFile "qr.tmp"
-                                                return $ sendPng qr
-                                        ["QR","AskPromotion"]  -> do
-                                                let url = reloc ++ "/AskPromotion"
-                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
-                                                callCommand c
-                                                qr <- BSF.readFile "qr.tmp"
-                                                return $ sendPng qr
-                                        ["QR",h] -> do
-                                                let url = reloc ++ "/#/Resource/" ++ h
-                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
-                                                callCommand c
-                                                qr <- BSF.readFile "qr.tmp"
-                                                return $ sendPng qr
+                                        ["QR","Login"] -> onuser user $ \u -> sendQR $ reloc ++ "/Login/" ++ u
+                                        ["QR","AskValidation"]  -> sendQR $ reloc ++ "/AskValidation"
+                                        ["QR","AskPromotion"]  -> sendQR $ reloc ++ "/AskPromotion"
+                                        ["QR",h] -> sendQR $ reloc ++ "/#/Resource/" ++ h
                                         ["Visitati"] -> onuser user $ \u ->
                                                 fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
                                                         . sendResponse g $ do
                                                         return $ Visitati u 
-                                        ["QR"] -> do
-                                                let url = reloc
-                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
-                                                callCommand c
-                                                qr <- BSF.readFile "qr.tmp"
-                                                return $ sendPng qr
+                                        ["QR"] -> sendQR reloc
                                         ["Validate",h] -> onuser user $ \u -> do 
                                                   x <- dotheget g $ Just $ Validate u h
                                                   return $ case x of 
@@ -286,3 +262,6 @@ sendHTML s v    = insertHeader HdrContentType "text/html"
                 $ sendText s v
 
 
+sendQR url = do
+      (_,qr,_) <- SPBSF.readProcessWithExitCode "qrencode" ["-s10","-o-",url] ""
+      return $ sendPng qr
