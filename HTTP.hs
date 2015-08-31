@@ -26,7 +26,7 @@ import Data.List
 import Data.List.Split
 import Data.List.Utils
 import Control.Concurrent
-
+import System.Process.ByteString as SPBSF
 import System.Environment
 import JSON
 import Mailer
@@ -181,9 +181,8 @@ main = do
                                                 return $ sendPng qr
                                         ["QR","Login"] -> onuser user $ \u -> do
                                                 let url = reloc ++ "/Login/" ++ u
-                                                let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
-                                                callCommand c
-                                                qr <- BSF.readFile "qr.tmp"
+                                                let c = "qrencode -s 10 -o- \""++ url ++ "\""
+                                                (_,qr,_) <- SPBSF.readProcessWithExitCode c [c] ""
                                                 return $ sendPng qr
                                         ["QR","AskValidation"]  -> do
                                                 let url = reloc ++ "/AskValidation"
