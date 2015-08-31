@@ -283,3 +283,17 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
         });
 
 
+cs.controller("PromotedController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
+Page.setTitle("Promozione");
+});
+cs.controller("ValidatedController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
+Page.setTitle("Validazione");
+});
+cs.controller("CantPromoteController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
+$scope.reason=$routeParams.reason;
+Page.setTitle("Promozione");
+});
+cs.controller("CantValidateController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
+Page.setTitle("Validazione");
+$scope.reason=$routeParams.reason;
+});

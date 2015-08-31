@@ -41,6 +41,22 @@ myApp.config(['$routeProvider',
         templateUrl: 'static/loggedout.html',
         controller: 'LoggedOutController'
       }).
+      when('/CantPromote/:reason', {
+        templateUrl: 'static/cantpromote.html',
+        controller: 'CantPromoteController'
+      }).
+      when('/CantValidate/:reason', {
+        templateUrl: 'static/cantvalidate.html',
+        controller: 'CantValidateController'
+      }).
+      when('/Promoted', {
+        templateUrl: 'static/promoted.html',
+        controller: 'PromotedController'
+      }).
+      when('/Validated', {
+        templateUrl: 'static/validated.html',
+        controller: 'ValidatedController'
+      }).
       otherwise({
         redirectTo: '/'
       });

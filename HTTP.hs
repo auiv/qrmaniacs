@@ -30,6 +30,7 @@ import Control.Concurrent
 import System.Environment
 import JSON
 import Mailer
+import NiceError
 jsError x = makeObj [("error",showJSON $ show x)]
 jsDBError x  = makeObj [("dberror",showJSON $ show x)]
 jsCompund x y = makeObj [("result",showJSON x)]
@@ -212,7 +213,11 @@ main = do
                                                 callCommand c
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
-                                        ["Validate",h] -> onuser user $ \u -> sendResponse g $ Just $ Validate u h
+                                        ["Validate",h] -> onuser user $ \u -> do 
+                                                  x <- dotheget g $ Just $ Validate u h
+                                                  return $ case x of 
+                                                    Left y -> insertHeader HdrLocation (reloc ++ "/CantValidate/" ++ niceError y) $ respond SeeOther
+                                                    Right _ -> insertHeader HdrLocation (reloc ++ "/#/Validated") $ respond SeeOther
                                         ["Logout"] -> fmap (insertHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
                                                         $ return $ sendText OK "Bye!"
                                         ["Role"] -> onuser user $ \u -> sendResponse g $ Just $ Role u
@@ -243,7 +248,10 @@ main = do
                                         ["IsValidate",h] -> onuser user $ \u -> do
                                                 sendResponse g (Just $ IsValidate u h)
                                         ["Promote",o] -> onuser user $ \u  -> do        
-                                                        sendResponse g (Just $ Promote u o)
+                                                  x <- dotheget g $ Just $ Promote u o
+                                                  return $ case x of 
+                                                    Left y -> insertHeader HdrLocation (reloc ++ "/#/CantPromote/" ++ niceError  y) $ respond SeeOther
+                                                    Right _ -> insertHeader HdrLocation (reloc ++ "/#/Promoted") $ respond SeeOther
                                         [""] -> do
                                                 v <- readFile "static/index.html"
                                                 
