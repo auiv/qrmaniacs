@@ -1,7 +1,7 @@
 
 <div  class=container>
         <div ng-show=active class=row>
-                <div class="col-sm-2" >
+                <div class="navigation" >
                         <img class=author src={{Page.logo()}} width=50 height=50 />
                         <a ng-if="isAuthor" class=link href="#/Autore">Autore</a>
                         <a class=link href="#/Visitatore">Visitatore</a>
@@ -10,7 +10,7 @@
                         <a ng-if="isAuthor" class=link href="#/Sistema">Sistema</a>
                 </div>
 
-                <div class="col-sm-6">
+                <div class="content">
                         <div class="title well"> Il tuo profilo </div> 
                         <ul class=" list-group"> 
                                 <li class="well list-group-item">
@@ -78,10 +78,10 @@
         </div>
 
         <div ng-hide=active class=row>
-                <div class="col-sm-2" >
+                <div class="navigation" >
                 </div>
 
-                <div class="col-sm-6">
+                <div class="content">
                         <div class="title well"> 
                                 <em>QR Maniacs</em>  
                                 <span class=comment> QR code related services <span>
