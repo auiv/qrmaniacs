@@ -107,4 +107,4 @@ p{margin:0}
 .modal-dialog{width: 500px;position:fixed;left:15px}
 .modal-body{width:500px}
 .result{font-size:400%}
-.finequestionario{position:fixed;right:0;background-color: #ff3600}
+.finequestionario{position:fixed;right:14em;background-color: #ff3600;z-index:1;bottom:0}
