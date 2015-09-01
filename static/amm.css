@@ -102,7 +102,7 @@ a.link{display:inline;margin-top:10px;vertical-align:100%}
 .logolink{background-color:#f8f8f8;padding:1px;margin:3px;border:1px solid #e3e3e3}
 .container{margin:0px;}
 .title{font-weight: bold;font-size:200%;display:inline-block;width:200px;}
-.author{padding:3px;background-color: #f8f8f8;width:80px;height:80px;border: 1px solid #e3e3e3;margin:10px}
+.author{padding:3px;background-color: #f8f8f8;width:40px;height:40px;border: 1px solid #e3e3e3;margin:10px}
 .well{margin:0;}
 p{margin:0}
 .modal-dialog{width: 500px;position:fixed;left:15px}
