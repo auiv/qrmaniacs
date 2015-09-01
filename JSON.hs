@@ -15,8 +15,10 @@ instance JSON QuestionarioAutore where
 instance JSON QuestionarioVisitatore where
         showJSON (QuestionarioVisitatore l n ds lo nu a) = makeObj $ [("campagna",showJSON a),("author",showJSON l),("text",showJSON n),("domande",showJSON ds),("logo",showJSON lo),
                 ("nuovo",showJSON nu)]
+instance JSON Phase where
+        showJSON p = showJSON $ show p
 instance JSON Campagna where
-        showJSON (Campagna lo be ex pl) = makeObj $ [("logo",showJSON lo),("begin",showJSON be),("expire",showJSON ex),("place",showJSON pl)]
+        showJSON (Campagna lo be ex pl ph) = makeObj $ [("logo",showJSON lo),("begin",showJSON be),("expire",showJSON ex),("place",showJSON pl),("phase",showJSON ph)]
 instance JSON Risposta where
         showJSON (Risposta i s v) = makeObj $ [("index",showJSON i),("text",showJSON s),("value",showJSON $ show v)]
 instance JSON RispostaV where

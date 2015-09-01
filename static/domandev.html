@@ -5,25 +5,33 @@
                         <a ng-show=author class=link href="#/Autore/Resource/{{hash}}">Edit</a>
                         <a class="link" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> Fatto</span></a>
                 </div>
-
                 <div class="content">
+                        <div class="banner">
+                                        <div ng-show="campagna.phase=='Running'" class=well>
+                                                <div class="notvalid" ng-show="notValid">
+                                                <p> La tua partecipazione a questa campagna non è stata ancora validata.
+                                                <p> Hai tempo fino alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} per validarla 
+                                                <a href={{campagna.place}}>qui</a>
+                                                </div>
+                                                <div class="well notvalid" ng-show="!notValid">
+                                                <p> La tua partecipazione a questa campagna è stata validata.
+                                                <p> La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
+                                                </div>
+                                        </div>
+                                        <div ng-show="campagna.phase=='Before'" class=well>
+                                                <p> Questo questionario si aprirà alle {{campagna.begin | date:'HH:mm'}} del {{campagna.begin | date:'dd-MM-yyyy'}} 
+                                        </div>
+                                        <div ng-show="campagna.phase=='After'" class=well>
+                                                <p> La campagna di questo QR si è chiusa alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} 
+                                        </div>
+                                </div>
+
                         <img class=author src={{Page.logo()}} width=50 height=50 />
                 <div class="title well"> {{argomento.text}}
 
                 </div> 
 
                         <ul class="list-group"> 
-                                <li class="list-group-item">
-                                        <div class="well notvalid" ng-show="notValid">
-                                        <p> La tua partecipazione a questa campagna non è stata ancora validata.
-                                        <p> Hai tempo fino alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} per validarla 
-                                        <a href={{campagna.place}}>qui</a>
-                                        </div>
-                                        <div class="well notvalid" ng-show="!notValid">
-                                        <p> La tua partecipazione a questa campagna è stata validata.
-                                        <p> La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
-                                        </div>
-                                </li>
                                 <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
                                 <div class=domanda>                                {{ item.text}}</div>
                                                                 

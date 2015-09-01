@@ -206,9 +206,25 @@ data Campagna = Campagna
         String  -- start
         String  --end
         String -- place
+        Phase
+
+phase (Campagna _ _ _ _ p) = p
+
+data Phase = Before | Running | After deriving Show
 
 instance FromRow Campagna where
-   fromRow = Campagna <$> field <*> field <*> field <*> field
+   fromRow = do 
+                logo <- field 
+                start <- field 
+                end <- field 
+                start' <- field 
+                end' <- field 
+                place <- field 
+                (now :: String) <- field
+                let ph = if now < start' then Before
+                                else if now > end' then After
+                                        else Running
+                return $ Campagna logo start end place ph
 
 setLogo e u l = checkAuthor e u $ \u _ -> do
                 eexecute e "update autori set logo=? where id=?" (l,u)
@@ -233,11 +249,13 @@ listDomandeAutore' e u i = checkAuthorOf e u i $ \i -> do
 listDomandeVisitatore' e u i nu = checkUtente e u $ \u -> checkRisorsa e i $ \i _ y -> do
                         [(n,lo)] <- equery e "select argomento,logo  from argomenti join autori on autori.id = argomenti.autore where argomenti.id=?" $ Only i
                         ds <- equery e "select id,domanda from domande where argomento = ? " $ Only i
-                        fs <- forM ds $ \(i,d) -> do
-                                rs <- equery e "select id,risposta from risposte where domanda = ?" $ Only i
-                                zs <- equery e "select risposta from feedback where domanda = ? and utente=?" $ (i,u)
-                                return $ DomandaV i d $ map (\(i,r) -> RispostaV i r $ i `elem` map fromOnly zs) rs
-                        [c] <- equery e "select logo,begin,expire,place from autori where id=?" (Only y)
+                        [c] <- equery e "select logo,begin,expire,datetime(begin),datetime(expire),place,datetime('now') from autori where id=?" (Only y) 
+                        fs <- case phase c of 
+                                Running -> forM ds $ \(i,d) -> do
+                                        rs <- equery e "select id,risposta from risposte where domanda = ?" $ Only i
+                                        zs <- equery e "select risposta from feedback where domanda = ? and utente=?" $ (i,u)
+                                        return $ DomandaV i d $ map (\(i,r) -> RispostaV i r $ i `elem` map fromOnly zs) rs
+                                _ -> return []
                         return $ QuestionarioVisitatore (u==y) n fs lo nu c
                         
 
@@ -339,7 +357,7 @@ role e u = checkUtente e u $ \u -> do
                 [] -> (Nothing,False)
                 [(a,b)] -> (a,b)
         [campagna] <- case b1 of 
-                        [Only x] -> if x > 0 then fmap (map Just) $ equery e "select logo,begin,expire,place from autori where id=?" (Only u)
+                        [Only x] -> if x > 0 then fmap (map Just) $ equery e "select logo,begin,expire,datetime(begin),datetime(expire),place,datetime('now') from autori where id=?" (Only u)
                                 else return [Nothing]
                         _ -> return [Nothing]
         return $ Roles (not . null $ (b1 :: [Only Integer])) en c campagna
