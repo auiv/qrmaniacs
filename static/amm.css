@@ -111,3 +111,4 @@ p{margin:0}
 .finequestionario{position:fixed;right:10%;background-color: #ff3600;z-index:1;bottom:0}
 .list-group-item{border:0;margin:1px;}
 .banner{margin-left:10px;margin-right:50px;font-style: oblique;}
+.through{transform:matrix(0.70710678, -0.70710678, 0.70710678, 0.70710678, -40, 180);width:350px;font-size:140%;color:#ff3600;position:absolute }

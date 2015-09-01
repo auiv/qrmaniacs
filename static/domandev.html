@@ -3,7 +3,7 @@
                 <div class=navigation>
                         <a class=link href="#/">Profilo</a>
                         <a ng-show=author class=link href="#/Autore/Resource/{{hash}}">Edit</a>
-                        <a class="link" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> Fatto</span></a>
+                        <a class="link" ng-if="campagna.phase=='Running'" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> Fatto</span></a>
                 </div>
                 <div class="content">
                         <div class="banner">
@@ -18,7 +18,7 @@
                                                 <p> La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
                                                 </div>
                                         </div>
-                                        <div ng-show="campagna.phase=='Before'" class=well>
+                                        <div ng-show="campagna.phase=='Before'" class="well through">
                                                 <p> Questo questionario si aprirà alle {{campagna.begin | date:'HH:mm'}} del {{campagna.begin | date:'dd-MM-yyyy'}} 
                                         </div>
                                         <div ng-show="campagna.phase=='After'" class=well>
