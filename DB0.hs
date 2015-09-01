@@ -393,3 +393,9 @@ isValidate e u h = checkUtente e u $ \u -> checkRisorsa e h $ \h _ a -> do
 
 validations :: Env -> User -> Int 
 validations = undefined
+
+logout e u = checkUtente e u $ \u -> do
+        [Only c] <- equery e "select conferma from utenti where id= ?" (Only u)
+        case c of
+                        False ->  eexecute e "delete from utenti where id=?" (Only u)
+                        True -> return ()

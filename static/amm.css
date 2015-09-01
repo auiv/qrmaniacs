@@ -85,7 +85,7 @@ a.link{display:inline;margin-top:10px;vertical-align:100%}
 .domanda{margin-top:15px;margin-bottom:10px;background-color:#43c2c4;padding:5px;padding-left:10px;border-radius:5px;color:white;}
 .logo{float:right}
 .navigation{width:100%;position:fixed;z-index:1;background-color:#ff3600;height:30px;padding:3px}
-.content{margin-bottom:50px;margin-top:30px}
+.content{margin:3px;margin-bottom:50px;margin-top:30px;}
 .user{margin-right:5px;font-style:oblique;font-size:50%}
 .login{float:right;font-size:30%;color:#999}
 .pointer{background-color:#e5f6fd;cursor:pointer;padding:5px;}
@@ -103,10 +103,9 @@ a.link{display:inline;margin-top:10px;vertical-align:100%}
 .container{margin:0px;}
 .title{font-weight: bold;font-size:130%;display:inline-block;width:240px;}
 .author{padding:3px;background-color: #f8f8f8;width:40px;height:40px;border: 1px solid #e3e3e3;margin:10px}
-.well{margin:0;}
-p{margin:0}
-.modal-dialog{width:;position:fixed;left:15px}
-.modal-body{width:}
+.well{margin:}
+.modal-dialog{overflow:auto;position:absolute;left:15px}
+.modal-body{overflow:auto}
 .result{font-size:400%}
 .finequestionario{position:fixed;right:10%;background-color: #ff3600;z-index:1;bottom:0}
 .list-group-item{border:0;margin:1px;}

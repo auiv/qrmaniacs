@@ -51,7 +51,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 }
         $scope.logout = function () {
                 if($scope.conferma)
-                    $http.get("Logout").then(function(xs){$location.url("/loggedout");})
+                    $http.put("Logout").then(function(xs){$location.url("/loggedout");})
                 else {
                   var modalInstance = $modal.open({
                           animation: true,
@@ -61,7 +61,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                           scope:$scope
                           });
                   modalInstance.result.then(
-                          function () {$http.get("Logout").then(function(xs){$location.url("/loggedout");})},
+                          function () {$http.put("Logout").then(function(xs){$location.url("/loggedout");})},
                           function () {}
                           );
                     }
@@ -103,6 +103,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
 cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
         $scope.Page = Page;
         Page.setLogo("static/immagini/logo.png");
+        
         });
 
 cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page) {
