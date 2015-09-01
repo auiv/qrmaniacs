@@ -105,8 +105,8 @@ a.link{display:inline;margin-top:10px;vertical-align:100%}
 .author{padding:3px;background-color: #f8f8f8;width:40px;height:40px;border: 1px solid #e3e3e3;margin:10px}
 .well{margin:0;}
 p{margin:0}
-.modal-dialog{width: 500px;position:fixed;left:15px}
-.modal-body{width:500px}
+.modal-dialog{width:;position:fixed;left:15px}
+.modal-body{width:}
 .result{font-size:400%}
 .finequestionario{position:fixed;right:10%;background-color: #ff3600;z-index:1;bottom:0}
 .list-group-item{border:0;margin:1px;}
