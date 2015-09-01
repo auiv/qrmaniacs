@@ -1,13 +1,13 @@
 <div  class=container>
         <div class=row>
                 <div class=navigation>
-                        <img class=author src={{Page.logo()}} width=50 height=50 />
                         <a class=link href="#/">Profilo</a>
-                        <a class=link href="#/Visitatore">Visitatore</a>
                         <a ng-show=author class=link href="#/Autore/Resource/{{hash}}">Edit</a>
+                        <a class="link" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> Fatto</span></a>
                 </div>
 
                 <div class="content">
+                        <img class=author src={{Page.logo()}} width=50 height=50 />
                 <div class="title well"> {{argomento.text}}
 
                 </div> 
@@ -41,7 +41,6 @@
                                         </ul>
                                 </li>
                         </ul>
-                        <a class="btn btn-success finequestionario" ng-click="conferma()"><span class="glyphicon glyphicon-ok">Fine</span></a>
                 </div>
         </div>
 </div>

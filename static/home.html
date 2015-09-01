@@ -2,7 +2,6 @@
 <div  class=container>
         <div ng-show=active class=row>
                 <div class="navigation" >
-                        <img class=author src={{Page.logo()}} width=50 height=50 />
                         <a ng-if="isAuthor" class=link href="#/Autore">Autore</a>
                         <a class=link href="#/Visitatore">Visitatore</a>
                         <a ng-if="false" class=link href="#/Validatore">Validatore</a>
@@ -11,6 +10,7 @@
                 </div>
 
                 <div class="content">
+                <img class=author src={{Page.logo()}} width=50 height=50 />
                         <div class="title well"> Il tuo profilo </div> 
                         <ul class=" list-group"> 
                                 <li class="well list-group-item">
