@@ -26,7 +26,7 @@ a.editable-click:hover {
 .editable-buttons button{padding:13px}
 a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 
-.delete{position:absolute;right:5px;top:3px;}
+.delete{display:inline;}
 
 .modal-dialog {
     width:;
@@ -85,7 +85,7 @@ a.link{display:inline;margin-top:10px;vertical-align:100%}
 .domanda{margin-top:15px;margin-bottom:10px;background-color:#43c2c4;padding:5px;padding-left:10px;border-radius:5px;color:white;}
 .logo{float:right}
 .navigation{width:100%;position:fixed;z-index:1;background-color:#ff3600;height:30px;padding:3px}
-.content{margin-bottom:50px;margin-top:30px;padding:0px}
+.content{margin-bottom:50px;margin-top:30px}
 .user{margin-right:5px;font-style:oblique;font-size:50%}
 .login{float:right;font-size:30%;color:#999}
 .pointer{background-color:#e5f6fd;cursor:pointer;padding:5px;}
@@ -101,13 +101,11 @@ a.link{display:inline;margin-top:10px;vertical-align:100%}
 .label{font-size:110%;color:black;}
 .logolink{background-color:#f8f8f8;padding:1px;margin:3px;border:1px solid #e3e3e3}
 .container{margin:0px;}
-.title{font-weight: bold;font-size:120%;display:inline-block;width:200px;}
-.author{padding:3px;background-color: #f8f8f8;width:50px;height:40px;border: 1px solid #e3e3e3;margin:1px}
+.title{font-weight: bold;font-size:200%;display:inline-block;width:200px;}
+.author{padding:3px;background-color: #f8f8f8;width:80px;height:80px;border: 1px solid #e3e3e3;margin:10px}
 .well{margin:0;}
 p{margin:0}
 .modal-dialog{width: 500px;position:fixed;left:15px}
 .modal-body{width:500px}
 .result{font-size:400%}
 .finequestionario{position:fixed;right:10%;background-color: #ff3600;z-index:1;bottom:0}
-.list-group{margin:0px;padding:1px;}
-.list-group-item{margin:3px;padding:1px;border:0}

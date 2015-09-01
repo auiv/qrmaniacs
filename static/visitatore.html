@@ -12,12 +12,6 @@
                                 <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
                                         <img class=logov width=25 height=25 src={{argomento.logo}} />
                                         {{argomento.text}}
-                                        <div class=delete>
-                                                <a  class="btn btn-default"  href="QR/{{argomento.index}}">
-                                                        <span class="glyphicon glyphicon-qrcode"></span></a>
-                                                <button  class="btn btn-default" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
-                                                       <span class="glyphicon glyphicon-trash"></span> </button>
-                                        <div>
                                 </li>
                         </ul> 
 
