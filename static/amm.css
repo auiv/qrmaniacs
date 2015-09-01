@@ -43,7 +43,7 @@ a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
 body{font-size:;}
 .btn{white-space:normal;}
 .btn-default{background-color: transparent;border: 0}
-}
+
 .nuovo {
        position:fixed;
        bottom:20px;
@@ -111,3 +111,4 @@ a.link{display:inline;margin-top:10px;vertical-align:100%}
 .list-group-item{border:0;margin:1px;}
 .banner{margin-left:10px;margin-right:50px;font-style: oblique;}
 .through{transform:matrix(0.70710678, -0.70710678, 0.70710678, 0.70710678, -40, 180);width:350px;font-size:140%;color:#ff3600;position:absolute }
+.btn{padding:0}
