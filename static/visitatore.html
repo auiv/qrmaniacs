@@ -6,23 +6,18 @@
                 </div>
 
                 <div class="content">
-                <div class="title well"> Le tue risposte 
-                <div ng-if="argomenti.length" class="alert alert-warning alert-dismissible" role="alert">
-                                                                <div class="notvalid" ng-show="notValid">
+                                                        <div ng-if="argomenti.length < 1" class="alert alert-warning alert-dismissible" role="alert">
+                                                                <div>
                                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                                   <span aria-hidden="true">&times;</span>
                                                                                 </button>
 
 
-                                                                          <p> La tua partecipazione a questa campagna non è stata ancora convalidata.
-                                                                          <p> Puoi farlo <a href={{campagna.place}}>qui</a> entro le {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}
-                                                                </div>
-                                                                <div class="well notvalid" ng-show="!notValid">
-                                                                <p> La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
+                                                                          <p> Non hai ancora risposto ad alcun questionario
+                                                                          <p> Puoi farlo inquadrando un QR questionario
                                                                 </div>
                                                         </div>
 
-                                </div> 
                         <ul class="list-group"> 
                                 <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
                                         <img class=logov width=25 height=25 src={{argomento.logo}} />
