@@ -44,6 +44,7 @@ data Put
         | SetPlace User String
         | ConfirmMail User
         | Revoke User String
+        | Logout User 
         deriving Read
 
 put' :: Env -> Put -> ConnectionMonad ()
@@ -66,6 +67,7 @@ put' e (SetExpire u r)= setExpire e u r
 put' e (SetPlace u r)= setPlace e u r
 put' e (ConfirmMail u)= confirmMail e u
 put' e (Revoke u h)= revoke e u h
+put' e (Logout u)= logout e u
       
 put :: Env -> Put -> WriterT [Event] IO (Either DBError ())
 put e l = runErrorT (put' e l)

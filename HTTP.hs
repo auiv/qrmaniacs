@@ -121,6 +121,8 @@ main = do
                                                         sendResponseP' p (Just  $ SetMail u e) $ sendAMail mailer pwd e reloc  (LoginMail u)
                                         ["Revoke",m] -> onuser user $ \u  -> do        
                                                         responseP (Just $ Revoke u m)
+                                        ["Logout"] -> onuser user $ \u -> fmap (insertHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
+                                                        $ responseP (Just $ Logout u)
                                         _ -> return $ sendJSON BadRequest $ JSNull
 
                             POST -> do 
@@ -193,8 +195,6 @@ main = do
                                                   return $ case x of 
                                                     Left y -> insertHeader HdrLocation (reloc ++ "/CantValidate/" ++ niceError y) $ respond SeeOther
                                                     Right _ -> insertHeader HdrLocation (reloc ++ "/#/Validated") $ respond SeeOther
-                                        ["Logout"] -> fmap (insertHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
-                                                        $ return $ sendText OK "Bye!"
                                         ["Role"] -> onuser user $ \u -> sendResponse g $ Just $ Role u
                                         ["AskValidation"] -> onuser user $ \u -> do
                                                 x <- dotheget g $ Just (AskValidation u)

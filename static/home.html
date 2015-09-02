@@ -2,7 +2,6 @@
 <div  class=container>
         <div ng-show=active class=row>
                 <div class="navigation" >
-                        <img class=author src={{Page.logo()}} width=50 height=50 />
                         <a ng-if="isAuthor" class=link href="#/Autore">Autore</a>
                         <a class=link href="#/Visitatore">Visitatore</a>
                         <a ng-if="false" class=link href="#/Validatore">Validatore</a>
@@ -11,6 +10,7 @@
                 </div>
 
                 <div class="content">
+                <img class=author src={{Page.logo()}} width=50 height=50 />
                         <div class="title well"> Il tuo profilo </div> 
                         <ul class=" list-group"> 
                                 <li class="well list-group-item">
@@ -35,7 +35,7 @@
                                                          
                                                         <div class=row>
                                                                 <div class="col-sm-7">
-                                                                        <datepicker class="well well-sm" ng-model="campagna.begin"/> 
+                                                                        <datepicker show-weeks=false class="well well-sm" ng-model="campagna.begin"/> 
                                                                 </div>
                                                                 <div class="col-sm-5">
                                                                         <timepicker show-meridian=false  ng-model="campagna.begin" ></timepicker>
@@ -48,7 +48,7 @@
                                                          
                                                         <div class=row>
                                                                 <div class="col-sm-7">
-                                                                        <datepicker class="well well-sm" ng-model="campagna.expire"/> 
+                                                                        <datepicker show-weeks=false class="well well-sm" ng-model="campagna.expire"/> 
                                                                 </div>
                                                                 <div class="col-sm-5">
                                                                         <timepicker show-meridian=false  ng-model="campagna.expire" ></timepicker>
@@ -84,12 +84,14 @@
                 <div class="content">
                         <div class="title well"> 
                                 <em>QR Maniacs</em>  
-                                <span class=comment> QR code related services <span>
+                                <span class=comment> QR related services <span>
                         </div>
+                                <div class=well>
                                         <p> I servizi di <em>QR Maniacs</em> (fase alpha) sono accessibili tramite QR argomento (URL inerni) di questo dominio. </p>
                                         <p> Per diventare autore contatta  
                                                 <a href="mailto:paolo.veronelli@gmail.com">mail</a>
                                         </p>
+                                </div>
                 </div>
         </div>
 </div>
