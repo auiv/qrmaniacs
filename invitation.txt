@@ -1,14 +1,16 @@
-Il tuo link di login su qrmaniacs.com è:
+Qualcuno ha richiesto un link di login su QR Maniacs.com associato a questa casella di posta elettronica.
+Se non l'hai richiesto tu puoi ignorare questa mail.
 
 linklogin
 
-Sarà confermato solo dopo il primo utilizzo che puoi effettuare da ora.
+Questo link sarà confermato dopo il primo utilizzo.
 
-Lo potrai utilizzare per recuperare la tua connessione al sistema su un altro device o per rientrare dopo un logout.
-Su questo indirizzo verrai notificato della chiusura dei QR ai quali hai contribuito con le tue risposte.
+Il sistema QR maniacs non prevede login via password e quindi questo link è l'unico metodo di ingresso alla tua posizione.
 
-Questo indirizzo email non verrà utilizzato per altri scopi e non verrà rivelato ad altri servizi.
+Potrai utilizzarlo per entrare nel sistema da qualsiasi device con l'accesso alla tua posta elettrronica.
 
-Distinti Saluti.
+Questo indirizzo non verrà utilizzato per altri scopi e non verrà rivelato ad altri servizi.
 
-lambdasistemi.net services
+In fede.
+
+   lambdasistemi.net services

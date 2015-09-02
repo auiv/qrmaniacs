@@ -16,7 +16,7 @@
                                         Indirizzo:
                                         <a  ng-if="!confermato()" href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                                 {{mail || 'mail....'}}</a>
-                                        <span ng-if="confermato()">{{mail}}</span>
+                                        <span class=email ng-if="confermato()">{{mail}}</span>
                                         
                                         <div>
                                         <span ng-if="confermato()" class="glyphicon glyphicon-ok"> Indirizzo confermato </span>
