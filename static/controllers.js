@@ -51,9 +51,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 return $http.put("SetMail/" + d).success(function(xs){$scope.update()});
                 }
         $scope.logout = function () {
-                if(0)
-                    $http.put("Logout").then(function(xs){$location.url("/loggedout");})
-                else {
+               
                   var modalInstance = $modal.open({
                           animation: true,
                           templateUrl: 'static/logginout.html',
@@ -70,7 +68,6 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                                   }},
                           function () {}
                           );
-                    }
                 };
         $scope.confermato = function () {
                 return $scope.conferma;

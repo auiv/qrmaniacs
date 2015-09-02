@@ -2,10 +2,10 @@
 <div  class=container>
         <div ng-show=active class=row>
                 <div class="navigation" >
-                        <a ng-if="isAuthor" class=link href="#/Autore">Questionari</a>
-                        <a class=link href="#/Visitatore">Risposte</a>
-                        <a ng-if="isAuthor" class=link href="#/Sistema">Sistema</a>
-                        <a class=link ng-click="logout()">Logout</a>
+                        <a class=link href="#/Visitatore"><span class="glyphicon glyphicon-list"></span></a>
+                        <a class=link ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+                        <a ng-if="isAuthor" class=link href="#/Autore"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a ng-if="isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-cog"></span></a>
                 </div>
 
                 <div class="content">
