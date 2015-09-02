@@ -5,6 +5,10 @@ var myApp = angular.module("myApp", ["xeditable",'ngRoute','cs']);
 myApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+      when('/', {
+        templateUrl: 'static/visitatore.html',
+        controller: 'VisitatoreController'
+      }).
       when('/Profile', {
         templateUrl: 'static/home.html',
         controller:'HomeController'
@@ -16,10 +20,6 @@ myApp.config(['$routeProvider',
       when('/Autore', {
         templateUrl: 'static/argomenti.html',
         controller: 'AutoreController'
-      }).
-      when('/', {
-        templateUrl: 'static/visitatore.html',
-        controller: 'VisitatoreController'
       }).
       when('/Validatore', {
         templateUrl: 'static/validatore.html'
