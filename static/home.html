@@ -13,8 +13,8 @@
                         <div ng-if="!confermato()" class="title well"> Il tuo profilo </div> 
                         <div ng-if="confermato()" class="title well"> {{mail}} </div> 
                         <ul class=" list-group"> 
-                                <li class="well list-group-item">
-                                        <div ng-if="!confermato()"> Posta elettronica:
+                                <li ng-if="!confermato()" class="well list-group-item">
+                                        <div > Posta elettronica:
                                                 <a   href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                                         {{' mail....'}}</a>
                                         
