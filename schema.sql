@@ -3,28 +3,24 @@ BEGIN TRANSACTION;
 CREATE TABLE "utenti" (
         "id"  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         "hash" text unique not null
-        , email text unique, conferma integer not null, identification text);
-INSERT INTO "utenti" VALUES(1,'LYL85EwHXYX9PYYkTxFOaW6CHy45ndGUeiG447B0v3E5fcd6Sh','giuliano.bora@gmail.com',1,NULL);
+        , email text , conferma integer not null, identification text unique);
+INSERT INTO "utenti" VALUES(1,'LYL85EwHXYX9PYYkTxFOaW6CHy45ndGUeiG447B0v3E5fcd6Sh','guidorisi@me.com',1,NULL);
 INSERT INTO "utenti" VALUES(8,'lwmb4vxUxv2iScU9q51mbqaVNziQmOpypPArqnHHHLrR58kYtN','paolo.veronelli@gmail.com',1,NULL);
-INSERT INTO "utenti" VALUES(38,'r8dx8LfIficR4l5y8AA3Uc6o0dcKSctVpm1SYIR4kdnwxEmFEQ',NULL,0,NULL);
-INSERT INTO "utenti" VALUES(39,'RjYGPGhy8pZ2EksGv8o6VPY3p2l2PlepZf6tAEnOYbpqN79bWJ',NULL,0,NULL);
-INSERT INTO "utenti" VALUES(40,'txLyTV8YTJ8O5SyCoNwiHivDYFZfEGiSsnqaAQT70fQ8cuVsBm',NULL,0,NULL);
-INSERT INTO "utenti" VALUES(41,'UPujTPtjpTDffzW6xN3osZdstdv5MDYf5phHtW5XGGtejPn6zx',NULL,0,NULL);
-INSERT INTO "utenti" VALUES(42,'J4FAZ0h7hE87XUSe5LCbUcLSjQDRByxFnX47SLZutEiQW6oQgz',NULL,0,NULL);
-INSERT INTO "utenti" VALUES(43,'0VJc8Hw6135YGxkEOQhOdOYsGXNzKpX3n86jOyXmmwWOU6GKXm',NULL,0,NULL);
 CREATE TABLE "autori" (
         "id" integer not null unique references utenti(id) on delete cascade,
          logo text not null, begin text not null, expire text not null,place text not null);
-INSERT INTO "autori" VALUES(1,'http://www.p46.it/wp-content/uploads/2014/06/logo-p46-70x70@x2-e1405693109885.jpg','2015-09-13 23:00','2015-09-13 23:00','https://goo.gl/maps/v9rwK');
-INSERT INTO "autori" VALUES(8,'http://lambdasistemi.net/logo.png','2015-09-13 23:00','2015-09-13 23:00','https://goo.gl/maps/v9rwK');
+INSERT INTO "autori" VALUES(1,'http://www.p46.it/wp-content/uploads/2014/06/logo-p46-70x70@x2-e1405693109885.jpg','2015-09-10T06:00:00.000Z','2015-09-13T20:00:00.000Z','https://goo.gl/maps/S2ihw');
+INSERT INTO "autori" VALUES(8,'http://lambdasistemi.net/logo.png','2015-08-31T10:17:29.000Z','2015-09-13 23:00','https://goo.gl/maps/S2ihw');
 CREATE TABLE "realizzatori" (
         "autore" integer not null references autori(id) on delete cascade,
-        "utente" integer not null references utenti(id) on delete cascade
+        "utente" integer not null references utenti(id) on delete cascade,
+        constraint "uniquerealizzatori" unique ("autore","utente")
         );
 CREATE TABLE "identificati" ( 
         "validatore" integer not null references utenti(id) on delete cascade,
         "utente" integer not null references utenti(id) on delete cascade,
-        "date" text not null DEFAULT (datetime('now','localtime'))
+        "date" text not null DEFAULT (datetime('now','localtime')),
+        constraint "identificati" unique ("validatore","utente")
         );
 CREATE TABLE "argomenti" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -142,68 +138,9 @@ CREATE TABLE feedback (
         "risposta" integer not null references risposte(id)  on delete cascade,
         constraint "uniquedomanda" unique ("utente","domanda")
         );
-INSERT INTO "feedback" VALUES(5,16,23);
-INSERT INTO "feedback" VALUES(1,16,27);
-INSERT INTO "feedback" VALUES(15,42,84);
-INSERT INTO "feedback" VALUES(15,31,54);
-INSERT INTO "feedback" VALUES(15,38,75);
-INSERT INTO "feedback" VALUES(15,35,66);
-INSERT INTO "feedback" VALUES(15,44,89);
-INSERT INTO "feedback" VALUES(1,41,82);
-INSERT INTO "feedback" VALUES(1,30,52);
-INSERT INTO "feedback" VALUES(1,31,53);
-INSERT INTO "feedback" VALUES(29,30,50);
-INSERT INTO "feedback" VALUES(1,29,48);
-INSERT INTO "feedback" VALUES(1,37,71);
-INSERT INTO "feedback" VALUES(34,29,48);
-INSERT INTO "feedback" VALUES(34,27,45);
-INSERT INTO "feedback" VALUES(1,34,63);
-INSERT INTO "feedback" VALUES(1,35,67);
-INSERT INTO "feedback" VALUES(1,36,69);
-INSERT INTO "feedback" VALUES(1,19,30);
-INSERT INTO "feedback" VALUES(37,27,43);
-INSERT INTO "feedback" VALUES(43,16,23);
-INSERT INTO "feedback" VALUES(43,19,31);
-INSERT INTO "feedback" VALUES(1,27,45);
 CREATE TABLE assoc (        
         "utente" integer not null references utenti(id) on delete cascade,
         "argomento" integer not null references argomenti(id) on delete cascade,
         constraint "uniqueassoc" unique ("utente","argomento")
         );
-INSERT INTO "assoc" VALUES(5,9);
-INSERT INTO "assoc" VALUES(6,9);
-INSERT INTO "assoc" VALUES(13,9);
-INSERT INTO "assoc" VALUES(14,34);
-INSERT INTO "assoc" VALUES(15,34);
-INSERT INTO "assoc" VALUES(18,9);
-INSERT INTO "assoc" VALUES(19,9);
-INSERT INTO "assoc" VALUES(20,18);
-INSERT INTO "assoc" VALUES(21,24);
-INSERT INTO "assoc" VALUES(22,21);
-INSERT INTO "assoc" VALUES(23,31);
-INSERT INTO "assoc" VALUES(24,20);
-INSERT INTO "assoc" VALUES(25,23);
-INSERT INTO "assoc" VALUES(27,22);
-INSERT INTO "assoc" VALUES(28,28);
-INSERT INTO "assoc" VALUES(26,21);
-INSERT INTO "assoc" VALUES(29,21);
-INSERT INTO "assoc" VALUES(30,26);
-INSERT INTO "assoc" VALUES(31,32);
-INSERT INTO "assoc" VALUES(33,9);
-INSERT INTO "assoc" VALUES(34,18);
-INSERT INTO "assoc" VALUES(35,18);
-INSERT INTO "assoc" VALUES(36,18);
-INSERT INTO "assoc" VALUES(37,20);
-INSERT INTO "assoc" VALUES(38,18);
-INSERT INTO "assoc" VALUES(39,18);
-INSERT INTO "assoc" VALUES(40,9);
-INSERT INTO "assoc" VALUES(41,9);
-INSERT INTO "assoc" VALUES(42,9);
-INSERT INTO "assoc" VALUES(43,9);
-INSERT INTO "assoc" VALUES(1,18);
-DELETE FROM sqlite_sequence;
-INSERT INTO "sqlite_sequence" VALUES('argomenti',35);
-INSERT INTO "sqlite_sequence" VALUES('domande',44);
-INSERT INTO "sqlite_sequence" VALUES('risposte',91);
-INSERT INTO "sqlite_sequence" VALUES('utenti',43);
 COMMIT;

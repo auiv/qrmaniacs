@@ -8,7 +8,7 @@
 
                 <div class="content">
 
-                        <img class=author src={{Page.logo()}} width=50 height=50 />
+                        <img class=author ng-src={{Page.logo()}} width=50 height=50 />
                 <div class="title well"> 
                         <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data)" e-rows="2" e-cols="20">
                                                 {{ argomento.text || 'Argomento..' }}</a>

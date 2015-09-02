@@ -362,10 +362,10 @@ role e u = checkUtente e u $ \u -> do
                         _ -> return [Nothing]
         return $ Roles (not . null $ (b1 :: [Only Integer])) en c campagna
 setMail e u r = checkUtente e u $ \u -> etransaction e $ do
-        -- t <- equery e "select conferma from utenti where id=?" (Only u)
-        --case t of
-                -- _ -> 
-        eexecute e "update utenti set email=? ,conferma=0 where id =?" (r,u)
+        t <- equery e "select conferma from utenti where id=?" (Only u)
+        case t of
+                  [Only False] -> eexecute e "update utenti set email=? ,conferma=0 where id =?" (r,u)
+                  _ -> throwError $ DatabaseError "replacing a confirmed email"
 confirmMail e u = checkUtente e u $ \u -> eexecute e "update utenti set conferma=1 where id =?" (Only u)
 
 askValidation e u = checkUtente e u $ \u -> do
@@ -394,8 +394,4 @@ isValidate e u h = checkUtente e u $ \u -> checkRisorsa e h $ \h _ a -> do
 validations :: Env -> User -> Int 
 validations = undefined
 
-logout e u = checkUtente e u $ \u -> do
-        [Only c] <- equery e "select conferma from utenti where id= ?" (Only u)
-        case c of
-                        False ->  eexecute e "delete from utenti where id=?" (Only u)
-                        True -> return ()
+logout e u = checkUtente e u $ \u -> eexecute e "delete from utenti where id=?" (Only u)

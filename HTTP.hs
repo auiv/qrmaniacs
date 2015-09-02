@@ -122,6 +122,8 @@ main = do
                                         ["Revoke",m] -> onuser user $ \u  -> do        
                                                         responseP (Just $ Revoke u m)
                                         ["Logout"] -> onuser user $ \u -> fmap (insertHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
+                                                        $ return $ sendJSON OK $ JSNull
+                                        ["Destroy"] -> onuser user $ \u -> fmap (insertHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
                                                         $ responseP (Just $ Logout u)
                                         _ -> return $ sendJSON BadRequest $ JSNull
 

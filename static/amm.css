@@ -112,3 +112,4 @@ a.link{display:inline;margin-top:10px;vertical-align:100%}
 .banner{margin-left:10px;margin-right:50px;font-style: oblique;}
 .through{transform:matrix(0.70710678, -0.70710678, 0.70710678, 0.70710678, -40, 180);width:350px;font-size:140%;color:#ff3600;position:absolute }
 .btn{padding:0}
+.fatto{position:fixed;background-color: #ff3600;color:white;bottom:0px;right:0px;}

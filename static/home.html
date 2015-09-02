@@ -2,21 +2,22 @@
 <div  class=container>
         <div ng-show=active class=row>
                 <div class="navigation" >
-                        <a ng-if="isAuthor" class=link href="#/Autore">Autore</a>
-                        <a class=link href="#/Visitatore">Visitatore</a>
-                        <a ng-if="false" class=link href="#/Validatore">Validatore</a>
-                        <a class=link ng-click="logout()">Logout</a>
+                        <a ng-if="isAuthor" class=link href="#/Autore">Questionari</a>
+                        <a class=link href="#/Visitatore">Risposte</a>
                         <a ng-if="isAuthor" class=link href="#/Sistema">Sistema</a>
+                        <a class=link ng-click="logout()">Logout</a>
                 </div>
 
                 <div class="content">
-                <img class=author src={{Page.logo()}} width=50 height=50 />
+                <img class=author ng-src={{Page.logo()}} width=50 height=50 />
                         <div class="title well"> Il tuo profilo </div> 
                         <ul class=" list-group"> 
                                 <li class="well list-group-item">
                                         Indirizzo:
-                                        <a  href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
+                                        <a  ng-if="!confermato()" href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                                 {{mail || 'mail....'}}</a>
+                                        <span ng-if="confermato()">{{mail}}</span>
+                                        
                                         <div>
                                         <span ng-if="confermato()" class="glyphicon glyphicon-ok"> Indirizzo confermato </span>
                                         <span ng-if="!confermato()" class="glyphicon glyphicon-warning-sign"> Indirizzo non confermato </span>       
@@ -67,7 +68,7 @@
                                                 </li> 
                                 <li class="well list-group-item"> Validatori promossi:
                                         <ul class=list-group>
-                                                <li class = list-group-item ng-repeat="v in validatori">
+                                                <li class = list-group-item ng-repeat="v in validatori track by $index">
                                                         {{v}}
                                                 </li>
                                         </ul>

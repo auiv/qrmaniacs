@@ -30,6 +30,7 @@ cs.factory('Page', function($location,$window,$cookies) {
 cs.controller('Input', function ($scope, $modalInstance) {
           $scope.gotMessage = function () {$modalInstance.close();};
           $scope.cancel = function () {$modalInstance.dismiss('cancel');};
+          $scope.any = function (x) {$modalInstance.close(x);};
         });
 
 cs.controller('LoggedOutController', function () {
@@ -50,7 +51,7 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 return $http.put("SetMail/" + d).success(function(xs){$scope.update()});
                 }
         $scope.logout = function () {
-                if($scope.conferma)
+                if(0)
                     $http.put("Logout").then(function(xs){$location.url("/loggedout");})
                 else {
                   var modalInstance = $modal.open({
@@ -61,7 +62,12 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                           scope:$scope
                           });
                   modalInstance.result.then(
-                          function () {$http.put("Logout").then(function(xs){$location.url("/loggedout");})},
+                          function (x) {
+                              switch (x) {
+                                  case 'esci':$http.put("Logout").then(function(xs){$location.url("/loggedout");});break
+                                  case 'destroy':$http.put("Destroy").then(function(xs){$location.url("/loggedout");});break
+                                  default:break;
+                                  }},
                           function () {}
                           );
                     }

@@ -3,31 +3,32 @@
                 <div class=navigation>
                         <a class=link href="#/">Profilo</a>
                         <a ng-show=author class=link href="#/Autore/Resource/{{hash}}">Edit</a>
-                        <a class="link" ng-if="campagna.phase=='Running'" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> Fatto</span></a>
+                        <a class="link" href="#/Visitatore">Risposte</a>
                 </div>
                 <div class="content">
                         <div class="banner">
                                         <div ng-show="campagna.phase=='Running'" class=well>
                                                 <div class="notvalid" ng-show="notValid">
-                                                <p> La tua partecipazione a questa campagna non è stata ancora validata.
-                                                <p> Hai tempo fino alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} per validarla 
-                                                <a href={{campagna.place}}>qui</a>
+                                                <p> La tua partecipazione a questa campagna non è stata ancora convalidata.
+                                                <p> Puoi farlo <a href={{campagna.place}}>qui</a> entro le {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}
                                                 </div>
                                                 <div class="well notvalid" ng-show="!notValid">
-                                                <p> La tua partecipazione a questa campagna è stata validata.
                                                 <p> La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
                                                 </div>
                                         </div>
                                         <div ng-show="campagna.phase=='Before'" class="well through">
-                                                <p> Questo questionario si aprirà alle {{campagna.begin | date:'HH:mm'}} del {{campagna.begin | date:'dd-MM-yyyy'}} 
+                                                <p> Questo campagna si aprirà alle {{campagna.begin | date:'HH:mm'}} del {{campagna.begin | date:'dd-MM-yyyy'}} 
                                         </div>
                                         <div ng-show="campagna.phase=='After'" class=well>
                                                 <p> La campagna di questo QR si è chiusa alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} 
                                         </div>
                                 </div>
 
-                        <img class=author src={{Page.logo()}} width=50 height=50 />
+                        <img class=author ng-src={{Page.logo()}} width=50 height=50 />
                 <div class="title well"> {{argomento.text}}
+                
+                                                <a  class="btn btn-default"  href="QR/{{hash}}">
+                                                        <span class="glyphicon glyphicon-qrcode"></span></a>
 
                 </div> 
 
@@ -49,6 +50,7 @@
                                         </ul>
                                 </li>
                         </ul>
+                        <a class="link fatto" ng-if="campagna.phase=='Running'" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> Fatto</span></a>
                 </div>
         </div>
 </div>
