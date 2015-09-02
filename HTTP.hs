@@ -70,9 +70,9 @@ sendResponseP' p v f = case v of
 sendResponseP p v = sendResponseP' p v $ return ()
 
 redirectHome :: String -> Response BS.ByteString
-redirectHome r = insertHeader HdrLocation r $ (respond SeeOther :: Response BS.ByteString)
+redirectHome r = replaceHeader HdrLocation r $ (respond SeeOther :: Response BS.ByteString)
 
-logoutAsError = insertHeader HdrSetCookie ""  
+logoutAsError = replaceHeader HdrSetCookie ""  
 main :: IO ()
 main = do
         [mailer,pwd,reloc] <- getArgs
@@ -121,9 +121,9 @@ main = do
                                                         sendResponseP' p (Just  $ SetMail u e) $ sendAMail mailer pwd e reloc  (LoginMail u)
                                         ["Revoke",m] -> onuser user $ \u  -> do        
                                                         responseP (Just $ Revoke u m)
-                                        ["Logout"] -> onuser user $ \u -> fmap (insertHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
+                                        ["Logout"] -> onuser user $ \u -> fmap (replaceHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
                                                         $ return $ sendJSON OK $ JSNull
-                                        ["Destroy"] -> onuser user $ \u -> fmap (insertHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
+                                        ["Destroy"] -> onuser user $ \u -> fmap (replaceHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
                                                         $ responseP (Just $ Logout u)
                                         _ -> return $ sendJSON BadRequest $ JSNull
 
@@ -166,7 +166,7 @@ main = do
                                                         return $ ArgomentiAutore u 
                                         ["Login",u] -> do
                                                         responseP (Just $ ConfirmMail u)
-                                                        return $ (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                        return $ (replaceHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
                                                                 $ redirectHome   reloc                                                   
 
                                         ["Domande",i] -> onuser user $ \u -> sendResponse g $ do
@@ -174,9 +174,9 @@ main = do
                                         ["DomandeAutore",i] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ DomandeAutore u i 
                                         ["ChangeAssoc",i] -> case user of
-                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndQuestionario u q) -> (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
+                                                                 Just u -> sendResponse' g (Just $ ChangeAssoc u i) (\(UserAndQuestionario u q) -> (replaceHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                                                  Nothing -> sendResponse' g (Just $ AddAssoc i) (\(UserAndQuestionario u q) ->
-                                                                          (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
+                                                                          (replaceHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;"),q))
                                         ["QR","Identify"] -> onuser user $ \u -> do
                                                 let url = reloc ++ "/Identify/" ++ u
                                                 let c = "qrencode -s 10 -o qr.tmp \""++ url ++ "\""
@@ -188,15 +188,15 @@ main = do
                                         ["QR","AskPromotion"]  -> sendQR $ reloc ++ "/AskPromotion"
                                         ["QR",h] -> sendQR $ reloc ++ "/#/Resource/" ++ h
                                         ["Visitati"] -> onuser user $ \u ->
-                                                fmap (insertHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                fmap (replaceHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
                                                         . sendResponse g $ do
                                                         return $ Visitati u 
                                         ["QR"] -> sendQR reloc
                                         ["Validate",h] -> onuser user $ \u -> do 
                                                   x <- dotheget g $ Just $ Validate u h
                                                   return $ case x of 
-                                                    Left y -> insertHeader HdrLocation (reloc ++ "/CantValidate/" ++ niceError y) $ respond SeeOther
-                                                    Right _ -> insertHeader HdrLocation (reloc ++ "/#/Validated") $ respond SeeOther
+                                                    Left y -> replaceHeader HdrLocation (reloc ++ "/CantValidate/" ++ niceError y) $ respond SeeOther
+                                                    Right _ -> replaceHeader HdrLocation (reloc ++ "/#/Validated") $ respond SeeOther
                                         ["Role"] -> onuser user $ \u -> sendResponse g $ Just $ Role u
                                         ["AskValidation"] -> onuser user $ \u -> do
                                                 x <- dotheget g $ Just (AskValidation u)
@@ -227,8 +227,8 @@ main = do
                                         ["Promote",o] -> onuser user $ \u  -> do        
                                                   x <- dotheget g $ Just $ Promote u o
                                                   return $ case x of 
-                                                    Left y -> insertHeader HdrLocation (reloc ++ "/#/CantPromote/" ++ niceError  y) $ respond SeeOther
-                                                    Right _ -> insertHeader HdrLocation (reloc ++ "/#/Promoted") $ respond SeeOther
+                                                    Left y -> replaceHeader HdrLocation (reloc ++ "/#/CantPromote/" ++ niceError  y) $ respond SeeOther
+                                                    Right _ -> replaceHeader HdrLocation (reloc ++ "/#/Promoted") $ respond SeeOther
                                         [""] -> do
                                                 v <- readFile "static/index.html"
                                                 
@@ -247,20 +247,20 @@ main = do
                         return resp      
 sendPng :: BS.ByteString -> Response BS.ByteString
 sendPng s = 
-                 insertHeader HdrContentEncoding "image/png"
+                 replaceHeader HdrContentEncoding "image/png"
                 $ (respond OK :: Response BS.ByteString) { rspBody = s }
 
 
-sendText s v    = -- insertHeader HdrContentLength (show $ BS.length v' * 2) $
-                insertHeader HdrContentEncoding "UTF-8"
-                $ insertHeader HdrContentEncoding "text/plain"
+sendText s v    = -- replaceHeader HdrContentLength (show $ BS.length v' * 2) $
+                replaceHeader HdrContentEncoding "UTF-8"
+                $ replaceHeader HdrContentEncoding "text/plain"
                 $ (respond s :: Response BS.ByteString) { rspBody = v'}
  where v'= BS.fromString v;
 
-sendJSON s v    = insertHeader HdrContentType "application/json"  
+sendJSON s v    = replaceHeader HdrContentType "application/json"  
                 $ sendText s (showJSValue v "")
 
-sendHTML s v    = insertHeader HdrContentType "text/html"
+sendHTML s v    = replaceHeader HdrContentType "text/html"
                 $ sendText s v
 
 
