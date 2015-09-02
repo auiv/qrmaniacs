@@ -10,17 +10,18 @@
 
                 <div class="content">
                 <img class=author ng-src={{Page.logo()}} width=50 height=50 />
-                        <div class="title well"> Il tuo profilo </div> 
+                        <div ng-if="!confermato()" class="title well"> Il tuo profilo </div> 
+                        <div ng-if="confermato()" class="title well"> {{mail}} </div> 
                         <ul class=" list-group"> 
                                 <li class="well list-group-item">
-                                        Indirizzo:
-                                        <a  ng-if="!confermato()" href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
-                                                {{mail || 'mail....'}}</a>
-                                        <span class=email ng-if="confermato()">{{mail}}</span>
+                                        <div ng-if="!confermato()"> Posta elettronica:
+                                                <a   href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
+                                                        {{'mail....'}}</a>
                                         
+                                        </div>
                                         <div>
-                                        <span ng-if="confermato()" class="glyphicon glyphicon-ok"> Indirizzo confermato </span>
-                                        <span ng-if="!confermato()" class="glyphicon glyphicon-warning-sign"> Indirizzo non confermato </span>       
+                                                <span ng-if="confermato()" class="glyphicon glyphicon-ok"> Indirizzo confermato </span>
+                                                <span ng-if="!confermato()" class="glyphicon glyphicon-warning-sign"> Indirizzo non confermato </span>       
                                         </div>
                                 </li> 
                                 <li ng-if="isAuthor" class="list-group-item">
