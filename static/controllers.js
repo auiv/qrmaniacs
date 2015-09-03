@@ -35,7 +35,7 @@ cs.factory('Page', function($location,$window,$cookies,$http) {
         gotoResource:function(i) {$location.url("/Resource/"+i)},
         gotoEditResource :function(i) {$location.url("/Autore/Resource/"+i)},
         gotoQR :function(i) {window.location.href="QR/"+i},
-        goBack : function () {window.history.back()},
+        goBack : function () {$window.history.back()},
         user : function (){return $cookies.get("userName")},
         loginQR : function(){window.location.href = "QR/Login"},
         setUnlogged: function (){unlogged=true},

@@ -22,9 +22,9 @@
 </head>
 <body>
         <div class="navigation" >
-                <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
+                <a class=link href="#/"><span class="glyphicon glyphicon-check"></span></a>
                 <a ng-if="Page.id.isAuthor" class=link href="#/Autore"><span class="glyphicon glyphicon-edit"></span></a>
-                <a ng-if="Page.id.isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-qrcode"></span></a>
+                <a ng-if="Page.id.isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-share"></span></a>
                 <a ng-if="Page.id.isAuthor" class="link" href="#/Profile"><span class="glyphicon glyphicon-cog"></span></a>
                 <a ng-if="Page.id.mail" href="#/Logout" class="link mail"> {{Page.id.mailpart}} </a> 
                 <a ng-if="!Page.id.mail" href="#/Logout" class="link"><span class="glyphicon glyphicon-user"></span></a> 
