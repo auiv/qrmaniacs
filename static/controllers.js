@@ -5,11 +5,26 @@ cs.run(function(editableOptions) {
   editableOptions.theme = 'bs2';
 });
 
-cs.factory('Page', function($location,$window,$cookies) {
+cs.factory('Page', function($location,$window,$cookies,$http) {
    var title = 'default';
    var logo = "";
    var unlogged=false;
+   var id={}
+         $http.get("Role").success(function(xs){
+                id.isAuthor=xs.result.author;
+                id.isValidatore=xs.result.validatore;
+                id.mail=xs.result.email;
+                id.mailpart=xs.result.email.split("@")[0];
+                id.conferma = xs.result.conferma;
+                id.campagna=xs.result.campagna;
+                if(id.isAuthor)
+                  $http.get("Validators").success(function(xs){
+                          id.validatori=xs.result;
+                          });
+
+                });
    return {
+        id : id,
         title: function() { return title; },
         setTitle: function(newTitle) { title = newTitle; },
         logo: function(newTitle) {return logo},
@@ -50,25 +65,6 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         $scope.updateMail = function (d) {
                 return $http.put("SetMail/" + d).success(function(xs){$scope.update()});
                 }
-        $scope.logout = function () {
-               
-                  var modalInstance = $modal.open({
-                          animation: true,
-                          templateUrl: 'static/logginout.html',
-                          controller: 'Input',
-                          size: 'lg',
-                          scope:$scope
-                          });
-                  modalInstance.result.then(
-                          function (x) {
-                              switch (x) {
-                                  case 'esci':$http.put("Logout").then(function(xs){$location.url("/loggedout");});break
-                                  case 'destroy':$http.put("Destroy").then(function(xs){$location.url("/loggedout");});break
-                                  default:break;
-                                  }},
-                          function () {}
-                          );
-                };
         $scope.confermato = function () {
                 return $scope.conferma;
                 }
@@ -107,6 +103,12 @@ cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
         $scope.Page = Page;
         Page.setLogo("static/immagini/logo.png");
         
+        $scope.esci=function(){
+                $http.put("Logout").then(function(xs){$location.url("/loggedout");});
+                }
+        $scope.distruggi= function (){
+                $http.put("Destroy").then(function(xs){$location.url("/eliminated");});
+                }
         });
 
 cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page) {
@@ -292,6 +294,9 @@ Page.setTitle("Promozione");
 });
 cs.controller("ValidatedController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
 Page.setTitle("Validazione");
+});
+cs.controller("ConfirmedController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
+Page.setTitle("Conferma mail");
 });
 cs.controller("CantPromoteController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
 $scope.reason=$routeParams.reason;

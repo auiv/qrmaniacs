@@ -1,13 +1,9 @@
 
-<div  class=container>
-        <div class=row>
-                <div class="navigation" >
-                        <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
-                        <a class=link href="#/Profile"><span class="glyphicon glyphicon-user"></span></a>
+                <div  class=navigation2>
+                        <a  class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
                         <a class=link href="#/Resource/{{hash}}"><span class="glyphicon glyphicon-eye-open"></span></a>
                 </div>
-
-                <div class="content">
+                        <a ng-if="!Page.id.isAuthor" class=link href="#/Resource/{{hash}}"><span class="glyphicon glyphicon-eye-open"></span></a>
 
                         <img class=author ng-src={{Page.logo()}} width=50 height=50 />
                 <div class="title well"> 
@@ -43,6 +39,3 @@
                                 <button class="btn btn-default" ng-click="addDomanda()"><span class="glyphicon glyphicon-plus"></span></button>
                                 </li>
                         </ul>
-                </div>
-        </div>
-</div>

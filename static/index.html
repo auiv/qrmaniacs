@@ -21,9 +21,35 @@
     <script src="static/js/xeditable.js"></script>
 </head>
 <body>
+        <div class="navigation" >
+                <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
+                <a ng-if="Page.id.isAuthor" class=link href="#/Autore"><span class="glyphicon glyphicon-edit"></span></a>
+                <a ng-if="Page.id.isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-qrcode"></span></a>
+                <a ng-if="Page.id.isAuthor" class="link" href="#/Profile"><span class="glyphicon glyphicon-cog"></span></a>
+                <a ng-if="Page.id.mail" href="#/Logout" class="link mail"> {{Page.id.mailpart}} </a> 
+                <a ng-if="!Page.id.mail" href="#/Logout" class="link"><span class="glyphicon glyphicon-user"></span></a> 
+        </div>
 
-  <div ng-view></div>
-  
+        <div class="content">
+                <div ng-view></div>
+        </div>
+        <div ng-hide=true class=row>
+                <div class="navigation" >
+                </div>
+
+                <div class="content">
+                        <div class="title well"> 
+                                <em>QR Maniacs</em>  
+                                <span class=comment> QR related services <span>
+                        </div>
+                                <div class=well>
+                                        <p> I servizi di <em>QR Maniacs</em> (fase alpha) sono accessibili tramite QR argomento (URL inerni) di questo dominio. </p>
+                                        <p> Per diventare autore contatta  
+                                                <a href="mailto:paolo.veronelli@gmail.com">mail</a>
+                                        </p>
+                                </div>
+                </div>
+        </div>
 </body>
 
 </html>

@@ -118,7 +118,7 @@ main = do
                                                         i' <- readMaybe i
                                                         return $ AddFeedback u i'
                                         ["SetMail",e] -> onuser user $ \u -> do 
-                                                        sendResponseP' p (Just  $ SetMail u e) $ sendAMail mailer pwd e reloc  (LoginMail u)
+                                                        sendResponseP' p (Just  $ SetMail u e) $ sendAMail mailer pwd e  (LoginMail $ reloc ++ "/Login/" ++ u)
                                         ["Revoke",m] -> onuser user $ \u  -> do        
                                                         responseP (Just $ Revoke u m)
                                         ["Logout"] -> onuser user $ \u -> fmap (replaceHeader HdrSetCookie ("userName=;Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2000 21:47:38 GMT;")) 
@@ -167,7 +167,7 @@ main = do
                                         ["Login",u] -> do
                                                         responseP (Just $ ConfirmMail u)
                                                         return $ (replaceHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
-                                                                $ redirectHome   reloc                                                   
+                                                                $ replaceHeader HdrLocation (reloc ++ "/Confirmed") $ respond SeeOther
 
                                         ["Domande",i] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ Domande u i 

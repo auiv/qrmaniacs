@@ -1,29 +1,14 @@
 
-<div  class=container>
-        <div class=row>
-                <div class="navigation" >
-                        <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
-                        <a class=link href="#/Profile"><span class="glyphicon glyphicon-user"></span></a>
-                </div>
 
-                <div class="content">
-
-                        <div class="title well"> I tuoi questionari 
-                        </div>
+                        <div class="title"> Le tue domande </div>
                         <ul class="list-group"> 
                                 <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)" ng-click="Page.gotoResource(argomento.index)"> 
-                                        <div class=delete>
-                                                <a  class="btn btn-default"  href="QR/{{argomento.index}}">
+                                                <a  class="link"  href="QR/{{argomento.index}}" ng-click="$event.stopPropagation()">
                                                         <span class="glyphicon glyphicon-qrcode"></span></a>
-                                                <button  class="btn btn-default" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
-                                                       <span class="glyphicon glyphicon-trash"></span> </button>
+                                                <a  class="link" ng-click="checkDelete(deleteArgomento,argomento.index);$event.stopPropagation()">
+                                                       <span class="glyphicon glyphicon-trash"></span> </a>
 
-                                        </div>
-                                        {{ argomento.text}}
+                                                <span class=argomento>{{ argomento.text}}</span>
                                 </li>
                         </ul> 
-                        <button class="btn btn-default" ng-click="addArgomento($index)"><span class="glyphicon glyphicon-plus"></span></button>
-                </div>
-        </div>
-</div>
 

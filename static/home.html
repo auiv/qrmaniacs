@@ -1,33 +1,5 @@
 
-<div  class=container>
-        <div ng-show=active class=row>
-                <div class="navigation" >
-                        <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
-                        <a ng-if="isAuthor" class=link href="#/Autore"><span class="glyphicon glyphicon-edit"></span></a>
-                        <a ng-if="isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-cog"></span></a>
-                        <a class=link ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
-                </div>
-
-                <div class="content">
-                <img class=author ng-src={{Page.logo()}} width=50 height=50 />
-                        <div ng-if="!confermato()" class="title well"> Il tuo profilo </div> 
-                        <div ng-if="confermato()" class="title well smalltitle"> {{mail}} </div> 
-                        <ul class=" list-group"> 
-                                <li ng-if="!confermato()" class="well list-group-item">
-                                        <div > Posta elettronica:
-                                                <a   href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
-                                                        {{' mail....'}}</a>
-                                        
-                                                <div>
-                                                        <span  class="glyphicon glyphicon-warning-sign"> Indirizzo non confermato </span>       
-                                                </div>
-                                        </div>
-                                </li> 
-                                                <li  class="well list-group-item">
-
-                                                        QR di login:<a href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span></a>
-                                                </li> 
-                                <li ng-if="isAuthor" class="list-group-item">
+                                <li class="list-group-item">
                                         <ul  class=list-group>  
                                                 <li class="well list-group-item"> 
                                                 Logo campagna: <a  href="#"  editable-textarea="campagna.logo" onbeforesave="setLogo($data)" e-rows="2" e-cols="20">
@@ -79,21 +51,3 @@
                 </div>
         </div>
 
-        <div ng-hide=active class=row>
-                <div class="navigation" >
-                </div>
-
-                <div class="content">
-                        <div class="title well"> 
-                                <em>QR Maniacs</em>  
-                                <span class=comment> QR related services <span>
-                        </div>
-                                <div class=well>
-                                        <p> I servizi di <em>QR Maniacs</em> (fase alpha) sono accessibili tramite QR argomento (URL inerni) di questo dominio. </p>
-                                        <p> Per diventare autore contatta  
-                                                <a href="mailto:paolo.veronelli@gmail.com">mail</a>
-                                        </p>
-                                </div>
-                </div>
-        </div>
-</div>

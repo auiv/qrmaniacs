@@ -1,23 +1,21 @@
 
-<div class=navlinks>
-        <a class=link href="#/">Home</a>
-        <a class=link ng-click="goBack()">Back</a>
-        <a class=link ng-click="logout()">Logout</a>
+                
+<div ng-if="!Page.id.mail"> <h2 class=alert><span class="glyphicon glyphicon-alert"></span></h2> Non hai confermato il tuo login via mail. Se esci verrai eliminato dal sistema. </div>
+       
+<div class=choices> 
+<a ng-if="Page.id.conferma" class="link btn-success" ng-click="esci()"><span class="glyphicon glyphicon-ok"></span> Esci  </a>
+        
+<a class="link btn-danger" ng-click="distruggi()"><span class="glyphicon glyphicon-trash"></span> Eliminami  </a>
+        
+<a class="link btn-primary" href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span> QR login</a>
+
+
+
+
+<a class="link btn-primary" ng-click="Page.goBack()"><span class="glyphicon glyphicon-remove">   </span>Resta connesso</a>
 </div>
 
-<div class="well title"> Il tuo profilo 
-</div> 
 
-<ul class="content list-group">
-        <li class=list-group-item>
-                QR di ingresso
-                  <img  src="QR/Login"></img>
-        </li> 
-        <li class=list-group-item>
-                Link di ingresso
-                  <a href="Login/{{Page.user()}}">{{Page.user().slice(1,20)}}........</a>
-        </li> 
-        <li class=list-group-item>
-        </li> 
-</ul>
-                
+
+
+

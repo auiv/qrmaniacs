@@ -1,11 +1,3 @@
-<div  class=container>
-        <div class=row>
-                <div class=navigation>
-                        <a class="link" href="#/"><span class="glyphicon glyphicon-home"></span></a>
-                        <a class=link href="#/Profile"><span class="glyphicon glyphicon-user"></span></a>
-                        <a ng-show=author class=link href="#/Autore/Resource/{{hash}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                </div>
-                <div class="content">
                                           <div ng-if="campagna.phase=='Running'" class="alert alert-warning alert-dismissible" role="alert">
                                                 <div class="notvalid" ng-show="notValid">
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -27,12 +19,13 @@
                                                 <p> La campagna di questo QR si è chiusa alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} 
                                         </div>
 
+                <div  ng-if=author class=navigation2>
+                        <a  class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
+                        <a class=link href="#/Autore/Resource/{{hash}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </div>
                         <img class=author ng-src={{Page.logo()}} width=50 height=50 />
-                <div class="title well"> {{argomento.text}}
-                
-                                                <a  class="btn btn-default"  href="QR/{{hash}}">
-                                                        <span class="glyphicon glyphicon-qrcode"></span></a>
-
+                <div class="title well"> 
+                        {{argomento.text}}
                 </div> 
 
                         <ul class="list-group"> 
@@ -54,6 +47,3 @@
                                 </li>
                         </ul>
                         <a class="link fatto" ng-if="campagna.phase=='Running'" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> Fatto</span></a>
-                </div>
-        </div>
-</div>
