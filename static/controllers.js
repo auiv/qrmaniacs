@@ -62,9 +62,6 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                 alert(1);
                 return true;
                 }
-        $scope.updateMail = function (d) {
-                return $http.put("SetMail/" + d).success(function(xs){$scope.update()});
-                }
         $scope.confermato = function () {
                 return $scope.conferma;
                 }
@@ -103,6 +100,9 @@ cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
         $scope.Page = Page;
         Page.setLogo("static/immagini/logo.png");
         
+        $scope.updateMail = function (d) {
+                return $http.put("SetMail/" + d).success(function(xs){});
+                }
         $scope.esci=function(){
                 $http.put("Logout").then(function(xs){$location.url("/loggedout");});
                 }
