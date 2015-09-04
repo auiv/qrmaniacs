@@ -167,7 +167,7 @@ main = do
                                         ["Login",u] -> do
                                                         responseP (Just $ ConfirmMail u)
                                                         return $ (replaceHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
-                                                                $ replaceHeader HdrLocation (reloc ++ "/Confirmed") $ respond SeeOther
+                                                                $ replaceHeader HdrLocation (reloc ++ "/#/Confirmed") $ respond SeeOther
 
                                         ["Domande",i] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ Domande u i 
@@ -195,7 +195,7 @@ main = do
                                         ["Validate",h] -> onuser user $ \u -> do 
                                                   x <- dotheget g $ Just $ Validate u h
                                                   return $ case x of 
-                                                    Left y -> replaceHeader HdrLocation (reloc ++ "/CantValidate/" ++ niceError y) $ respond SeeOther
+                                                    Left y -> replaceHeader HdrLocation (reloc ++ "/#/CantValidate/" ++ niceError y) $ respond SeeOther
                                                     Right _ -> replaceHeader HdrLocation (reloc ++ "/#/Validated") $ respond SeeOther
                                         ["Role"] -> onuser user $ \u -> sendResponse g $ Just $ Role u
                                         ["AskValidation"] -> onuser user $ \u -> do
