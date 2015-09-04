@@ -111,8 +111,18 @@ cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
                 }
         });
 
-cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page) {
+cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page,$route) {
         $scope.Page=Page; 
+        $scope.isViewLoading = false;
+        $scope.$on('$routeChangeStart', function() {
+          $scope.isViewLoading = true;
+        });
+        $scope.$on('$routeChangeSuccess', function() {
+          $scope.isViewLoading = false;
+        });
+        $scope.$on('$routeChangeError', function() {
+          $scope.isViewLoading = false;
+        })
         });
 
 cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page,$window) {
