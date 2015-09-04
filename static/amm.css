@@ -97,14 +97,15 @@ body{font-size:;}
 
 .code{position:absolute;color:black;right:5px;bottom:1px;font-size:25%}
 .qrmaniacs{float:right;}
-.risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:5px; }
+.risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:5px; width:80%;text-align: left }
+.risposte + .glyphicon {font-size:200%}
 .logov{background-color:#f8f8f8;padding:1px;margin-right:15px;border:1px solid #e3e3e3;height:40px;width:35px;}
 .logor{background-color:#f8f8f8;padding:1px;margin-right:15px;border:1px solid #e3e3e3;height:50px;width:45px;float:right}
 
 .label{font-size:110%;color:black;}
 .logolink{background-color:#f8f8f8;padding:1px;margin:3px;border:1px solid #e3e3e3}
 .container{margin:0px;}
-.title{font-weight: bold;font-size:120%;margin:20px;background-color:white;padding:5px;opacity:0.8;border-radius:5px;text-decoration:underline;min-height:63px}
+.title{font-weight: bold;font-size:150%;margin:20px;background-color:white;padding:5px;opacity:0.8;border-radius:5px;text-decoration:underline;min-height:63px}
 .author{width:50;height:50;opacity:0.3;}
 .well{margin:}
 .modal-dialog{overflow:auto;position:absolute;left:15px;opacity: 0.9}
@@ -127,3 +128,5 @@ body{font-size:;}
 .list-group {background-color: transparent}
 .list-group-item {background-color: transparent}
 .loading{width:30px;height:25px;float:right;}
+.ops{font-size:70%;
+       text-decoration:none;display:inline}

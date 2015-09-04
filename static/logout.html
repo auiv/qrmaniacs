@@ -1,11 +1,11 @@
 
                 
-<div ng-if="!Page.id.mail"> <h2 class=alert><span class="glyphicon glyphicon-alert"></span></h2> Non hai confermato il tuo login via mail. Se esci verrai eliminato dal sistema. </div>
+<div ng-if="!Page.id().mail"> <h2 class=alert><span class="glyphicon glyphicon-alert"></span></h2> Non hai confermato il tuo login via mail. Se esci verrai eliminato dal sistema. </div>
        
 <div class=choices> 
-                                                <a  ng-if="!Page.id.conferma" class=link href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
+                                                <a  ng-if="!Page.id().conferma" class=link href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                                         {{mail || ' mail....'}}</a>
-<a ng-if="Page.id.conferma" class="link btn-success" ng-click="esci()"><span class="glyphicon glyphicon-ok"></span> Esci  </a>
+<a ng-if="Page.id().conferma" class="link btn-success" ng-click="esci()"><span class="glyphicon glyphicon-ok"></span> Esci  </a>
         
 <a class="link btn-danger" ng-click="distruggi()"><span class="glyphicon glyphicon-trash"></span> Eliminami  </a>
         

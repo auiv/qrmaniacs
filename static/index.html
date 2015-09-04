@@ -21,19 +21,21 @@
     <script src="static/js/xeditable.js"></script>
 </head>
 <body>
-        <div class="navigation" >
-                <img ng-show=isViewLoading class=loading src="static/immagini/loading.gif"/>
-                <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
-                <a ng-if="Page.id.isAuthor" class="link" href="#/Profile"><span class="glyphicon glyphicon-wrench"></span></a>
-                <a ng-if="Page.id.mail" href="#/Logout" class="link mail"> {{Page.id.mailpart}} </a> 
-                <a ng-if="!Page.id.mail" href="#/Logout" class="link"><span class="glyphicon glyphicon-user"></span></a> 
-                
+        <div ng-show="Page.id().user">
+          <div class="navigation" >
+                  <img ng-show=isViewLoading class=loading src="static/immagini/loading.gif"/>
+                  <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
+                  <a ng-if="Page.id().isAuthor" class="link" href="#/Profile"><span class="glyphicon glyphicon-wrench"></span></a>
+                  <a ng-if="Page.id().isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-qrcode"></span></a>
+                  <a ng-if="Page.id().mail" href="#/Logout" class="link mail"> {{Page.id().mailpart}} </a> 
+                  <a ng-if="!Page.id().mail" href="#/Logout" class="link"><span class="glyphicon glyphicon-user"></span></a> 
+                  
+          </div>
+          <div class="content">
+                  <div ng-view></div>
+          </div>
         </div>
-
-        <div class="content">
-                <div ng-view></div>
-        </div>
-        <div ng-hide=true class=row>
+        <div ng-hide="Page.id().user">
                 <div class="navigation" >
                 </div>
 

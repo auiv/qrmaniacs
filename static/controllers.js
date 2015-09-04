@@ -9,8 +9,12 @@ cs.factory('Page', function($location,$window,$cookies,$http) {
    var title = 'default';
    var logo = "";
    var unlogged=false;
-   var id={}
+   var id= {}
+   update = function () {
+          id={};
+          id.user=false;
          $http.get("Role").success(function(xs){
+                id.user=true;
                 id.isAuthor=xs.result.author;
                 id.isValidatore=xs.result.validatore;
                 id.mail=xs.result.email;
@@ -23,8 +27,11 @@ cs.factory('Page', function($location,$window,$cookies,$http) {
                           });
 
                 });
+        }
+    update();
    return {
-        id : id,
+        update : update,
+        id : function () {return id},
         title: function() { return title; },
         setTitle: function(newTitle) { title = newTitle; },
         logo: function(newTitle) {return logo},
@@ -48,38 +55,23 @@ cs.controller('Input', function ($scope, $modalInstance) {
           $scope.any = function (x) {$modalInstance.close(x);};
         });
 
-cs.controller('LoggedOutController', function () {
+cs.controller('LoggedOutController', function (Page) {
+        Page.setTitle("Uscito");
         });
 cs.controller('CommonController', function (Page) {
         Page.setTitle("Sistema");
         });
 cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         $scope.Page=Page; 
-        Page.setTitle("Profilo");
+        Page.setTitle("Autore QR");
         Page.setLogo("static/immagini/logo.png");
         $scope.active=false;
         $scope.changeLogo = function (x) {
-                alert(1);
                 return true;
                 }
         $scope.confermato = function () {
                 return $scope.conferma;
                 }
-        $scope.update = function (f) {
-         $http.get("Role").success(function(xs){
-                $scope.isAuthor=xs.result.author;
-                $scope.isValidatore=xs.result.validatore;
-                $scope.mail=xs.result.email;
-                $scope.conferma = xs.result.conferma;
-                $scope.campagna=xs.result.campagna;
-                $scope.active=true;
-                if($scope.isAuthor)
-                  $http.get("Validators").success(function(xs){
-                          $scope.validatori=xs.result;
-                          });
-
-                });
-        }
         $scope.$watch("campagna.begin",function(a,b) {
                         if(b){
                                 $http.post("SetBegin",a,$scope.update);
@@ -92,6 +84,43 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         $scope.setPlace = function (a) {
                         return $http.post("SetPlace",a,$scope.update)};
 
+        $scope.selected=null;
+        $scope.argomenti = [];
+        $scope.update_ = function (f) {
+                $http.get("ArgomentiAutore").then(function(xs){
+                        $scope.argomenti=xs.data.result.argomenti;
+                        f();
+                        });
+        }
+        $scope.update=function(){$scope.update_(function(){})};
+        $scope.input={};
+        $scope.checkDelete = function (f,i) {
+                var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'static/deleting.html',
+                        controller: 'Input',
+                        size: 'lg',
+                        scope:$scope
+                        });
+                modalInstance.result.then(
+                        function () {f(i);},
+                        function () {}
+                        );
+                };
+
+        $scope.addArgomento = function () {
+                                $http.post("AddArgomento","argomento ...").
+                                        success(function(){
+                                                $scope.update_(function(){
+                                                $location.url("/Autore/Resource/" + $scope.argomenti[$scope.argomenti.length-1].index);
+                                                });
+                                        })
+                                        
+                                }; 
+
+        $scope.deleteArgomento = function(index)  {
+                $http.put("DeleteArgomento/" + index).success($scope.update);
+                }
         $scope.update();
 
     });  
@@ -104,15 +133,15 @@ cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
                 return $http.put("SetMail/" + d).success(function(xs){});
                 }
         $scope.esci=function(){
-                $http.put("Logout").then(function(xs){$location.url("/loggedout");});
+                $http.put("Logout").then(function(xs){$location.url("/loggedout");Page.update();});
                 }
         $scope.distruggi= function (){
-                $http.put("Destroy").then(function(xs){$location.url("/eliminated");});
+                $http.put("Destroy").then(function(xs){$location.url("/eliminated");Page.update();});
                 }
         });
 
 cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page,$route) {
-        $scope.Page=Page; 
+        $scope.Page=Page;
         $scope.isViewLoading = false;
         $scope.$on('$routeChangeStart', function() {
           $scope.isViewLoading = true;
@@ -210,6 +239,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
                         });}
         $scope.update = function () {
         $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
+                Page.update();
                 $scope.author=xs.result.author;
                 $scope.campagna=xs.result.campagna;
                 $scope.items=xs.result.domande;

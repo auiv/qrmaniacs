@@ -1,3 +1,12 @@
+
+                <div class="title well"> 
+                        <img class=logor ng-src={{Page.logo()}} /> 
+                        <div class=ops>
+                          <a ng-if="author" class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
+                          <a ng-if="author" class=link href="#/Autore/Resource/{{hash}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        </div> 
+                        {{argomento.text}}
+                </div> 
                                           <div ng-if="campagna.phase=='Running'" class="alert alert-warning alert-dismissible" role="alert">
                                                 <div class="notvalid" ng-show="notValid">
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -18,13 +27,6 @@
                                         <div ng-if="campagna.phase=='After'" class="through well" >
                                                 <p> La campagna di questo QR si è chiusa alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} 
                                         </div>
-
-                <div class="title well"> 
-                        <img class=logor ng-src={{Page.logo()}} /> 
-                        {{argomento.text}}
-                        <a  class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
-                        <a class=link href="#/Autore/Resource/{{hash}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                </div> 
 
                         <ul class="list-group"> 
                                 <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
