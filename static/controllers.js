@@ -239,7 +239,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
                         });}
         $scope.update = function () {
         $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
-                if(!Page.id.user)Page.update();
+                if(!Page.id().user)Page.update();
                 $scope.author=xs.result.author;
                 $scope.campagna=xs.result.campagna;
                 $scope.items=xs.result.domande;
