@@ -1,14 +1,10 @@
 
-                <div  class=navigation2>
-                        <a  class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
-                        <a class=link href="#/Resource/{{hash}}"><span class="glyphicon glyphicon-eye-open"></span></a>
-                </div>
-                        <a ng-if="!Page.id.isAuthor" class=link href="#/Resource/{{hash}}"><span class="glyphicon glyphicon-eye-open"></span></a>
 
                 <div class="title well"> 
-                        <img class=logov ng-src={{Page.logo()}} width=50 height=50 />
                         <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data)" e-rows="2" e-cols="20">
                                                 {{ argomento.text || 'Argomento..' }}</a>
+                        <a  class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
+                        <a class=link href="#/Resource/{{hash}}"><span class="glyphicon glyphicon-eye-open"></span></a>
                 </div>
                         <ul class="list-group"> 
 

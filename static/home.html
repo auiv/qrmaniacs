@@ -1,5 +1,9 @@
 
-                                <li class="list-group-item">
+                <div class="title well"> 
+                        La tua campagna
+                <a ng-if="Page.id.isAuthor" class=link href="#/Autore"><span class="glyphicon glyphicon-edit"></span></a>
+                <a ng-if="Page.id.isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-share"></span></a>
+                </div> 
                                         <ul  class=list-group>  
                                                 <li class="well list-group-item"> 
                                                 Logo campagna: <a  href="#"  editable-textarea="campagna.logo" onbeforesave="setLogo($data)" e-rows="2" e-cols="20">
@@ -48,6 +52,4 @@
                                 </li> 
 
                         </ul>
-                </div>
-        </div>
 

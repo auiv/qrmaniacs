@@ -19,13 +19,11 @@
                                                 <p> La campagna di questo QR si è chiusa alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} 
                                         </div>
 
-                <div  ng-if=author class=navigation2>
-                        <a  class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
-                        <a class=link href="#/Autore/Resource/{{hash}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                </div>
                 <div class="title well"> 
                         <img class=logor ng-src={{Page.logo()}} /> 
                         {{argomento.text}}
+                        <a  class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
+                        <a class=link href="#/Autore/Resource/{{hash}}"><span class="glyphicon glyphicon-pencil"></span></a>
                 </div> 
 
                         <ul class="list-group"> 

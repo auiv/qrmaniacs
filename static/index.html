@@ -23,10 +23,8 @@
 <body>
         <div class="navigation" >
                 <img ng-show=isViewLoading class=loading src="static/immagini/loading.gif"/>
-                <a class=link href="#/"><span class="glyphicon glyphicon-check"></span></a>
-                <a ng-if="Page.id.isAuthor" class=link href="#/Autore"><span class="glyphicon glyphicon-edit"></span></a>
-                <a ng-if="Page.id.isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-share"></span></a>
-                <a ng-if="Page.id.isAuthor" class="link" href="#/Profile"><span class="glyphicon glyphicon-cog"></span></a>
+                <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
+                <a ng-if="Page.id.isAuthor" class="link" href="#/Profile"><span class="glyphicon glyphicon-wrench"></span></a>
                 <a ng-if="Page.id.mail" href="#/Logout" class="link mail"> {{Page.id.mailpart}} </a> 
                 <a ng-if="!Page.id.mail" href="#/Logout" class="link"><span class="glyphicon glyphicon-user"></span></a> 
                 
