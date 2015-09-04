@@ -125,10 +125,15 @@ body{font-size:;}
 .smalltitle{font-size:100%}
 .navigation .confirmed{color:white;border:0px;background-color:transparent}
 .mail{font-weight:normal;word-wrap:break-word;width:100px}
-.choices a{display:block;margin-top:20px;}
-.choices .link{padding-bottom:2px;border-bottom:2px solid;border-right:2px solid;}
+.choices {padding:20px;}
+.choices a{display:block;margin-top:30px;}
+.choices .link{border:1px solid grey;padding:6px;border-bottom:2px solid black;border-right:2px solid black;}
+.choices .glyphicon {margin-right:10px;border:1px solid grey;padding:4px;background-color: white;color:black;border-radius:5px}
 .list-group {background-color: transparent}
 .list-group-item {background-color: transparent}
 .loading{width:30px;height:25px;float:right;}
 .ops{font-size:70%;
        text-decoration:none;display:inline}
+.danger{background-color: red;color:white}
+.success{background-color: lightgreen;color:black}
+.primary{background-color: lightblue}

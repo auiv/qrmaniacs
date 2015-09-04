@@ -14,11 +14,11 @@
                                         <a  href="#" editable-textarea="item.text" onbeforesave="changeDomanda($data,item.index)" e-rows="3" e-cols="25">
                                                         {{ item.text || 'Domanda..' }}
                                                                 </a>
-                                        <button class="btn btn-default" ng-click="checkDelete(deleteDomanda,item.index)"><span class="glyphicon glyphicon-trash"></span></button>
+                                        <button class="btn btn-default" ng-click="deleteDomanda(item.index)"><span class="glyphicon glyphicon-trash"></span></button>
                                         <ul class="list-group">
                                                 <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
 
-                                                <button  class="btn btn-default" ng-click="checkDelete(deleteRisposta,item.answers[$index].index)"><span class="glyphicon glyphicon-trash"></span></button>
+                                                <button  class="btn btn-default" ng-click="deleteRisposta(item.answers[$index].index)"><span class="glyphicon glyphicon-trash"></span></button>
                                                 <a  href="#" editable-textarea="item.answers[$index].text" onbeforesave="changeRisposta($data,item.answers[$index].index)" e-rows="2" e-cols="20">
                                                         {{ item.answers[$index].text || 'Risposta ' + $index + '..' }}
                                                                 </a>

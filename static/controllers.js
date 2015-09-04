@@ -94,7 +94,9 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         }
         $scope.update=function(){$scope.update_(function(){})};
         $scope.input={};
+        $scope.modal={} 
         $scope.checkDelete = function (f,i) {
+                $scope.modal.question="Cancellare il QR  \"" + i + "\""
                 var modalInstance = $modal.open({
                         animation: true,
                         templateUrl: 'static/deleting.html',
@@ -118,17 +120,34 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
                                         
                                 }; 
 
-        $scope.deleteArgomento = function(index)  {
-                $http.put("DeleteArgomento/" + index).success($scope.update);
+        $scope.deleteArgomento = function(index,text)  {
+                $scope.checkDelete(function() {
+                  $http.put("DeleteArgomento/" + index).success($scope.update);
+                  },text);
                 }
         $scope.update();
 
     });  
 
-cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
+cs.controller("LogoutController",function ($scope,$http,$log,$location,Page,$modal) {
         $scope.Page = Page;
         Page.setLogo("static/immagini/logo.png");
-        
+        $scope.modal={} 
+        $scope.checkDelete = function (f,i) {
+                $scope.modal.question="Cancellare tutti i propri dati (questionari e risposte)"
+                var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'static/deleting.html',
+                        controller: 'Input',
+                        size: 'lg',
+                        scope:$scope
+                        });
+                modalInstance.result.then(
+                        function () {f(i);},
+                        function () {}
+                        );
+                };
+
         $scope.updateMail = function (d) {
                 return $http.put("SetMail/" + d).success(function(xs){});
                 }
@@ -136,7 +155,9 @@ cs.controller("LogoutController",function ($scope,$http,$log,$location,Page) {
                 $http.put("Logout").then(function(xs){$location.url("/loggedout");Page.update();});
                 }
         $scope.distruggi= function (){
-                $http.put("Destroy").then(function(xs){$location.url("/eliminated");Page.update();});
+                $scope.checkDelete (function () {
+                  $http.put("Destroy").then(function(xs){$location.url("/eliminated");Page.update();});
+                  });
                 }
         });
 
@@ -286,8 +307,9 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
         $scope.update();
                 
         $scope.input={};
-
-        $scope.checkDelete = function (f,i) {
+        $scope.modal={};
+        $scope.checkDelete = function (f,q) {
+                $scope.modal.question=q;
                 var modalInstance = $modal.open({
                         animation: true,
                         templateUrl: 'static/deleting.html',
@@ -296,7 +318,7 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
                         scope:$scope
                         });
                 modalInstance.result.then(
-                        function () {f(i);},
+                        function () {f();},
                         function () {}
                         );
                 };
@@ -311,10 +333,14 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
                 return $http.post("ChangeDomanda/" + index,value);
                 }
         $scope.deleteDomanda = function(index)  {
-                $http.put("DeleteDomanda/" + index).success($scope.update);
+                $scope.checkDelete(function () {
+                    $http.put("DeleteDomanda/" + index).success($scope.update);
+                    },"Cancella la domanda");
                 }
         $scope.deleteRisposta = function(index)  {
-                $http.put("DeleteRisposta/" + index).success($scope.update);
+                $scope.checkDelete(function () {
+                    $http.put("DeleteRisposta/" + index).success($scope.update);
+                    },"Cancella la risposta");
                 }
     
         $scope.changeArgomento = function(value)  {
