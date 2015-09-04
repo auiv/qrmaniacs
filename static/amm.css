@@ -66,6 +66,7 @@ body{font-size:;}
        color:black;
        border:1px solid #e3e3e3;
     margin:1px;padding:4px;border:1px solid #939393;padding-bottom:2px;padding-left:3px;
+    border-bottom:2px solid;border-right:2px solid;
        }
 
 .button:hover{text-decoration:none;}
@@ -124,7 +125,8 @@ body{font-size:;}
 .smalltitle{font-size:100%}
 .navigation .confirmed{color:white;border:0px;background-color:transparent}
 .mail{font-weight:normal;word-wrap:break-word;width:100px}
-.choices a{display:block;margin-top:20px}
+.choices a{display:block;margin-top:20px;}
+.choices .link{padding-bottom:2px;border-bottom:2px solid;border-right:2px solid;}
 .list-group {background-color: transparent}
 .list-group-item {background-color: transparent}
 .loading{width:30px;height:25px;float:right;}

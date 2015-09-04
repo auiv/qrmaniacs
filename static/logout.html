@@ -1,7 +1,5 @@
 
                 
-<div ng-if="!Page.id().mail"> <h2 class=alert><span class="glyphicon glyphicon-alert"></span></h2> Non hai confermato il tuo login via mail. Se esci verrai eliminato dal sistema. </div>
-       
 <div class=choices> 
                                                 <a  ng-if="!Page.id().conferma" class=link href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
                                                         {{mail || ' mail....'}}</a>
