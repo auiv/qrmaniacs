@@ -13,7 +13,7 @@
                         <ul class="list-group"> 
                                 <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
                                         <img class=logov width=25 height=25 src={{argomento.logo}} />
-                                        {{argomento.text}}
+                                        <span class=argomento> {{argomento.text}} </span>
                                 </li>
                         </ul> 
 
