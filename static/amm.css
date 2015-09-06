@@ -1,143 +1,369 @@
-
-    a {
+a {
     text-decoration: none;
     font-weight: bold;
     font-size;
     font-family: Arial, sans-serif;
     color: #333;
 }
-a.editable-click { 
+a.editable-click {
     color: #262;
-    border-bottom:0px;
+    border-bottom: 0px;
 }
-a.editable-click:hover { 
+a.editable-click:hover {
     color: #47a447;
     border-bottom-color: #47a447;
 }
-
-.editable-input{height:;width:;}
-
+.editable-input {
+    height: ;
+    width: ;
+}
 .editable-radiolist label {
-    font-weight:100;
-  display: block;
+    font-weight: 100;
+    display: block;
 }
-.risposta{margin-left:65%;}
-.well{padding:0;padding-left:10px}
-.editable-buttons button{padding:13px}
-a.editable.valore{font-style: oblique;font-weight:100;color:pink;}
-
-.delete{display:inline;}
-
+.risposta {
+    margin-left: 65%;
+}
+.well {
+    padding: 0;
+    padding-left: 10px
+}
+.editable-buttons button {
+    padding: 13px
+}
+a.editable.valore {
+    font-style: oblique;
+    font-weight: 100;
+    color: pink;
+}
+.delete {
+    display: inline;
+}
 .modal-dialog {
-    width:;
-    margin:;
-    margin-top:;
+    width: ;
+    margin: ;
+    margin-top: ;
 }
-.modal-footer{
-       position: absolute;
-       top:-30px;
-       right:-300px;
-       padding:30px;
-       
+.modal-footer {
+    position: absolute;
+    top: -30px;
+    right: -300px;
+    padding: 30px;
 }
-body{font-size:;}
-.btn{white-space:normal;}
-.btn-default{background-color: transparent;border: 0}
-
+body {
+    font-size: ;
+}
+.btn {
+    white-space: normal;
+}
+.btn-default {
+    background-color: transparent;
+    border: 0
+}
 .nuovo {
-       position:fixed;
-       bottom:20px;
-       left:20px;
-       margin-top:0px;
-       z-index: 100;
-       color:white;
-       background-color:#ff3600;
-       padding:20px;
-       border-radius: 20px
-       }
-.link:hover{text-decoration:none;background-color:#ff3600;color:white}
-.link  {display:;
-       margin-left:1px;
-       background-color:#43c2c4;
-       padding:1px;
-       font-size:120%;
-       border-radius:25px;
-       font-weight:bold;
-       color:white;
-       border:1px solid #e3e3e3;
-    margin:1px;padding:6px;padding-bottom:4px;
-    padding-left:5px;
-       }
-
-.button:hover{text-decoration:none;}
-.button  {
-       margin-left:0px;
-       background-color: GREEN;
-       padding:10px;       padding-left:13px;       padding-top:13px;
-       border-radius:25px;
-       font-weight:normal;
-       color:white;
-       margin-top:15px;
-       border-color:aliceblue;
-       }
-.op{}
-.argomento{margin-left:20px;font-size:120%}
-.domanda{margin-top:15px;margin-bottom:10px;background-color:#43c2c4;padding:5px;padding-left:10px;border-radius:5px;color:white;}
-.logo{float:right}
-.navigation{width:100%;position:fixed;z-index:1;background-color:#eee;height:40px;padding:8px;border-radius:0;opacity:0.95;top:0;}
-.navigation div{}
-.navigation2{background-color:#d3c3c3;height:40px;padding:8px;border-radius:5px;opacity:0.8;}
-
-.content{margin:3px;margin-bottom:50px;margin-top:50px;background-color:transparent;padding:6px}
-.user{margin-right:5px;font-style:oblique;font-size:50%}
-.login{float:right;font-size:30%;color:#999}
-.pointer{background-color:#e5f6fd;cursor:pointer;padding:5px;}
-.pointer:hover{background-color:#43c2c4;color:white}
-.comment{font-size:25%}
-.intro{font-size:50%;margin-left:10px;}
-.footer{position:fixed;top:10px;left:10px;}
-
-.code{position:absolute;color:black;right:5px;bottom:1px;font-size:25%}
-.qrmaniacs{float:right;}
-.risposte{background-color:#e5f6fd;border:1px solid #e3e3e3;padding:5px; width:80%;text-align: left }
-.risposte + .glyphicon {font-size:200%}
-.logov{background-color:#f8f8f8;padding:1px;margin-right:15px;border:1px solid #e3e3e3;height:40px;width:35px;}
-.logor{background-color:#f8f8f8;padding:1px;margin-right:0px;border:1px solid #e3e3e3;height:50px;width:45px;float:right}
-.label{font-size:110%;color:black;}
-.logolink{background-color:#f8f8f8;padding:1px;margin:3px;border:1px solid #e3e3e3}
-.container{margin:0px;}
-.title{font-weight: bold;font-size:150%;;background-color:white;padding:5px;opacity:0.8;border-radius:5px;min-height:63px;}
-.titler{font-weight: bold;font-size:150%;background-color:white;padding:5px;opacity:0.8;border-radius:5px;text-align:center
-    }
-
-.author{width:50;height:50;opacity:0.3;}
-.well{margin:}
-.modal-dialog{overflow:auto;position:absolute;left:15px;opacity: 0.9}
-.modal-body{overflow:auto;}
-.result{font-size:400%}
-.finequestionario{position:fixed;right:10%;background-color: #ff3600;z-index:1;bottom:0}
-.list-group-item{border:0;margin:1px;}
-.banner{margin-left:5px;margin-right:5px;font-style: oblique;}
-.through{transform:matrix(0.70710678, -0.70710678, 0.70710678, 0.70710678, -30, 185);width:350px;font-size:140%;color:#ff3600;position:absolute }
-
-.fatto{position:fixed;background-color: #ff3600;color:white;bottom:0px;right:0px;}
-.modal-body .btn{display:block;margin:20px;padding:10px}
-.alert{margin-left:40%}
-.navigation .link {}
-.alert{margin:0px}
-.smalltitle{font-size:100%}
-.navigation .confirmed{color:white;border:0px;background-color:transparent}
-.mail{font-weight:normal;word-wrap:break-word;width:100px}
-.choices {padding:20px;}
-.choices a{display:block;margin-top:30px;}
-.choices .link{padding:6px;}
-.choices .glyphicon {margin-right:10px;}
-.list-group {background-color: transparent}
-.list-group-item {background-color: #e3e3e3;margin-top:3px}
-.loading{width:30px;height:25px;}
-.ops{font-size:70%;
-       text-decoration:none;display:inline}
-.danger{background-color: red;color:white}
-.success{background-color: lightgreen;color:black}
-.primary{background-color: lightblue}
-.mail{color:black;background-color: transparent;border:0;text-decoration:underline}
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    margin-top: 0px;
+    z-index: 100;
+    color: white;
+    background-color: #ff3600;
+    padding: 20px;
+    border-radius: 20px
+}
+.link:hover {
+    text-decoration: none;
+    background-color: #ff3600;
+    color: white
+}
+.link {
+    display: ;
+    margin-left: 1px;
+    background-color: #43c2c4;
+    padding: 1px;
+    font-size: 120%;
+    border-radius: 25px;
+    font-weight: bold;
+    color: white;
+    border: 1px solid #e3e3e3;
+    margin: 1px;
+    padding: 6px;
+    padding-bottom: 4px;
+    padding-left: 5px;
+}
+.button:hover {
+    text-decoration: none;
+}
+.button {
+    margin-left: 0px;
+    background-color: GREEN;
+    padding: 10px;
+    padding-left: 13px;
+    padding-top: 13px;
+    border-radius: 25px;
+    font-weight: normal;
+    color: white;
+    margin-top: 15px;
+    border-color: aliceblue;
+}
+.op {} .argomento {
+    margin-left: 20px;
+    font-size: 120%
+}
+.domanda {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    background-color: #43c2c4;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: white;
+}
+.logo {
+    float: right
+}
+.navigation {
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    background-color: #eee;
+    height: 40px;
+    padding: 8px;
+    border-radius: 0;
+    opacity: 0.95;
+    top: 0;
+}
+.navigation div {} .navigation2 {
+    background-color: #d3c3c3;
+    height: 40px;
+    padding: 8px;
+    border-radius: 5px;
+    opacity: 0.8;
+}
+.content {
+    margin: 3px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    background-color: transparent;
+    padding: 6px
+}
+.user {
+    margin-right: 5px;
+    font-style: oblique;
+    font-size: 50%
+}
+.login {
+    float: right;
+    font-size: 30%;
+    color: #999
+}
+.pointer {
+    background-color: #e5f6fd;
+    cursor: pointer;
+    padding: 5px;
+}
+.pointer:hover {
+    background-color: #43c2c4;
+    color: white
+}
+.comment {
+    font-size: 25%
+}
+.intro {
+    font-size: 50%;
+    margin-left: 10px;
+}
+.footer {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+.code {
+    position: absolute;
+    color: black;
+    right: 5px;
+    bottom: 1px;
+    font-size: 25%
+}
+.qrmaniacs {
+    float: right;
+}
+.risposte {
+    background-color: #e5f6fd;
+    border: 1px solid #e3e3e3;
+    padding: 5px;
+    width: 80%;
+    text-align: left
+}
+.risposte + .glyphicon {
+    font-size: 200%
+}
+.logov {
+    background-color: #f8f8f8;
+    padding: 1px;
+    margin-right: 15px;
+    border: 1px solid #e3e3e3;
+    height: 40px;
+    width: 35px;
+}
+.logor {
+    background-color: #f8f8f8;
+    padding: 1px;
+    margin-right: 0px;
+    border: 1px solid #e3e3e3;
+    height: 50px;
+    width: 45px;
+    float: right
+}
+.label {
+    font-size: 110%;
+    color: black;
+}
+.logolink {
+    background-color: #f8f8f8;
+    padding: 1px;
+    margin: 3px;
+    border: 1px solid #e3e3e3
+}
+.container {
+    margin: 0px;
+}
+.title {
+    font-weight: bold;
+    font-size: 150%;
+    ;
+    background-color: white;
+    padding: 5px;
+    opacity: 0.8;
+    border-radius: 5px;
+    min-height: 63px;
+}
+.titler {
+    font-weight: bold;
+    font-size: 150%;
+    background-color: white;
+    padding: 5px;
+    opacity: 0.8;
+    border-radius: 5px;
+    text-align: center
+}
+.author {
+    width: 50;
+    height: 50;
+    opacity: 0.3;
+}
+.well {
+    margin:
+}
+.modal-dialog {
+    overflow: auto;
+    position: absolute;
+    left: 15px;
+    opacity: 0.9
+}
+.modal-body {
+    overflow: auto;
+}
+.result {
+    font-size: 400%
+}
+.finequestionario {
+    position: fixed;
+    right: 10%;
+    background-color: #ff3600;
+    z-index: 1;
+    bottom: 0
+}
+.list-group-item {
+    border: 0;
+    margin: 1px;
+}
+.banner {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-style: oblique;
+}
+.through {
+    transform: matrix(0.70710678, -0.70710678, 0.70710678, 0.70710678, -30, 185);
+    width: 350px;
+    font-size: 140%;
+    color: #ff3600;
+    position: absolute
+}
+.fatto {
+    position: fixed;
+    background-color: #ff3600;
+    color: white;
+    bottom: 0px;
+    right: 0px;
+}
+.modal-body .btn {
+    display: block;
+    margin: 20px;
+    padding: 10px
+}
+.alert {
+    margin-left: 40%
+}
+.navigation .link {} .alert {
+    margin: 0px
+}
+.smalltitle {
+    font-size: 100%
+}
+.navigation .confirmed {
+    color: white;
+    border: 0px;
+    background-color: transparent
+}
+.mail {
+    font-weight: normal;
+    word-wrap: break-word;
+    width: 100px
+}
+.choices {
+    padding: 20px;
+}
+.choices a {
+    display: block;
+    margin-top: 30px;
+}
+.choices .link {
+    padding: 6px;
+}
+.choices .glyphicon {
+    margin-right: 10px;
+}
+.list-group {
+    background-color: transparent
+}
+.list-group-item {
+    background-color: #e3e3e3;
+    margin-top: 3px
+}
+.loading {
+    width: 30px;
+    height: 25px;
+}
+.ops {
+    font-size: 70%;
+    text-decoration: none;
+    display: inline
+}
+.danger {
+    background-color: red;
+    color: white
+}
+.success {
+    background-color: lightgreen;
+    color: black
+}
+.primary {
+    background-color: lightblue
+}
+.mail {
+    color: black;
+    background-color: transparent;
+    border: 0;
+    text-decoration: underline
+}
