@@ -345,6 +345,7 @@ body {
 .loading {
     width: 30px;
     height: 25px;
+    float:right;
 }
 .ops {
     font-size: 70%;
