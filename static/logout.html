@@ -2,15 +2,14 @@
                 
 <div class=choices> 
                                                 
-<a  ng-if="!Page.id().conferma" class=link href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20">
-                                                        {{mail || ' mail....'}}</a>
-<a ng-if="Page.id().conferma" class="link success" ng-click="esci()"><span class="glyphicon glyphicon-log-out"></span>  Uscita  </a>
+<a  ng-if="!Page.id().conferma" class="link setmail" href="#"  editable-email="mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20"><span class="glyphicon glyphicon-envelope"></span> <span> Email</span></a>
+<a ng-if="Page.id().conferma" class="link success" ng-click="esci()"><span class="glyphicon glyphicon-log-out"></span> <span> Uscita</span>  </a>
         
-<a class="link danger" ng-click="distruggi()"><span class="glyphicon glyphicon-trash"></span>  Cancellazione dal sistema </a>
+<a class="link danger" ng-click="distruggi()"><span class="glyphicon glyphicon-trash"></span> <span> Cancellazione dal sistema </span> </a>
         
-<a ng-if="Page.id().isAuthor" class="link primary" href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span>  QR di login</a>
+<a ng-if="Page.id().isAuthor" class="link primary" href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span><span>  QR di login</span></a>
 
-<a class="link" ng-click="Page.goBack()"><span class="glyphicon glyphicon-remove">   </span>  Indietro </a>
+<a class="link indietro" ng-click="Page.goBack()"><span class="glyphicon glyphicon-remove">   </span>  <span> Indietro</span> </a>
 
 </div>
 
