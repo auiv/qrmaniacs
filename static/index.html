@@ -23,6 +23,8 @@
 <body>
         <div ng-show="Page.id().user">
           <div class="navigation" >
+                  <img ng-show=isViewLoading class=loading src="static/immagini/loading.gif"/>
+                  
                   <div>
                   <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
                   <a ng-if="!Page.id().mail" href="#/Logout" class="link"><span class="glyphicon glyphicon-user"></span></a> 
@@ -30,8 +32,6 @@
                   <a ng-if="Page.id().isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-qrcode"></span></a>
                   <a ng-if="Page.id().mail" href="#/Logout" class="link mail"> {{Page.id().mailpart}} </a> 
                   </div>
-                  <img ng-show=isViewLoading class=loading src="static/immagini/loading.gif"/>
-                  
           </div>
           <div class="content">
                   <div ng-view></div>
