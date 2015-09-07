@@ -128,10 +128,11 @@ body {
     z-index: 1;
     background-color: #eee;
     height: 50px;
-    padding: 8px;
+    padding: 10px;
     border-radius: 0;
     opacity: 0.95;
     top: 0;
+    border-bottom:1px solid #aaa;
 }
 .navigation div {} .navigation2 {
     background-color: #d3c3c3;
