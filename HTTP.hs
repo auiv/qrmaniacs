@@ -167,7 +167,7 @@ main = do
                                         ["Login",u] -> do
                                                         responseP (Just $ ConfirmMail u)
                                                         return $ (replaceHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
-                                                                $ replaceHeader HdrLocation (reloc ++ "/#/Logout") $ respond SeeOther
+                                                                $ replaceHeader HdrLocation (reloc ++ "/#/Profile") $ respond SeeOther
 
                                         ["Domande",i] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ Domande u i 
