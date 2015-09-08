@@ -6,7 +6,7 @@ cs.run(function(editableOptions) {
 });
 
 cs.factory('Page', function($location,$window,$cookies,$http) {
-   var title = 'default';
+   var title = 'QR maniacs';
    var logo = "";
    var unlogged=false;
    var id= {}
@@ -55,7 +55,8 @@ cs.controller('Input', function ($scope, $modalInstance) {
           $scope.any = function (x) {$modalInstance.close(x);};
         });
 
-cs.controller("HomeController",function ($scope) {
+cs.controller("HomeController",function ($scope,Page) {
+    Page.setTitle('QR Maniacs");
     });
 cs.controller("RisposteController",function ($scope,Page,$http,$window,$location,Page,$modal) {
         $scope.Page = Page;
