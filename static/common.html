@@ -3,13 +3,13 @@
                         Campagna
                 </div> 
                                         <ul  class=list-group>  
-                                                <li class="well list-group-item"> 
-                                                Logo campagna: <a  href="#"  editable-textarea="Page.id().campagna.logo" onbeforesave="setLogo($data)" e-rows="2" e-cols="20">
+                                                <li class="list-group-item"> 
+                                                <span class="campagna"> Logo:</span> <a  href="#"  editable-textarea="Page.id().campagna.logo" onbeforesave="setLogo($data)" e-rows="2" e-cols="20">
                                                                 <img class=logolink width=35 height=35 ng-src="{{Page.id().campagna.logo}}" alt="{{Page.id().campagna.logo.slice(1,20) || 'link al logo'}}"/></a>
                                                 </li>
 
                                                 <li class="well list-group-item"> 
-                                                        Inizio campagna: <div class=label> {{campagna.begin | date:'HH:mm dd-MM-yyyy'}}</div>
+                                                        <span class=campagna> Apertura:</span> <div class=label> {{campagna.begin | date:'HH:mm dd-MM-yyyy'}}</div>
                                                         <p>
                                                          
                                                         <div class=row>
@@ -22,7 +22,7 @@
                                                         </div>
                                                 </li>
                                                 <li class="well list-group-item"> 
-                                                        Fine campagna: <div class=label> {{campagna.expire | date:'HH:mm dd-MM-yyyy'}}</div>
+                                                        <span class=campagna> Chiusura:</span>   <div class=label> {{campagna.expire | date:'HH:mm dd-MM-yyyy'}}</div>
                                                         <p>
                                                          
                                                         <div class=row>
@@ -35,13 +35,12 @@
                                                         </div>
                                                 </li>
                                                 <li class="well list-group-item"> 
-                                                Luogo validazione:  <a  href="#"  editable-textarea="Page.id().campagna.place" onbeforesave="setPlace($data)" e-rows="2" e-cols="20">
+                                                    <span class=campagna> Luogo:</span>  <a  href="#"  editable-textarea="Page.id().campagna.place" onbeforesave="setPlace($data)" e-rows="2" e-cols="20">
                                                                 {{Page.id().campagna.place}}
                                                                 </a>
                                                                 
-                                                                <a class=vaisugooglemaps href="http://maps.google.com"><img width=70 height=70 src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSfBezxeGH2wju3Tm55MT9GN1xvKst2pUNV6JKlu4u_c0HrpJa8XNkviw"></a>
                                                 </li>
-                                <li class="well list-group-item"> Validatori promossi:
+                                <li class="well list-group-item"> <span class=campagna> Validatori: </span>
                                         <ul class=list-group>
                                                 <li class = list-group-item ng-repeat="v in Page.id().validatori track by $index">
                                                         {{v}}
@@ -53,16 +52,19 @@
 
 
 
+                <div class="title well"> 
+                        QR di sistema
+                </div> 
 
-<ul class=" list-group"> 
+<ul class="sistema list-group"> 
         <li class="list-group-item">
-                richiesta validazione: <a class=link href="QR/AskValidation"><span class="glyphicon glyphicon-qrcode"></span></a>
+                <a class=link href="QR/AskValidation"><span class="glyphicon glyphicon-qrcode"></span></a> richiesta validazione 
         </li> 
         <li class="list-group-item">
-                richiesta promozione: <a class=link href="QR/AskPromotion"><span class="glyphicon glyphicon-qrcode"></span></a>
+                <a class=link href="QR/AskPromotion"><span class="glyphicon glyphicon-qrcode"></span></a>   richiesta promozione 
         </li> 
         <li class="list-group-item">
-                home page: <a class=link href="QR"><span class="glyphicon glyphicon-qrcode"></span></a>
+                <a class=link href="QR"><span class="glyphicon glyphicon-qrcode"></span></a> home page 
         </li> 
 
 </ul>

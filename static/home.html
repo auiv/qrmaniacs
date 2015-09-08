@@ -1,16 +1,13 @@
 
-<div class="titler well"> Questionari </div>
-
-<ul class="list-group"> 
-        <li class="elenco pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)" ng-click="Page.gotoResource(argomento.index)"> 
-                        <a  class="link linkautore" ng-click="deleteArgomento(argomento.index,argomento.text);$event.stopPropagation()">
-                               <span class="glyphicon glyphicon-trash"></span> 
-                        </a>
-                        <span class=argomento>{{argomento.text}}</span>
-        </li>
-</ul> 
-
-<a class="link plus" ng-click="addArgomento($index)"><span class="glyphicon glyphicon-plus"></span></a>
+                        <div class="title well"> 
+                                <em>QR Maniacs</em>  
+                                <span class=comment> QR related services <span>
+                        </div>
+                                <div class=twit>
+                                    <a class="twitter-timeline"  href="https://twitter.com/qmaniacs" data-widget-id="641185528029835264">Tweet di @qrmaniacs</a>
+                                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                                </div>
+                </div>
 
 
 

@@ -6,6 +6,10 @@ myApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
+        templateUrl: 'static/home.html',
+        controller: 'homeController'
+      }).
+      when('/Risposte', {
         templateUrl: 'static/visitatore.html',
         controller: 'VisitatoreController'
       }).
