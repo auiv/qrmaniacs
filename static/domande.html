@@ -1,39 +1,49 @@
 
 
                 <div class="title well"> 
-                        <div class=ops>
-                          <a  class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
-                          <a class=link href="#/Resource/{{hash}}"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        </div>
-                        <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data)" e-rows="2" e-cols="20">
+                        <a  href="#"  editable-textarea="argomento.text" onbeforesave="changeArgomento($data)" onshow="setOpsoff(true)" onhide="setOpsoff(false)" e-rows="2" e-cols="20">
                                                 {{ argomento.text || 'Argomento..' }}</a>
                 </div>
                         <ul class="list-group"> 
 
                                 <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
-                                        <a  href="#" editable-textarea="item.text" onbeforesave="changeDomanda($data,item.index)" e-rows="3" e-cols="25">
+                                        <a class="linkautore trash" ng-click="deleteDomanda(item.index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a  href="#" editable-textarea="item.text" onbeforesave="changeDomanda($data,item.index)" onshow="setOpsoff(true)" onhide="setOpsoff(false)" e-rows="3" e-cols="25">
                                                         {{ item.text || 'Domanda..' }}
                                                                 </a>
-                                        <button class="btn btn-default" ng-click="deleteDomanda(item.index)"><span class="glyphicon glyphicon-trash"></span></button>
                                         <ul class="list-group">
                                                 <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
 
-                                                <button  class="btn btn-default" ng-click="deleteRisposta(item.answers[$index].index)"><span class="glyphicon glyphicon-trash"></span></button>
-                                                <a  href="#" editable-textarea="item.answers[$index].text" onbeforesave="changeRisposta($data,item.answers[$index].index)" e-rows="2" e-cols="20">
+                                                <a  class="linkautore trash" ng-click="deleteRisposta(item.answers[$index].index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                                <a  href="#" editable-textarea="item.answers[$index].text" onbeforesave="changeRisposta($data,item.answers[$index].index)" onshow="setOpsoff(true)" onhide="setOpsoff(false)"    e-rows="2" e-cols="20">
                                                         {{ item.answers[$index].text || 'Risposta ' + $index + '..' }}
                                                                 </a>
                                                         <a class=valore href="#" editable-radiolist="item.answers[$index].value"  onbeforesave="changeRispostaValue($data,item.answers[$index].index)"  e-ng-options="s for s  in valori">
-                                                                {{item.answers[$index].value}}</p>
+                                                          ({{item.answers[$index].value}})</p>
                                                         <a/>
                                                  
 
                                                 </li>
                                                 <li class="list-group-item">
-                                                        <button class="btn btn-default" ng-click="addRisposta(item.index)"><span class="glyphicon glyphicon-plus"></span></button>
+                                                        <a class="linkautore plus" ng-click="addRisposta(item.index)">
+                                                        <span class="glyphicon glyphicon-plus">
+                                                        </span>
+                                                        </a>
                                                 </li>
                                         </ul>
                                 </li>
                                 <li class="list-group-item">
-                                <button class="btn btn-default" ng-click="addDomanda()"><span class="glyphicon glyphicon-plus"></span></button>
+                                <a class="linkautore plus" ng-click="addDomanda()">
+                                  <span class="glyphicon glyphicon-plus">
+                                    </span>
+                                </a>
                                 </li>
                         </ul>
+                        <div ng-show="!opsoff" class=bottomopsl>
+                          <a  class="link linkautore"  href="QR/{{hash}}">
+                            <span class="glyphicon glyphicon-qrcode">
+                            </span></a>
+                          <a class="link linkautore" href="#/Resource/{{hash}}">
+                              <span class="glyphicon glyphicon-eye-open">
+                                </span></a>
+                        </div>

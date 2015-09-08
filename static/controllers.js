@@ -58,8 +58,22 @@ cs.controller('Input', function ($scope, $modalInstance) {
 cs.controller('LoggedOutController', function (Page) {
         Page.setTitle("Uscito");
         });
-cs.controller('CommonController', function (Page) {
-        Page.setTitle("Sistema");
+cs.controller('CommonController', function (Page,$scope,$http) {
+        $scope.Page=Page;
+        $scope.campagna=Page.id().campagna;
+        $scope.$watch("campagna.begin",function(a,b) {
+                        if(b){
+                                $http.post("SetBegin",a,Page.update);
+                                }
+                        });
+        $scope.$watch("campagna.expire",function(a,b) {
+                        if(b)$http.post("SetExpire",a,Page.update)});
+        $scope.setLogo = function (a) {
+                        return $http.post("SetLogo",a,Page.update)};
+        $scope.setPlace = function (a) {
+                        return $http.post("SetPlace",a,Page.update)};
+
+        Page.setTitle("Campagna");
         });
 cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         $scope.Page=Page; 
@@ -72,17 +86,6 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
         $scope.confermato = function () {
                 return $scope.conferma;
                 }
-        $scope.$watch("campagna.begin",function(a,b) {
-                        if(b){
-                                $http.post("SetBegin",a,$scope.update);
-                                }
-                        });
-        $scope.$watch("campagna.expire",function(a,b) {
-                        if(b)$http.post("SetExpire",a,$scope.update)});
-        $scope.setLogo = function (a) {
-                        return $http.post("SetLogo",a,$scope.update)};
-        $scope.setPlace = function (a) {
-                        return $http.post("SetPlace",a,$scope.update)};
 
         $scope.selected=null;
         $scope.argomenti = [];
@@ -134,7 +137,7 @@ cs.controller("LogoutController",function ($scope,$http,$log,$location,Page,$mod
         Page.setLogo("static/immagini/logo.png");
         $scope.modal={} 
         $scope.checkDelete = function (f,i) {
-                $scope.modal.question="Cancellare tutti i propri dati (questionari e risposte)"
+                $scope.modal.question="Vuoi eliminare tutti i tuoi dati (questionari e risposte)"
                 var modalInstance = $modal.open({
                         animation: true,
                         templateUrl: 'static/deleting.html',
@@ -292,6 +295,8 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
 cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window) {
         $scope.Page = Page;
         $scope.items = [];
+        $scope.opsoff=false;
+        $scope.setOpsoff = function(t) {$scope.opsoff=t;}
         $scope.valori=['Giusta','Sbagliata','Accettabile'];
         $scope.hash = $routeParams.hash;
         $scope.update_ = function (f) {
@@ -335,12 +340,12 @@ cs.controller("DomandeAutoreController",function ($scope,$http,$modal,$timeout,$
         $scope.deleteDomanda = function(index)  {
                 $scope.checkDelete(function () {
                     $http.put("DeleteDomanda/" + index).success($scope.update);
-                    },"Cancella la domanda");
+                    },"Elimina la domanda");
                 }
         $scope.deleteRisposta = function(index)  {
                 $scope.checkDelete(function () {
                     $http.put("DeleteRisposta/" + index).success($scope.update);
-                    },"Cancella la risposta");
+                    },"Elimina la risposta");
                 }
     
         $scope.changeArgomento = function(value)  {

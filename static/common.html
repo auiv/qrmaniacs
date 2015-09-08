@@ -1,3 +1,59 @@
+
+                <div class="title well"> 
+                        Campagna
+                </div> 
+                                        <ul  class=list-group>  
+                                                <li class="well list-group-item"> 
+                                                Logo campagna: <a  href="#"  editable-textarea="Page.id().campagna.logo" onbeforesave="setLogo($data)" e-rows="2" e-cols="20">
+                                                                <img class=logolink width=35 height=35 ng-src="{{Page.id().campagna.logo}}" alt="{{Page.id().campagna.logo.slice(1,20) || 'link al logo'}}"/></a>
+                                                </li>
+
+                                                <li class="well list-group-item"> 
+                                                        Inizio campagna: <div class=label> {{campagna.begin | date:'HH:mm dd-MM-yyyy'}}</div>
+                                                        <p>
+                                                         
+                                                        <div class=row>
+                                                                <div class="col-sm-7">
+                                                                        <datepicker show-weeks=false class="well well-sm" ng-model="Page.id().campagna.begin"/> 
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                        <timepicker show-meridian=false  ng-model="Page.id().campagna.begin" ></timepicker>
+                                                                </div>
+                                                        </div>
+                                                </li>
+                                                <li class="well list-group-item"> 
+                                                        Fine campagna: <div class=label> {{campagna.expire | date:'HH:mm dd-MM-yyyy'}}</div>
+                                                        <p>
+                                                         
+                                                        <div class=row>
+                                                                <div class="col-sm-7">
+                                                                        <datepicker show-weeks=false class="well well-sm" ng-model="campagna.expire"/> 
+                                                                </div>
+                                                                <div class="col-sm-5">
+                                                                        <timepicker show-meridian=false  ng-model="Page.id().campagna.expire" ></timepicker>
+                                                                </div>
+                                                        </div>
+                                                </li>
+                                                <li class="well list-group-item"> 
+                                                Luogo validazione:  <a  href="#"  editable-textarea="Page.id().campagna.place" onbeforesave="setPlace($data)" e-rows="2" e-cols="20">
+                                                                {{Page.id().campagna.place}}
+                                                                </a>
+                                                                
+                                                                <a class=vaisugooglemaps href="http://maps.google.com"><img width=70 height=70 src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSfBezxeGH2wju3Tm55MT9GN1xvKst2pUNV6JKlu4u_c0HrpJa8XNkviw"></a>
+                                                </li>
+                                <li class="well list-group-item"> Validatori promossi:
+                                        <ul class=list-group>
+                                                <li class = list-group-item ng-repeat="v in Page.id().validatori track by $index">
+                                                        {{v}}
+                                                </li>
+                                        </ul>
+                                </li> 
+
+                        </ul>
+
+
+
+
 <ul class=" list-group"> 
         <li class="list-group-item">
                 richiesta validazione: <a class=link href="QR/AskValidation"><span class="glyphicon glyphicon-qrcode"></span></a>

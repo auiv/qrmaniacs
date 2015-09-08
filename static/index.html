@@ -26,11 +26,22 @@
                   <img ng-show=isViewLoading class=loading src="static/immagini/loading.gif"/>
                   
                   <div>
-                  <a class=link href="#/"><span class="glyphicon glyphicon-home"></span></a>
-                  <a ng-if="!Page.id().mail" href="#/Logout" class="link"><span class="glyphicon glyphicon-user"></span></a> 
-                  <a ng-if="Page.id().isAuthor" class="link" href="#/Profile"><span class="glyphicon glyphicon-wrench"></span></a>
-                  <a ng-if="Page.id().isAuthor" class=link href="#/Sistema"><span class="glyphicon glyphicon-qrcode"></span></a>
-                  <a ng-if="Page.id().mail" href="#/Logout" class="link mail"> {{Page.id().mailpart}} </a> 
+                  <a class=link href="#/">
+                      <span class="glyphicon glyphicon-list">
+                      </span>
+                  </a>
+                  <a ng-if="Page.id().isAuthor" class="link" href="#/Profile">
+                      <span class="glyphicon glyphicon-copyright-mark">
+                      </span>
+                    </a>
+                  <a ng-if="Page.id().isAuthor" class=link href="#/Sistema">
+                    <span class="glyphicon glyphicon-cog">
+                    </span>
+                  </a>
+                  <a  href="#/Logout" class="link">
+                        <span class="glyphicon glyphicon-user">
+                        </span>
+                  </a> 
                   </div>
           </div>
           <div class="content">
@@ -46,14 +57,13 @@
                                 <em>QR Maniacs</em>  
                                 <span class=comment> QR related services <span>
                         </div>
-                                <div class=well>
-                                        <p> I servizi di <em>QR Maniacs</em> (fase alpha) sono accessibili tramite QR argomento (URL inerni) di questo dominio. </p>
-                                        <p> Per diventare autore contatta  
-                                                <a href="mailto:paolo.veronelli@gmail.com">mail</a>
-                                        </p>
+                                <div>
+                                    <a class="twitter-timeline"  href="https://twitter.com/qmaniacs" data-widget-id="641185528029835264">Tweet di @qrmaniacs</a>
+                                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                                 </div>
                 </div>
         </div>
+          
 </body>
 
 </html>

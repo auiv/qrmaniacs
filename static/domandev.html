@@ -1,11 +1,7 @@
 
                 <div class="title well"> 
                         <img class=logor ng-src={{Page.logo()}} /> 
-                        <div class=ops>
-                          <a ng-if="author" class="link"  href="QR/{{hash}}"><span class="glyphicon glyphicon-qrcode"></span></a>
-                          <a ng-if="author" class=link href="#/Autore/Resource/{{hash}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                        </div> 
-                        {{argomento.text}}
+                        <span> {{argomento.text}} </span>
                 </div> 
                                           <div ng-if="campagna.phase=='Running'" class="alert alert-warning alert-dismissible" role="alert">
                                                 <div class="notvalid" ng-show="notValid">
@@ -33,7 +29,7 @@
                                 <div class=domanda>                                {{ item.text}}</div>
                                                                 
                                         
-                                        <ul class="list-group">
+                                        <ul class="list-group elencorispostev">
                                                 <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
 
                                                         <button class="btn risposte" ng-click="feedback(item.answers[$index].index)">
@@ -46,4 +42,13 @@
                                         </ul>
                                 </li>
                         </ul>
-                        <a class="link fatto" ng-if="campagna.phase=='Running'" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> </span> Fatto </a>
+                        </div>
+                        <div class=bottomopsl>
+                          <a ng-if="author"  class="link linkautore"  href="QR/{{hash}}">
+                            <span class="glyphicon glyphicon-qrcode">
+                            </span></a>
+                          <a ng-if="author" class="link linkautore" href="#/Autore/Resource/{{hash}}">
+                            <span class="glyphicon glyphicon-pencil">
+                                </span></a>
+                        </div> 
+                        <a class="bottomops link fatto" ng-if="campagna.phase=='Running'" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> </span> Finito </a>

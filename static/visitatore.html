@@ -1,5 +1,5 @@
 
-                        <div class="titler well"> Le tue risposte </div>
+                        <div class="titler well"> Risposte </div>
                                                         <div ng-if="argomenti.length < 1" class="alert alert-warning alert-dismissible" role="alert">
                                                                 <div>
                                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -11,7 +11,7 @@
                                                         </div>
 
                         <ul class="list-group"> 
-                                <li class="pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
+                                <li class="  elenco pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
                                         <img class=logov width=25 height=25 src={{argomento.logo}} />
                                         <span class=argomento> {{argomento.text}} </span>
                                 </li>
