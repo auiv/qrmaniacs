@@ -56,9 +56,9 @@ cs.controller('Input', function ($scope, $modalInstance) {
         });
 
 cs.controller("HomeController",function ($scope,Page) {
-    Page.setTitle('QR Maniacs");
+    Page.setTitle('QR Maniacs');
     });
-cs.controller("RisposteController",function ($scope,Page,$http,$window,$location,Page,$modal) {
+cs.controller("RisposteController",function ($scope,Page,$http,$window,$location,$modal) {
         $scope.Page = Page;
         Page.setTitle("Visitatore");
         Page.setLogo("static/immagini/logo.png");
