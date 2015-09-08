@@ -7,7 +7,7 @@ myApp.config(['$routeProvider',
     $routeProvider.
       when('/', {
         templateUrl: 'static/home.html',
-        controller: 'homeController'
+        controller: 'HomeController'
       }).
       when('/Risposte', {
         templateUrl: 'static/risposte.html',
