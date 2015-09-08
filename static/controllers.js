@@ -55,10 +55,71 @@ cs.controller('Input', function ($scope, $modalInstance) {
           $scope.any = function (x) {$modalInstance.close(x);};
         });
 
-cs.controller('LoggedOutController', function (Page) {
-        Page.setTitle("Uscito");
+cs.controller("HomeController",function ($scope) {
+    });
+cs.controller("RisposteController",function ($scope,Page,$http,$window,$location,Page,$modal) {
+        $scope.Page = Page;
+        Page.setTitle("Visitatore");
+        Page.setLogo("static/immagini/logo.png");
+        $scope.update = function () {
+                $http.get("Visitati").then(function(xs){
+                        $scope.argomenti=xs.data.result;
+                        });
+                }
+        $scope.update();
+        $scope.checkDelete = function (f,i) {
+                var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'static/deleting.html',
+                        controller: 'Input',
+                        size: 'lg',
+                        scope:$scope
+                        });
+                modalInstance.result.then(
+                        function () {f(i);},
+                        function () {}
+                        );
+                };
+        $scope.deleteArgomento = function(i) {
+                $http.put("RemoveFeedback/"+i).success(function (){$scope.update()})}
+                });
+ 
+
+
+cs.controller("ProfileController",function ($scope,$http,$log,$location,Page,$modal) {
+        $scope.Page = Page;
+        Page.setLogo("static/immagini/logo.png");
+        $scope.modal={} 
+        $scope.checkDelete = function (f,i) {
+                $scope.modal.question="Vuoi eliminare tutti i tuoi dati (questionari e risposte)"
+                var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'static/deleting.html',
+                        controller: 'Input',
+                        size: 'lg',
+                        scope:$scope
+                        });
+                modalInstance.result.then(
+                        function () {f(i);},
+                        function () {}
+                        );
+                };
+
+        $scope.updateMail = function (d) {
+                return $http.put("SetMail/" + d).success(function(xs){});
+                }
+        $scope.esci=function(){
+                $http.put("Logout").then(function(xs){$location.url("/loggedout");Page.update();});
+                }
+        $scope.distruggi= function (){
+                $scope.checkDelete (function () {
+                  $http.put("Destroy").then(function(xs){$location.url("/eliminated");Page.update();});
+                  });
+                }
         });
-cs.controller('CommonController', function (Page,$scope,$http) {
+
+
+cs.controller('CampagnaController', function (Page,$scope,$http) {
         $scope.Page=Page;
         $scope.campagna=Page.id().campagna;
         $scope.$watch("campagna.begin",function(a,b) {
@@ -75,7 +136,9 @@ cs.controller('CommonController', function (Page,$scope,$http) {
 
         Page.setTitle("Campagna");
         });
-cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
+
+
+cs.controller("QuestionariController",function ($scope,$http,Page,$modal,$location) {
         $scope.Page=Page; 
         Page.setTitle("Autore QR");
         Page.setLogo("static/immagini/logo.png");
@@ -132,36 +195,10 @@ cs.controller("HomeController",function ($scope,$http,Page,$modal,$location) {
 
     });  
 
-cs.controller("LogoutController",function ($scope,$http,$log,$location,Page,$modal) {
-        $scope.Page = Page;
-        Page.setLogo("static/immagini/logo.png");
-        $scope.modal={} 
-        $scope.checkDelete = function (f,i) {
-                $scope.modal.question="Vuoi eliminare tutti i tuoi dati (questionari e risposte)"
-                var modalInstance = $modal.open({
-                        animation: true,
-                        templateUrl: 'static/deleting.html',
-                        controller: 'Input',
-                        size: 'lg',
-                        scope:$scope
-                        });
-                modalInstance.result.then(
-                        function () {f(i);},
-                        function () {}
-                        );
-                };
 
-        $scope.updateMail = function (d) {
-                return $http.put("SetMail/" + d).success(function(xs){});
-                }
-        $scope.esci=function(){
-                $http.put("Logout").then(function(xs){$location.url("/loggedout");Page.update();});
-                }
-        $scope.distruggi= function (){
-                $scope.checkDelete (function () {
-                  $http.put("Destroy").then(function(xs){$location.url("/eliminated");Page.update();});
-                  });
-                }
+
+cs.controller('LoggedOutController', function (Page) {
+        Page.setTitle("Uscito");
         });
 
 cs.controller("title",function ($scope,$http,$modal,$timeout,$log,$location,$cookies,Page,$route) {
@@ -222,33 +259,6 @@ cs.controller("AutoreController",function ($scope,$http,$modal,$timeout,$log,$lo
                 $http.put("DeleteArgomento/" + index).success($scope.update);
                 }
         });
-cs.controller("VisitatoreController",function ($scope,Page,$http,$window,$location,Page,$modal) {
-        $scope.Page = Page;
-        Page.setTitle("Visitatore");
-        Page.setLogo("static/immagini/logo.png");
-        $scope.update = function () {
-                $http.get("Visitati").then(function(xs){
-                        $scope.argomenti=xs.data.result;
-                        });
-                }
-        $scope.update();
-        $scope.checkDelete = function (f,i) {
-                var modalInstance = $modal.open({
-                        animation: true,
-                        templateUrl: 'static/deleting.html',
-                        controller: 'Input',
-                        size: 'lg',
-                        scope:$scope
-                        });
-                modalInstance.result.then(
-                        function () {f(i);},
-                        function () {}
-                        );
-                };
-        $scope.deleteArgomento = function(i) {
-                $http.put("RemoveFeedback/"+i).success(function (){$scope.update()})}
-                });
- 
 
 cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeout,$log,$routeParams,Page,$window,$cookies,$location) {
         $scope.Page = Page;

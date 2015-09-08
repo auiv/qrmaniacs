@@ -1,0 +1,70 @@
+
+<div class="title well"> 
+    Campagna
+</div> 
+<ul  class=list-group>  
+        <li class="list-group-item"> 
+        <span class="campagna"> Logo:</span> <a  href="#"  editable-textarea="Page.id().campagna.logo" onbeforesave="setLogo($data)" e-rows="2" e-cols="20">
+                        <img class=logolink width=35 height=35 ng-src="{{Page.id().campagna.logo}}" alt="{{Page.id().campagna.logo.slice(1,20) || 'link al logo'}}"/></a>
+        </li>
+
+        <li class="well list-group-item"> 
+                <span class=campagna> Apertura:</span> <div class=label> {{campagna.begin | date:'HH:mm dd-MM-yyyy'}}</div>
+                <p>
+                 
+                <div class=row>
+                        <div class="col-sm-7">
+                                <datepicker show-weeks=false class="well well-sm" ng-model="Page.id().campagna.begin"/> 
+                        </div>
+                        <div class="col-sm-5">
+                                <timepicker show-meridian=false  ng-model="Page.id().campagna.begin" ></timepicker>
+                        </div>
+                </div>
+        </li>
+        <li class="well list-group-item"> 
+                <span class=campagna> Chiusura:</span>   <div class=label> {{campagna.expire | date:'HH:mm dd-MM-yyyy'}}</div>
+                <p>
+                 
+                <div class=row>
+                        <div class="col-sm-7">
+                                <datepicker show-weeks=false class="well well-sm" ng-model="campagna.expire"/> 
+                        </div>
+                        <div class="col-sm-5">
+                                <timepicker show-meridian=false  ng-model="Page.id().campagna.expire" ></timepicker>
+                        </div>
+                </div>
+        </li>
+        <li class="well list-group-item"> 
+            <span class=campagna> Luogo:</span>  <a  href="#"  editable-textarea="Page.id().campagna.place" onbeforesave="setPlace($data)" e-rows="2" e-cols="20">
+                        {{Page.id().campagna.place}}
+                        </a>
+                        
+        </li>
+<li class="well list-group-item"> <span class=campagna> Validatori: </span>
+<ul class=list-group>
+        <li class = list-group-item ng-repeat="v in Page.id().validatori track by $index">
+                {{v}}
+        </li>
+</ul>
+</li> 
+
+</ul>
+
+
+
+<div class="title well"> 
+        QR di sistema
+</div> 
+
+<ul class="sistema list-group"> 
+        <li class="list-group-item">
+                <a class=link href="QR/AskValidation"><span class="glyphicon glyphicon-qrcode"></span></a> richiesta validazione 
+        </li> 
+        <li class="list-group-item">
+                <a class=link href="QR/AskPromotion"><span class="glyphicon glyphicon-qrcode"></span></a>   richiesta promozione 
+        </li> 
+        <li class="list-group-item">
+                <a class=link href="QR"><span class="glyphicon glyphicon-qrcode"></span></a> home page 
+        </li> 
+
+</ul>

@@ -10,24 +10,20 @@ myApp.config(['$routeProvider',
         controller: 'homeController'
       }).
       when('/Risposte', {
-        templateUrl: 'static/visitatore.html',
-        controller: 'VisitatoreController'
+        templateUrl: 'static/risposte.html',
+        controller: 'RisposteController'
       }).
       when('/Profile', {
-        templateUrl: 'static/home.html',
-        controller:'HomeController'
+        templateUrl: 'static/profile.html',
+        controller:'ProfileController'
       }).
-      when('/Sistema', {
-        templateUrl: 'static/common.html',
-        controller:'CommonController'
+      when('/Campagna', {
+        templateUrl: 'static/campagna.html',
+        controller:'CampagnaController'
       }).
       when('/Autore', {
-        templateUrl: 'static/argomenti.html',
-        controller: 'AutoreController'
-      }).
-      when('/Validatore', {
-        templateUrl: 'static/validatore.html'
-        //controller: 'VisitatoreController'
+        templateUrl: 'static/questionari.html',
+        controller: 'QuestionariController'
       }).
       when('/Autore/Resource/:hash', {
         templateUrl: 'static/domande.html',
@@ -36,10 +32,6 @@ myApp.config(['$routeProvider',
       when('/Resource/:hash', {
         templateUrl: 'static/domandev.html',
         controller: 'DomandeVisitatoreController'
-      }).
-      when('/Logout', {
-        templateUrl: 'static/logout.html',
-        controller: 'LogoutController'
       }).
       when('/loggedout', {
         templateUrl: 'static/loggedout.html',
@@ -64,10 +56,6 @@ myApp.config(['$routeProvider',
       when('/Validated', {
         templateUrl: 'static/validated.html',
         controller: 'ValidatedController'
-      }).
-      when('/Confirmed', {
-        templateUrl: 'static/confirmed.html',
-        controller: 'ConfirmedController'
       }).
       otherwise({
         redirectTo: '/'
