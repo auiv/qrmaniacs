@@ -37,7 +37,6 @@ data Put
         | DeleteRisposta User Integer
         | AddFeedback User Integer
         | RemoveFeedback User Integer
-        | SetMail User String
         | SetLogo User String
         | SetBegin User String
         | SetExpire User String
@@ -45,7 +44,6 @@ data Put
         | ConfirmMail User
         | Revoke User String
         | Logout User 
-        deriving Read
 
 put' :: Env -> Put -> ConnectionMonad ()
 put' e (AddArgomento u s) = addArgomento e u s
@@ -60,7 +58,6 @@ put' e (ChangeRisposta u i s) = changeRisposta e u i s
 put' e (ChangeRispostaValue u i v) = changeRispostaValue e u i v
 put' e (AddFeedback u r)= addFeedback e u r
 put' e (RemoveFeedback u r)= removeFeedback e u r
-put' e (SetMail u r)= setMail e u r
 put' e (SetLogo u r)= setLogo e u r
 put' e (SetBegin u r)= setBegin e u r
 put' e (SetExpire u r)= setExpire e u r
@@ -86,6 +83,7 @@ data Get a where
         Validators :: User -> Get [String]
         IsValidate :: User -> Resource -> Get Bool
         Promote :: User ->  User -> Get ()
+        SetMail :: User -> String -> Get String
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (ArgomentiAutore u) = listArgomenti e u 
@@ -100,7 +98,7 @@ get' e (Role u ) = role e u
 get' e (AskValidation u ) = askValidation e u
 get' e (Validators u ) = validators e u
 get' e (IsValidate u h) = isValidate e  u  h
-
+get' e (SetMail u r)= setMail e u r
 get' e (Promote u h)= promote e u h 
 
 get :: Env -> Get a -> WriterT [Event] IO (Either DBError a)
