@@ -184,6 +184,7 @@ main = do
                                                 qr <- BSF.readFile "qr.tmp"
                                                 return $ sendPng qr
                                         ["QR","Login"] -> onuser user $ \u -> sendQR $ reloc ++ "/Login/" ++ u
+                                        ["LoginLink"] -> onuser user $ \u -> return $ sendJSON OK $showJSON $ reloc ++ "/Login/" ++ u
                                         ["QR","AskValidation"]  -> sendQR $ reloc ++ "/AskValidation"
                                         ["QR","AskPromotion"]  -> sendQR $ reloc ++ "/AskPromotion"
                                         ["QR",h] -> sendQR $ reloc ++ "/#/Resource/" ++ h

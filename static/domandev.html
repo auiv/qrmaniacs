@@ -1,54 +1,49 @@
 
-                <div class="title well"> 
-                        <img class=logor ng-src={{Page.logo()}} /> 
-                        <span> {{argomento.text}} </span>
-                </div> 
-                                          <div ng-if="campagna.phase=='Running'" class="alert alert-warning alert-dismissible" role="alert">
-                                                <div class="notvalid" ng-show="notValid">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                                  <span aria-hidden="true">&times;</span>
-                                                                </button>
+<div class="title well"> 
+        <span> {{argomento.text}} </span>
+        <img class=logor ng-src={{Page.logo()}} /> 
+</div> 
+<div ng-if="campagna.phase=='Running'" class="alert alert-warning alert-dismissible" role="alert">
+        <div class="banner notvalid" ng-show="notValid">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+                 <span>Valida la tua presenza entro le {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM'}} presso: <a class=place href={{campagna.place}}><span class="glyphicon glyphicon-map-marker">
+            </span></a> 
+             
+        </div>
+        <div class="well notvalid banner" ng-show="!notValid">
+                La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
+        </div>
+</div>
+<div ng-if="campagna.phase=='Before'" class="through well">
+        <p> Questa campagna si aprirà alle {{campagna.begin | date:'HH:mm'}} del {{campagna.begin | date:'dd-MM-yyyy'}} 
+</div>
+<div ng-if="campagna.phase=='After'" class="through well" >
+        <p> La campagna di questo QR si è chiusa alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} 
+</div>
+
+<ul class="list-group"> 
+        <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
+                <div class=domanda>{{ item.text}}</div>
+                <ul class="list-group elencorispostev">
+                        <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
+
+                                <button class="btn risposte" ng-click="feedback(item.answers[$index].index)">
+                                {{ item.answers[$index].text}}
+                                </button>
+                                <span ng-show="item.answers[$index].chosen"  class="glyphicon glyphicon-ok"></span></button>
 
 
-                                                          <p> La tua partecipazione a questa campagna non è stata ancora convalidata.
-                                                          <p> Puoi farlo <a href={{campagna.place}}>qui</a> entro le {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}
-                                                </div>
-                                                <div class="well notvalid" ng-show="!notValid">
-                                                <p> La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
-                                                </div>
-                                        </div>
-                                        <div ng-if="campagna.phase=='Before'" class="through well">
-                                                <p> Questa campagna si aprirà alle {{campagna.begin | date:'HH:mm'}} del {{campagna.begin | date:'dd-MM-yyyy'}} 
-                                        </div>
-                                        <div ng-if="campagna.phase=='After'" class="through well" >
-                                                <p> La campagna di questo QR si è chiusa alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} 
-                                        </div>
-
-                        <ul class="list-group"> 
-                                <li class="list-group-item" ng-repeat="item in items" id="item{{item.id}}"> 
-                                <div class=domanda>                                {{ item.text}}</div>
-                                                                
-                                        
-                                        <ul class="list-group elencorispostev">
-                                                <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
-
-                                                        <button class="btn risposte" ng-click="feedback(item.answers[$index].index)">
-                                                        {{ item.answers[$index].text}}
-                                                        </button>
-                                                        <span ng-show="item.answers[$index].chosen"  class="glyphicon glyphicon-ok"></span></button>
-
-
-                                                </li>
-                                        </ul>
-                                </li>
-                        </ul>
-                        </div>
-                        <div class=bottomopsl>
-                          <a ng-if="author"  class="link linkautore"  href="QR/{{hash}}">
-                            <span class="glyphicon glyphicon-qrcode">
-                            </span></a>
-                          <a ng-if="author" class="link linkautore" href="#/Autore/Resource/{{hash}}">
-                            <span class="glyphicon glyphicon-pencil">
-                                </span></a>
-                        </div> 
-                        <a class="bottomops link fatto" ng-if="campagna.phase=='Running'" ng-click="conferma()"><span class="glyphicon glyphicon-ok"> </span> Finito </a>
+                        </li>
+                </ul>
+        </li>
+</ul>
+<div class=finito>
+<a class="link fatto" ng-if="campagna.phase=='Running'" href="#/Risposte"><span class="glyphicon glyphicon-ok"> </span> Finito </a>
+</div>
+<div class=bottomopsl>
+  <a ng-if="author" class="link linkautore" href="#/Autore/Resource/{{hash}}">
+    <span class="glyphicon glyphicon-pencil">
+        </span></a>
+</div> 

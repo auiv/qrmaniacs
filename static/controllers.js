@@ -18,15 +18,15 @@ cs.factory('Page', function($location,$window,$cookies,$http) {
                 id.isAuthor=xs.result.author;
                 id.isValidatore=xs.result.validatore;
                 id.mail=xs.result.email;
-                id.mailpart=xs.result.email.split("@")[0];
-                id.conferma = xs.result.conferma;
+                if(id.mail)id.mailpart=xs.result.email.split("@")[0];
+                id.conferma = xs.result.conferma  ;
                 id.campagna=xs.result.campagna;
                 if(id.isAuthor)
                   $http.get("Validators").success(function(xs){
                           id.validatori=xs.result;
                           });
 
-                });
+                }).error(function() {$location.url("/");});
         }
     update();
    return {
@@ -55,8 +55,10 @@ cs.controller('Input', function ($scope, $modalInstance) {
           $scope.any = function (x) {$modalInstance.close(x);};
         });
 
-cs.controller("HomeController",function ($scope,Page) {
+cs.controller("HomeController",function ($scope,Page,$timeout) {
+    Page.update();
     Page.setTitle('QR Maniacs');
+$timeout(function () { twttr.widgets.load(); }, 500);
     });
 cs.controller("RisposteController",function ($scope,Page,$http,$window,$location,$modal) {
         $scope.Page = Page;
@@ -88,6 +90,7 @@ cs.controller("RisposteController",function ($scope,Page,$http,$window,$location
 
 
 cs.controller("ProfileController",function ($scope,$http,$log,$location,Page,$modal) {
+        Page.update();
         $scope.Page = Page;
         Page.setLogo("static/immagini/logo.png");
         $scope.modal={} 
@@ -106,15 +109,18 @@ cs.controller("ProfileController",function ($scope,$http,$log,$location,Page,$mo
                         );
                 };
 
+        $http.get("LoginLink").success(function(xs){
+                          $scope.login=xs;
+                          });
         $scope.updateMail = function (d) {
                 return $http.put("SetMail/" + d).success(function(xs){});
                 }
         $scope.esci=function(){
-                $http.put("Logout").then(function(xs){$location.url("/loggedout");Page.update();});
+                $http.put("Logout").then(function(xs){$location.url("/");Page.update();});
                 }
         $scope.distruggi= function (){
                 $scope.checkDelete (function () {
-                  $http.put("Destroy").then(function(xs){$location.url("/eliminated");Page.update();});
+                  $http.put("Destroy").then(function(xs){$location.url("/");Page.update();},function(xs){$location.url("/");Page.update();});
                   });
                 }
         });
@@ -284,14 +290,14 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
                 if(xs.result.nuovo){
                         var modalInstance = $modal.open({
                                 animation: true,
-                                templateUrl: 'static/firstloging.html',
+                                templateUrl: 'static/login.html',
                                 controller: 'Input',
                                 size: 'lg',
                                 scope:$scope
                                 });
                         modalInstance.result.then(
                                 function () {},
-                                function () {}
+                                function () {$http.put("Destroy").then(function(xs){$location.url("/");});}
                                 );
                         }
                         
