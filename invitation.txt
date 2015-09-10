@@ -1,13 +1,12 @@
-Qualcuno ha richiesto una conferma di questa mail su QRManiacs.com .
-
-Utilizza il seguente link per effettuarla.
+Se hai richiesto una conferma di questo indirizzo mail su QRManiacs.com, utilizza il seguente link per effettuarla.
 
 linklogin
 
-Questo link e il QR in allegato sono gli unici validi accessi alla tua posizione.
+Questo link e il QR in allegato sono validi accessi alla tua posizione presso il servizio. Leggendo il QR, il tuo scanner ritroverà i tuoi dati in caso di logout.
+A seconda delle impostazioni del tuo sistema, il link invece potrebbe aprire la tua posizione su un browser diverso da quello dello scanner.
 
-Questo indirizzo non verrà utilizzato per altri scopi e non verrà rivelato ad altri servizi.
+Questo indirizzo mail non verrà utilizzato per altri scopi e non verrà rivelato ad altri servizi.
 
 In fede.
 
-   lambdasistemi.net services
+   Paolo Veronelli, CEO @ lambdasistemi.net
