@@ -325,6 +325,11 @@ checkUtente' e u f g = do
         case (r :: [Only Integer]) of
                 [Only i] -> f i
                 _ -> g 
+checkProbe e u f = do
+        r <- equery e "select id from utenti where probemail=?" (Only u)
+        case (r :: [Only Integer]) of
+                [Only i] -> f i
+                _ -> throwError $ DatabaseError "Unknown Probe"
 checkUtente e u f = checkUtente' e u f $ throwError $ DatabaseError "Unknown Hash for User"
 
 checkAssoc e u d f = do
@@ -363,10 +368,12 @@ role e u = checkUtente e u $ \u -> do
         return $ Roles (not . null $ (b1 :: [Only Integer])) en c campagna
 setMail e u r = checkUtente e u $ \u -> etransaction e $ do
         t <- equery e "select conferma from utenti where id=?" (Only u)
+        new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
         case t of
-                  [Only False] -> eexecute e "update utenti set email=? ,conferma=0 where id =?" (r,u)
+                  [Only False] -> eexecute e "update utenti set email=? ,conferma=0,probemail=? where id =?" (r,u,new) >> return new 
                   _ -> throwError $ DatabaseError "replacing a confirmed email"
-confirmMail e u = checkUtente e u $ \u -> eexecute e "update utenti set conferma=1 where id =?" (Only u)
+
+confirmMail e u = checkProbe e u $ \u -> eexecute e "update utenti set conferma=1 where id =?" (Only u)
 
 askValidation e u = checkUtente e u $ \u -> do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
