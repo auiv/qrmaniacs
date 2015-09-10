@@ -26,7 +26,7 @@ cs.factory('Page', function($location,$window,$cookies,$http) {
                           id.validatori=xs.result;
                           });
 
-                }).error(function() {$location.url("/");});
+                });
         }
     update();
    return {
@@ -271,9 +271,6 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         $scope.Page = Page;
         $scope.items = [];
         $scope.hash = $routeParams.hash;
-        $scope.conferma = function (){
-                $location.url("Visitatore");
-                }
         $scope.feedback= function (r) {
                 $http.put("AddFeedback/"+r).success(function(xs){
                 $scope.update();
