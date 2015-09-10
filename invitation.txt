@@ -1,13 +1,10 @@
-Qualcuno ha richiesto un link di login su QR Maniacs.com associato a questa casella di posta elettronica.
-Se non l'hai richiesto tu puoi ignorare questa mail.
+Qualcuno ha richiesto una conferma di questa mail su QRManiacs.com .
+
+Utilizza il seguente link per effettuarla.
 
 linklogin
 
-Questo link sarà confermato dopo il primo utilizzo.
-
-Il sistema QR maniacs non prevede login via password e quindi questo link è l'unico metodo di ingresso alla tua posizione.
-
-Potrai utilizzarlo per entrare nel sistema da qualsiasi device con l'accesso alla tua posta elettrronica.
+Questo link e il QR in allegato sono gli unici validi accessi alla tua posizione.
 
 Questo indirizzo non verrà utilizzato per altri scopi e non verrà rivelato ad altri servizi.
 

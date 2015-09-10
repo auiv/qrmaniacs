@@ -16,8 +16,8 @@
                 La campagna si chiuderà alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}}. 
         </div>
 </div>
-<div ng-if="campagna.phase=='Before'" class="through well">
-        <p> Questa campagna si aprirà alle {{campagna.begin | date:'HH:mm'}} del {{campagna.begin | date:'dd-MM-yyyy'}} 
+<div ng-if="campagna.phase=='Before'" class="alert alert-warning alert-dismissible" role="alert">
+        <span> Questo questionario si aprirà alle {{campagna.begin | date:'HH:mm'}} del {{campagna.begin | date:'dd-MM-yyyy'}} </span>
 </div>
 <div ng-if="campagna.phase=='After'" class="through well" >
         <p> La campagna di questo QR si è chiusa alle {{campagna.expire | date:'HH:mm'}} del {{campagna.expire | date:'dd-MM-yyyy'}} 
