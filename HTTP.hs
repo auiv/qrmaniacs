@@ -167,7 +167,10 @@ main = do
                                         ["ArgomentiAutore"] -> onuser user $ \u -> sendResponse g $ do
                                                         return $ ArgomentiAutore u 
                                         ["Probe",u] -> do
-                                                        responseP (Just $ ConfirmMail u)
+                                                        Right x <- dotheget g (Just $ ConfirmMail u)
+                                                        return $ (replaceHeader HdrSetCookie ("userName=" ++ x ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
+                                                                $ replaceHeader HdrLocation (reloc ++ "/#/Profile") $ respond SeeOther
+
                                         ["Login",u] -> do
                                                         return $ (replaceHeader HdrSetCookie ("userName=" ++ u ++ ";Domain="++domain++";Path="++path++";Expires=Tue, 15-Jan-2100 21:47:38 GMT;")) 
                                                                 $ replaceHeader HdrLocation (reloc ++ "/#/Profile") $ respond SeeOther

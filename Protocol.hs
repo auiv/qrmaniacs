@@ -41,7 +41,6 @@ data Put
         | SetBegin User String
         | SetExpire User String
         | SetPlace User String
-        | ConfirmMail User
         | Revoke User String
         | Logout User 
 
@@ -62,7 +61,6 @@ put' e (SetLogo u r)= setLogo e u r
 put' e (SetBegin u r)= setBegin e u r
 put' e (SetExpire u r)= setExpire e u r
 put' e (SetPlace u r)= setPlace e u r
-put' e (ConfirmMail u)= confirmMail e u
 put' e (Revoke u h)= revoke e u h
 put' e (Logout u)= logout e u
       
@@ -84,6 +82,7 @@ data Get a where
         IsValidate :: User -> Resource -> Get Bool
         Promote :: User ->  User -> Get ()
         SetMail :: User -> String -> Get String
+        ConfirmMail :: User -> Get String
         
 get'  :: Env -> Get a -> ConnectionMonad a
 get' e (ArgomentiAutore u) = listArgomenti e u 
@@ -100,6 +99,7 @@ get' e (Validators u ) = validators e u
 get' e (IsValidate u h) = isValidate e  u  h
 get' e (SetMail u r)= setMail e u r
 get' e (Promote u h)= promote e u h 
+get' e (ConfirmMail u)= confirmMail e u
 
 get :: Env -> Get a -> WriterT [Event] IO (Either DBError a)
 get e l = runErrorT (get' e l)

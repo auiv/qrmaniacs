@@ -326,9 +326,9 @@ checkUtente' e u f g = do
                 [Only i] -> f i
                 _ -> g 
 checkProbe e u f = do
-        r <- equery e "select id from utenti where probemail=?" (Only u)
-        case (r :: [Only Integer]) of
-                [Only i] -> f i
+        r <- equery e "select id,hash from utenti where probemail=?" (Only u)
+        case (r :: [(Integer,String)]) of
+                [(i,h)] -> f i h
                 _ -> throwError $ DatabaseError "Unknown Probe"
 checkUtente e u f = checkUtente' e u f $ throwError $ DatabaseError "Unknown Hash for User"
 
@@ -373,7 +373,9 @@ setMail e u r = checkUtente e u $ \u -> etransaction e $ do
                   [Only False] -> eexecute e "update utenti set email=? ,conferma=0,probemail=? where id =?" (r,new,u) >> return new 
                   _ -> throwError $ DatabaseError "replacing a confirmed email"
 
-confirmMail e u = checkProbe e u $ \u -> eexecute e "update utenti set conferma=1 where id =?" (Only u)
+confirmMail e u = checkProbe e u $ \u h -> do 
+      eexecute e "update utenti set conferma=1 where id =?" (Only u)
+      return h
 
 askValidation e u = checkUtente e u $ \u -> do
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
