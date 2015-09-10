@@ -10,10 +10,10 @@
 <a  ng-if="!Page.id().conferma" class="link setmail" href="#"  editable-email="Page.id().mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20"><span  ng-if="!Page.id().mail" class="glyphicon glyphicon-envelope"></span> <span> {{Page.id().mail || 'la tua email'}}</span></a> 
         
 
-<a ng-if="Page.id().conferma" class="link" ng-click="esci()"><span class="glyphicon glyphicon-log-out"></span> <span> Logout </span>  </a>
+<a ng-if="Page.id().conferma" class="link success" ng-click="esci()"><span class="glyphicon glyphicon-log-out"></span> <span> Logout </span>  </a>
 
 <a class="link" href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span><span> QR di login</span></a>
-<a class="link" ng-click="distruggi()"><span class="glyphicon glyphicon-trash"></span> <span> Elimina profilo </span> </a>
+<a class="link danger" ng-click="distruggi()"><span class="glyphicon glyphicon-trash"></span> <span> Elimina profilo </span> </a>
 
 
 <div class="mail loginlinkc well"> <div> Link di login </div> <a class=loginlink href={{login}}> {{login.slice(0,35)}} ...</a></div>

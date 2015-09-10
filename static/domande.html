@@ -14,7 +14,7 @@
                                         <ul class="list-group">
                                                 <li class="list-group-item" ng-repeat="r in item.answers" id="r{{$index}}"> 
 
-                                                <a  class="linkautore trash" ng-click="deleteRisposta(item.answers[$index].index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                                <a  class="linkautore trash" ng-click="deleteRisposta(item.answers[$index].index)"><span class="glyphicon glyphicon-minus"></span></a>
                                                 <a  href="#" editable-textarea="item.answers[$index].text" onbeforesave="changeRisposta($data,item.answers[$index].index)"     e-rows="2" e-cols="20">
                                                         {{ item.answers[$index].text || 'Risposta ' + $index + '..' }}
                                                                 </a>
@@ -40,9 +40,6 @@
                                 </li>
                         </ul>
                         <div  class=bottomopsl>
-                          <a  class="link linkautore"  href="QR/{{hash}}">
-                            <span class="glyphicon glyphicon-qrcode">
-                            </span></a>
                           <a class="link linkautore" href="#/Resource/{{hash}}">
                               <span class="glyphicon glyphicon-eye-open">
                                 </span></a>

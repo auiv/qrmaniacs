@@ -1,8 +1,8 @@
 <div class="titler well"> Questionari </div>
 
 <ul class="list-group"> 
-        <li class="elenco pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)" ng-click="Page.gotoResource(argomento.index)"> 
-  <a class="link linkautore"  href="QR/{{argomento.index}}">
+        <li class="elenco pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)" ng-click="Page.gotoEditResource(argomento.index)"> 
+  <a class="link linkautore"  href="QR/{{argomento.index}}" ng-click="$event.stopPropagation()">
     <span class="glyphicon glyphicon-qrcode">
     </span></a>
                         <a  class="link linkautore" ng-click="deleteArgomento(argomento.index,argomento.text);$event.stopPropagation()">

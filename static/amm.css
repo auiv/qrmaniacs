@@ -391,9 +391,9 @@ border-radius:5px
 }
 .mail {
     text-decoration:none;
-    font-weight: bold;
+    font-weight: normal;
     width: 100%;
-    font-size:100%;
+    font-size:120%;
 
 }
 .mail:hover{
@@ -415,7 +415,7 @@ border-radius:5px
 }
 .choices > a:hover{background-color:}
 .choices .link {
-    padding: 6px;
+    padding: 4px;
 }
 .choices .glyphicon {
     margin-right: 10px;
@@ -449,19 +449,19 @@ border-radius:5px
     display: inline
 }
 .danger {
-    background-color: #f77;
+    background-color: #c77;
     color: black
 }
 .danger:hover {
-    background-color: #f33;
+    background-color: #d33;
     color:black
 }
 .success {
-    background-color: #6f6;
+    background-color: #6b6;
     color: black
 }
 .success:hover {
-    background-color:#1f1;
+    background-color:#1b1;
     color: black
 }
 .primary {
@@ -515,4 +515,4 @@ border-radius:5px
 .loginlinkc {
        text-align:left;font-size:130%;
        }
-
+.timeline {max-width:100% !important;}

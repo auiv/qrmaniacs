@@ -113,7 +113,7 @@ cs.controller("ProfileController",function ($scope,$http,$log,$location,Page,$mo
                           $scope.login=xs;
                           });
         $scope.updateMail = function (d) {
-                return $http.put("SetMail/" + d).success(function(xs){});
+                return $http.get("SetMail/" + d).success(function(xs){});
                 }
         $scope.esci=function(){
                 $http.put("Logout").then(function(xs){$location.url("/");Page.update();});

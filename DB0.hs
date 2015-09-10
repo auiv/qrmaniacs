@@ -370,7 +370,7 @@ setMail e u r = checkUtente e u $ \u -> etransaction e $ do
         t <- equery e "select conferma from utenti where id=?" (Only u)
         new <- liftIO $ take 50 <$> filter isAlphaNum <$> randomRs ('0','z') <$> newStdGen
         case t of
-                  [Only False] -> eexecute e "update utenti set email=? ,conferma=0,probemail=? where id =?" (r,u,new) >> return new 
+                  [Only False] -> eexecute e "update utenti set email=? ,conferma=0,probemail=? where id =?" (r,new,u) >> return new 
                   _ -> throwError $ DatabaseError "replacing a confirmed email"
 
 confirmMail e u = checkProbe e u $ \u -> eexecute e "update utenti set conferma=1 where id =?" (Only u)
