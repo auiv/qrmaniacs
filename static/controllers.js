@@ -273,6 +273,7 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         $scope.hash = $routeParams.hash;
         $scope.feedback= function (r) {
                 $http.put("AddFeedback/"+r).success(function(xs){
+                
                 $scope.update();
                         });}
         $scope.update = function () {
