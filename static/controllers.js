@@ -271,10 +271,12 @@ cs.controller("DomandeVisitatoreController",function ($scope,$http,$modal,$timeo
         $scope.Page = Page;
         $scope.items = [];
         $scope.hash = $routeParams.hash;
-        $scope.feedback= function (r) {
+        $scope.feedback= function (r,i,z) {
                 $http.put("AddFeedback/"+r).success(function(xs){
-                
-                $scope.update();
+                for(j=0;j<z.length;j ++)
+                  z[j].chosen=false;
+                i.chosen=true;
+                //$scope.update();
                         });}
         $scope.update = function () {
         $http.get("ChangeAssoc/"+$scope.hash).success(function(xs){
