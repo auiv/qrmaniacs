@@ -10,6 +10,13 @@
       </div>
 </div>
 
+<div ng-if="!Page.id().mail" class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+  Ricordati di inserire il tuo indirizzo e-mail per ricevere i risultati dei questionari
+    <a  class="link setmail" href="#"  editable-email="Page.id().mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20"><span  ng-if="!Page.id().mail" class="glyphicon glyphicon-envelope"></span> <span> {{Page.id().mail || 'la tua email'}}</span></a> 
+</div>
 <ul class="list-group"> 
   <li class="  elenco pointer list-group-item" ng-repeat="argomento in argomenti" ng-class="selectedClass($index)"  ng-click="Page.gotoResource(argomento.index)"> 
     <img class=logov width=25 height=25 src={{argomento.logo}} />

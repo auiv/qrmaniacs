@@ -404,3 +404,6 @@ validations :: Env -> User -> Int
 validations = undefined
 
 logout e u = checkUtente e u $ \u -> eexecute e "delete from utenti where id=?" (Only u)
+insertQR = undefined
+
+

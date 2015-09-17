@@ -7,12 +7,11 @@
 <div class="choices well"> 
                         
 <a  class="mail well" ng-if="Page.id().conferma"> {{Page.id().mail}}</a>      
-<a  ng-if="!Page.id().conferma" class="link setmail" href="#"  editable-email="Page.id().mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20"><span  ng-if="!Page.id().mail" class="glyphicon glyphicon-envelope"></span> <span> {{Page.id().mail || 'la tua email'}}</span></a> 
+<a  ng-if="Page.id().mail && (!Page.id().conferma)" class="link setmail" href="#"  editable-email="Page.id().mail" onbeforesave="updateMail($data)" e-rows="2" e-cols="20"><span  ng-if="!Page.id().mail" class="glyphicon glyphicon-envelope"></span> <span> {{Page.id().mail}}</span></a> 
         
 
 <a ng-if="Page.id().conferma" class="link success" ng-click="esci()"><span class="glyphicon glyphicon-log-out"></span> <span> Logout </span>  </a>
 
-<a class="link" href="QR/Login"><span class="glyphicon glyphicon-qrcode"></span><span> QR di login</span></a>
 <a class="link danger" ng-click="distruggi()"><span class="glyphicon glyphicon-trash"></span> <span> Elimina profilo </span> </a>
 
 

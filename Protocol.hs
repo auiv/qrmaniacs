@@ -26,6 +26,7 @@ import DB0
 
 data Put
         = AddArgomento User String	
+        | InsertQR User String String
         | DeleteArgomento User String	
         | ChangeDomanda User Integer String
         | ChangeArgomento User String String
@@ -45,6 +46,7 @@ data Put
         | Logout User 
 
 put' :: Env -> Put -> ConnectionMonad ()
+put' e (InsertQR u t q) = insertQR e u t q
 put' e (AddArgomento u s) = addArgomento e u s
 put' e (DeleteArgomento u s) = deleteArgomento e u s
 put' e (AddDomanda u i s) = addDomanda e u i s

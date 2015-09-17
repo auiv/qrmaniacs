@@ -83,6 +83,9 @@ cs.controller("RisposteController",function ($scope,Page,$http,$window,$location
                         function () {}
                         );
                 };
+        $scope.updateMail = function (d) {
+                return $http.get("SetMail/" + d).success(function(xs){});
+                }
         $scope.deleteArgomento = function(i) {
                 $http.put("RemoveFeedback/"+i).success(function (){$scope.update()})}
                 });

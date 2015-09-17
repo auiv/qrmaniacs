@@ -98,6 +98,8 @@ main = do
                           case rqMethod request of
                             PUT -> do 
                                 case splitOn "/" $ url_path url of
+                                        ["Insert",topic,qr] -> onuser user $ \u -> responseP $ do
+                                                        return $ InsertQR u topic qr
                                         ["DeleteArgomento",i] -> onuser user $ \u -> responseP $ do
                                                         return $ DeleteArgomento u i
                                         ["DeleteDomanda",i] -> onuser user $ \u -> responseP $ do
