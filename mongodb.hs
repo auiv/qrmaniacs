@@ -17,24 +17,22 @@ import qualified Data.ByteString.Lazy as L
 import Data.Aeson (decodeStrict,Object,encode)
 import Data.Aeson.Bson
 
-spocking pipe =
+spocking e =
     runSpock 3000 $ spockT id $
     do 
-    	get ("teams") $  do
-    		t <- show <$> liftIO (access pipe master "baseball" allTeams)
-        	text $ T.pack t
-        post ("insert") $ do
+    	get ("echo" <//> var) $ \v ->  do
+        	text $ T.pack v
+        post ("json") $ do
         	Just j <- fmap toBson <$> jsonBody
-        	liftIO (access pipe master "baseball" $ insert "team" j)
-        	liftIO $ print j
+        	e $ insert "json" j
+        	text $ T.pack $ show j
         	
 
 
 main = do
     pipe <- connect (host "127.0.0.1")
-    e <- access pipe master "baseball" run
-    print e
-    spocking pipe
+    let e = liftIO . access pipe master "qrmaniacs" 
+    spocking e
     close pipe
 
 
@@ -44,7 +42,7 @@ main = do
 
 
 
-
+{-
 
     
 run :: Action IO ()
@@ -76,3 +74,4 @@ newYorkTeams = rest =<< find (select ["home.state" =: "NY"] "team") {project = [
 
 printDocs :: String -> [Document] -> Action IO ()
 printDocs title docs = liftIO $ putStrLn title >> mapM_ (print . exclude ["_id"]) docs
+-}
