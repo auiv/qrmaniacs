@@ -3,28 +3,63 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE NoMonoLocalBinds #-}
 {-# LANGUAGE Rank2Types #-}
+{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE DataKinds #-}
 
 import Database.MongoDB    (Action, Document, Document, Value, access,
                             close, connect, delete, exclude, find,
                             host, insertMany, master, project, rest,insert,
                             select, sort, (=:))
 import Control.Monad.Trans (liftIO, MonadIO)
-import Web.Spock hiding (delete)
 
 import qualified Data.Text as T
-import qualified Data.Text.Encoding as TE
+import qualified Data.Text.Lazy as TL
+import qualified Data.Text.Lazy.Encoding as TE
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Lazy as L
 import Data.Monoid
-import Data.Either.Utils
 
 import Data.Aeson (decodeStrict,Object,encode)
 import Data.Aeson.Bson
+import Snap
+import Snap.Extras.JSON
+import Control.Applicative
 
-string = text . T.pack
 
-spocking :: (forall a. Action IO a -> IO a) -> IO ()
-spocking pe = runSpock 3000 $ spockT id $ do 
+
+main = do
+  
+    pipe <- connect (host "127.0.0.1")
+    quickHttpServe (site $ access pipe master "json")
+
+site :: (forall a . Action IO a -> IO a) -> Snap ()
+site f =
+    ifTop (writeBS "hello world") <|>
+    route [ ("foo", writeBS "bar")
+          , ("echo/:echoparam", echoHandler)
+          , ("all",allQR f) 
+          , ("insert",insertJSON f)
+          ] 
+
+echoHandler :: Snap ()
+echoHandler = do
+    param <- getParam "echoparam"
+    maybe (writeBS "must specify echo/param in URL")
+          writeBS param
+
+allQR f = do
+  method GET $ do
+      t <- fmap (map toAeson) .liftIO $ f $  find (select [] "free") >>= rest
+      writeJSON t
+
+insertJSON f = method POST $ do
+            j' <- reqJSON
+            let Just j = fmap toBson j'
+            liftIO $ f  $ insert "free" j
+            writeJSON j'
+
+{-
         get ("echo" <//> var) string
         post ("insert") $ do
             Just j <- fmap toBson <$> jsonBody
@@ -34,20 +69,6 @@ spocking pe = runSpock 3000 $ spockT id $ do
             t <- fmap (map $ fromRight . TE.decodeUtf8' . encode . toAeson) . liftIO $ pe $ find (select [] "free") >>= rest
             text $ mconcat t
 
-main = do
-    pipe <- connect (host "127.0.0.1")
-    spocking $ access pipe master "json"
-    close pipe
-
-
-
-
-
-
-
-
-
-{-
     
 run :: Action IO ()
 run = do
@@ -78,5 +99,4 @@ newYorkTeams = rest =<< find (select ["home.state" =: "NY"] "team") {project = [
 
 printDocs :: String -> [Document] -> Action IO ()
 printDocs title docs = liftIO $ putStrLn title >> mapM_ (print . exclude ["_id"]) docs
-
 -}
