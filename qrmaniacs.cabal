@@ -57,7 +57,7 @@ executable qrmaniacs
   other-extensions:    FlexibleInstances, ViewPatterns, OverloadedStrings, ScopedTypeVariables, DeriveFunctor, RankNTypes, GADTs
   
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.8 && <4.9, mtl,bytestring,text,mongoDB,aeson-bson,aeson,MissingH,snap,snap-extras
+  build-depends:       base >=4.8 && <4.9, mtl,bytestring,text,mongoDB,aeson-bson,aeson,MissingH,snap,snap-extras,cryptohash,bson,monad-control,time
   ghc-options: -O2 -threaded 
   
   -- Base language which the package is written in.

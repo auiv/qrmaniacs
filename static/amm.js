@@ -1,68 +1,39 @@
+var module = angular.module('controllers', ['page']);
+
+module.controller('HomeController',function ($scope,$resource,Page) {
+    $scope.Page=Page;
+    Page.setTile("Home");
+    });
 
 
-var myApp = angular.module("myApp", ["xeditable",'ngRoute','cs']);
+var module = angular.module("qrmaniacs", ["xeditable",'ngRoute','page','controllers']);
 
-myApp.config(['$routeProvider',
+module.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
         templateUrl: 'static/home.html',
         controller: 'HomeController'
       }).
-      when('/Risposte', {
-        templateUrl: 'static/risposte.html',
-        controller: 'RisposteController'
-      }).
-      when('/Profile', {
-        templateUrl: 'static/profile.html',
-        controller:'ProfileController'
-      }).
-      when('/Campagna', {
-        templateUrl: 'static/campagna.html',
-        controller:'CampagnaController'
-      }).
-      when('/Autore', {
-        templateUrl: 'static/questionari.html',
-        controller: 'QuestionariController'
-      }).
-      when('/Autore/Resource/:hash', {
-        templateUrl: 'static/domande.html',
-        controller: 'DomandeAutoreController'
-      }).
-      when('/Resource/:hash', {
-        templateUrl: 'static/domandev.html',
-        controller: 'DomandeVisitatoreController'
-      }).
-      when('/loggedout', {
-        templateUrl: 'static/loggedout.html',
-        controller: 'LoggedOutController'
-      }).
-      when('/eliminated', {
-        templateUrl: 'static/eliminated.html',
-        controller: 'LoggedOutController'
-      }).
-      when('/CantPromote/:reason', {
-        templateUrl: 'static/cantpromote.html',
-        controller: 'CantPromoteController'
-      }).
-      when('/CantValidate/:reason', {
-        templateUrl: 'static/cantvalidate.html',
-        controller: 'CantValidateController'
-      }).
-      when('/Promoted', {
-        templateUrl: 'static/promoted.html',
-        controller: 'PromotedController'
-      }).
-      when('/Validated', {
-        templateUrl: 'static/validated.html',
-        controller: 'ValidatedController'
-      }).
       otherwise({
         redirectTo: '/'
       });
   }]);
 
-myApp.run(function(editableOptions) {
+module.controller("title",function ($scope,Page) {
+        $scope.Page=Page;
+        $scope.isViewLoading = false;
+        $scope.$on('$routeChangeStart', function() {
+          $scope.isViewLoading = true;
+        });
+        $scope.$on('$routeChangeSuccess', function() {
+          $scope.isViewLoading = false;
+        });
+        $scope.$on('$routeChangeError', function() {
+          $scope.isViewLoading = false;
+        })
+        });
+module.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
 

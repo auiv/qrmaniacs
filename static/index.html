@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html   ng-app="myApp" ng-init="cookie=''" ng-controller="title">
+<html   ng-app="qrmaniacs" ng-controller="title">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,10 +12,14 @@
     <script src= "static/js/jquery.min.js" color="text/javascript"></script>
     <script src= "static/js/angular.min.js" color="text/javascript"></script>
     <script src= "static/js/angular-route.min.js" color="text/javascript"></script>
+    <script src= "static/js/angular-resource.js" color="text/javascript"></script>
     <script src= "static/js/angular-cookies.js" color="text/javascript"></script>
 
-    <script src= "static/controllers.js" color="text/javascript"></script>
-    <script src= "static/amm.js" color="text/javascript"></script>
+    <script src= "static/page.js" color="text/javascript"></script>
+    <script src= "static/home.js" color="text/javascript"></script>
+    <script src= "static/collections.js" color="text/javascript"></script>
+    <script src= "static/collection.js" color="text/javascript"></script>
+    <script src= "static/main.js" color="text/javascript"></script>
     <script src= "static/js/bootstrap.min.js" color="text/javascript"> </script>
     <script src= "static/js/ui-bootstrap-tpls-0.13.0.js" color="text/javascript"></script>
     <script src="static/js/xeditable.js"></script>
@@ -23,27 +27,16 @@
 <body>
         <div >
           <div ng-show="Page.id().user" class="navigation" >
-                  <img ng-show=isViewLoading class=loading src="static/immagini/loading.gif"/>
+                  <img ng-if=isViewLoading class=loading src="static/immagini/loading.gif"/>
                   
                   <div>
-                  <a class=link href="#/">
+                  <a class=link href="#/collections">
                       <span class="glyphicon glyphicon-home">
                       </span>
                   </a>
-                  <a class=link href="#/Risposte">
-                      <span class="glyphicon glyphicon-list">
-                      </span>
-                  </a>
-                  <a ng-if="Page.id().isAuthor" class="link" href="#/Autore">
-                      <span class="glyphicon glyphicon-copyright-mark">
-                      </span>
-                    </a>
-                  <a ng-if="Page.id().isAuthor" class=link href="#/Campagna">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
                   </a>
                   <a  href="#/Profile" class="link">
-                        <span class="glyphicon glyphicon-user">
+                        <span class="glyphicon glyphicon-user">{{Page.id().user}}
                         </span>
                   </a> 
                   </div>
