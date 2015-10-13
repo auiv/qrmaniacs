@@ -48,7 +48,7 @@ cabal-version:       >=1.10
 
 executable qrmaniacs
   -- .hs or .lhs file containing the Main module.
-  main-is:             mongodb.hs
+  main-is:             Graph.hs
   
   -- Modules included in this executable, other than Main.
   -- other-modules:       
@@ -57,7 +57,7 @@ executable qrmaniacs
   other-extensions:    FlexibleInstances, ViewPatterns, OverloadedStrings, ScopedTypeVariables, DeriveFunctor, RankNTypes, GADTs
   
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.8 && <4.9, mtl,bytestring,text,mongoDB,aeson-bson,aeson,MissingH,snap,snap-extras,cryptohash,bson,monad-control,time
+  build-depends:       base >=4.8 && <4.9, mtl,bytestring,text,mongoDB,aeson-bson,aeson,MissingH,snap,snap-extras,cryptohash,bson,monad-control,time,lens,containers
   ghc-options: -O2 -threaded 
   
   -- Base language which the package is written in.
