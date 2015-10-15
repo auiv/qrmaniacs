@@ -67,7 +67,7 @@ instance Val Core where
   cast'List = error "list of cores not serializable"
   cast'Maybe = error "maybe annotation not serializable"
 
-instance Val (Node Core Text) where
+instance Val (Node Text Core) where
   val (Node x ss ls) =  Doc $ ["core" =: x] 
     ++ map (\(l,s) -> l := Doc ["node" := val s]) ss
     ++ map (\(l,xs) -> l := Array (map val xs)) ls

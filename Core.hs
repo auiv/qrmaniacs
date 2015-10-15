@@ -3,7 +3,7 @@
 
 module Core where
 
-import Graph (Path, Node)
+import Graph (Path,Node)
 import Control.Lens.TH (makeLenses)
 import Data.Bson (Value(..), Document, Field (..))
 import Data.Text (Text)
@@ -43,7 +43,7 @@ validDocument = filter (\(_ := v) -> validDataValue v)
 
 
 -- | a 'Node' of 'Core' and using 'Text' as 'Path' type
-type Resource = Node Core Text
+type Resource = Node Text Core
 
 
 
