@@ -3,10 +3,11 @@
 
 module Graph (Path(..),Node(..),getNode,adjustNode,atPath) where
 
-import Control.Lens (lens,view,set, Lens')
+import Control.Lens (lens,view,set, Lens', over,mapped,_2)
 import Control.Lens.TH (makeLenses)
 import qualified Data.Set as S
 import Lib (assocGetAndReplace)
+import Data.Monoid (mappend,mconcat, Monoid)
 
 -- | recursive linear path, switching on label l and an integer for indexing a list
 data Path l = Multi l Int (Path l) | Single l (Path l) | End deriving (Show,Eq)
@@ -70,5 +71,19 @@ adjustNode r = adjustNode' r id
 atPath :: Eq l => Path l -> Lens' (Node a l) (Maybe (Node a l))
 atPath p = lens (getNode p) $ 
   \n r -> maybe n id $ adjustNode (const r) p n
+
+
+
+-- | follow all paths havesting (a -> b) and backcorrecting (b -> a -> a)
+correct :: forall a b l. Monoid b => (a -> b) -> (b -> a -> a) -> Node a l -> (Node a l,b)
+correct e c n@(Node x ss ls) = (n',e x `mappend` z) where
+    n' = Node (c z x) (map (over _2 fst) ss') $ map (over (_2 .mapped) fst) ls'
+    ls' :: [(l, [(Node a l, b)])]
+    ls' =  over (mapped . _2 . mapped) (correct e c) ls 
+    ss' :: [(l, (Node a l, b))]
+    ss' =  over (mapped . _2 ) (correct e c) ss 
+    z :: b
+    z = mconcat (map (snd . snd) ss') `mappend` mconcat (mconcat $ map (map snd . snd) ls') 
+
 
 
